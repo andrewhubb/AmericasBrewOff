@@ -1,0 +1,498 @@
+table 'Coffee Tasting Fact Table'
+	lineageTag: 7ee3c6e6-b101-41c3-a9e7-b755ca3f0a47
+
+	column 'Submission ID'
+		dataType: string
+		lineageTag: 1473f2ee-fc86-47cb-bdaa-3a2dd04bcdd6
+		summarizeBy: none
+		sourceColumn: Submission ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age Group'
+		dataType: string
+		lineageTag: f4e61ded-36b5-4659-a02c-e268f1564deb
+		summarizeBy: none
+		sourceColumn: Age Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Daily Consumption'
+		dataType: string
+		lineageTag: f3ff1a23-3e50-411a-b0ab-0e92a78cb7ee
+		summarizeBy: none
+		sourceColumn: Daily Consumption
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Drink Coffee Location'
+		dataType: string
+		lineageTag: 601e3360-41b8-4bef-b3ad-9c4f06ed1f8e
+		summarizeBy: none
+		sourceColumn: Drink Coffee Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Home Brew Method'
+		dataType: string
+		lineageTag: d195a140-8ce1-4aaf-93e4-a19eb034f687
+		summarizeBy: none
+		sourceColumn: Home Brew Method
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Other Methods'
+		dataType: string
+		lineageTag: b8c02448-7152-4ae4-b6ef-ff5bbbf7d99c
+		summarizeBy: none
+		sourceColumn: Other Methods
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Purchase Coffee Location'
+		dataType: string
+		lineageTag: 539f7057-fcf2-4c72-93d3-37f17844741c
+		summarizeBy: none
+		sourceColumn: Purchase Coffee Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Purchase - Other Location'
+		dataType: string
+		lineageTag: d75dc081-db12-4474-bd05-eddd5dc3adab
+		summarizeBy: none
+		sourceColumn: Purchase - Other Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Favourite Coffee Drink'
+		dataType: string
+		lineageTag: 08a31f6d-f1f2-4176-a563-8bc33097e5c0
+		summarizeBy: none
+		sourceColumn: Favourite Coffee Drink
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Other Coffee Drink'
+		dataType: string
+		lineageTag: 9c813253-5ba3-462b-95d6-20ce1f7498d1
+		summarizeBy: none
+		sourceColumn: Other Coffee Drink
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee Additions'
+		dataType: string
+		lineageTag: 1f4854b4-76b1-430a-a427-fdb77234982d
+		summarizeBy: none
+		sourceColumn: Coffee Additions
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Other Additions Type'
+		dataType: string
+		lineageTag: 9285c563-5e0a-4908-a600-bc9186e352e3
+		summarizeBy: none
+		sourceColumn: Other Additions Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dairy Type'
+		dataType: string
+		lineageTag: f4df2887-1d0d-47cb-9932-049d239d034f
+		summarizeBy: none
+		sourceColumn: Dairy Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sweetener Type'
+		dataType: string
+		lineageTag: 88de9922-3d80-445f-bc2b-d6bf38255e46
+		summarizeBy: none
+		sourceColumn: Sweetener Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Preferred Coffee Type'
+		dataType: string
+		lineageTag: 489dcea7-d6dc-415d-8115-f1b42dafa834
+		summarizeBy: none
+		sourceColumn: Preferred Coffee Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee Strength'
+		dataType: string
+		lineageTag: 88c3b990-f1e5-4fd4-8049-a32fcae65514
+		summarizeBy: none
+		sourceColumn: Coffee Strength
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Roast Level'
+		dataType: string
+		lineageTag: d83b065e-ab75-4150-b73b-cb7155a4363d
+		summarizeBy: none
+		sourceColumn: Roast Level
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Caffeine Strength'
+		dataType: string
+		lineageTag: a092eea9-24dc-419f-89f2-3fde9bb7e77e
+		summarizeBy: none
+		sourceColumn: Caffeine Strength
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Expertise Level'
+		dataType: int64
+		formatString: 0
+		lineageTag: f5e6a50a-2246-4877-9bbb-313294bbf6b5
+		summarizeBy: sum
+		sourceColumn: Expertise Level
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee A - Bitterness'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8d73be91-7010-4484-977a-476f68f3bba1
+		summarizeBy: sum
+		sourceColumn: Coffee A - Bitterness
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee A - Acidity'
+		dataType: int64
+		formatString: 0
+		lineageTag: 30c4fc4c-6014-45be-8abf-390b8351039f
+		summarizeBy: sum
+		sourceColumn: Coffee A - Acidity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee A - Personal Preference'
+		dataType: int64
+		formatString: 0
+		lineageTag: 6179d13b-1840-4dd5-830b-43a7730fa598
+		summarizeBy: sum
+		sourceColumn: Coffee A - Personal Preference
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee A - Notes'
+		dataType: string
+		lineageTag: d8111ff3-0b95-44d2-b244-85a909fcae77
+		summarizeBy: none
+		sourceColumn: Coffee A - Notes
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee B - Bitterness'
+		dataType: int64
+		formatString: 0
+		lineageTag: c5d3b3f6-922e-4783-824f-d6af6ba01c3d
+		summarizeBy: sum
+		sourceColumn: Coffee B - Bitterness
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee B - Acidity'
+		dataType: int64
+		formatString: 0
+		lineageTag: 88a8ea1c-90b4-4f78-bc60-87e063348d88
+		summarizeBy: sum
+		sourceColumn: Coffee B - Acidity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee B - Personal Preference'
+		dataType: int64
+		formatString: 0
+		lineageTag: caf3a8cd-7446-4519-a817-7fa8c0e60e2e
+		summarizeBy: sum
+		sourceColumn: Coffee B - Personal Preference
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee B - Notes'
+		dataType: string
+		lineageTag: ab238f1f-6e51-469b-8f69-f16021512fde
+		summarizeBy: none
+		sourceColumn: Coffee B - Notes
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee C - Bitterness'
+		dataType: int64
+		formatString: 0
+		lineageTag: 23ad5af0-c761-4783-9f6c-0b9000a7b068
+		summarizeBy: sum
+		sourceColumn: Coffee C - Bitterness
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee C - Acidity'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8b308b38-7b10-470e-889e-b9344ae7154f
+		summarizeBy: sum
+		sourceColumn: Coffee C - Acidity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee C - Personal Preference'
+		dataType: int64
+		formatString: 0
+		lineageTag: 0798b6ce-ab72-4304-9e45-ccc65a500b81
+		summarizeBy: sum
+		sourceColumn: Coffee C - Personal Preference
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee C - Notes'
+		dataType: string
+		lineageTag: eba97eb7-c6da-4f5c-9926-83263a8b3c28
+		summarizeBy: none
+		sourceColumn: Coffee C - Notes
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee D - Bitterness'
+		dataType: int64
+		formatString: 0
+		lineageTag: 95ac4eac-0389-44c6-b40f-9c385d079ef5
+		summarizeBy: sum
+		sourceColumn: Coffee D - Bitterness
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee D - Acidity'
+		dataType: int64
+		formatString: 0
+		lineageTag: b922a332-4ed2-4188-b046-acd588877637
+		summarizeBy: sum
+		sourceColumn: Coffee D - Acidity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee D - Personal Preference'
+		dataType: int64
+		formatString: 0
+		lineageTag: 7bb6ea77-b880-481c-a603-6f61a6ee2e00
+		summarizeBy: sum
+		sourceColumn: Coffee D - Personal Preference
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee D - Notes'
+		dataType: string
+		lineageTag: 42b767b1-e328-4bbb-b0eb-763b06dab138
+		summarizeBy: none
+		sourceColumn: Coffee D - Notes
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee A, B,or C Preference'
+		dataType: string
+		lineageTag: 11598d57-e370-4f03-bdda-26247c2ae66c
+		summarizeBy: none
+		sourceColumn: Coffee A, B,or C Preference
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee A or  D Preference'
+		dataType: string
+		lineageTag: c590bf0d-be2c-4503-a7fc-93159475773f
+		summarizeBy: none
+		sourceColumn: Coffee A or  D Preference
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Favourite Coffee'
+		dataType: string
+		lineageTag: d7d1916a-29fa-46bf-bf29-caec77c4e44a
+		summarizeBy: none
+		sourceColumn: Favourite Coffee
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Work Location'
+		dataType: string
+		lineageTag: cf255f18-3220-4516-8226-36ac50238df7
+		summarizeBy: none
+		sourceColumn: Work Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Monthly Coffee Expense'
+		dataType: string
+		lineageTag: 3c8731a6-1d56-4f39-9d86-6597d3fd9b98
+		summarizeBy: none
+		sourceColumn: Monthly Coffee Expense
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee Drinking Reason'
+		dataType: string
+		lineageTag: bd1d99b3-f1d1-4492-8bde-5a4a56762ced
+		summarizeBy: none
+		sourceColumn: Coffee Drinking Reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Other Reason Type'
+		dataType: string
+		lineageTag: 18558d8e-f9b0-4038-8633-c27888d870ff
+		summarizeBy: none
+		sourceColumn: Other Reason Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Like Taste of Coffee'
+		dataType: string
+		lineageTag: fd239a25-bdfe-43fc-ad54-04f75f3f51f9
+		summarizeBy: none
+		sourceColumn: Like Taste of Coffee
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee Origin Knowledge'
+		dataType: string
+		lineageTag: 91c283f1-3544-4200-8b54-cee14fc7f750
+		summarizeBy: none
+		sourceColumn: Coffee Origin Knowledge
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Max Coffee Price Paid'
+		dataType: string
+		lineageTag: a6e8d8c6-95cf-4fee-8864-e4fb73e7c13a
+		summarizeBy: none
+		sourceColumn: Max Coffee Price Paid
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Max Coffee Price Willing to Pay'
+		dataType: string
+		lineageTag: 49ab1364-792a-463e-8f49-f99bce8ef9bf
+		summarizeBy: none
+		sourceColumn: Max Coffee Price Willing to Pay
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cafe Good Value'
+		dataType: string
+		lineageTag: 97ac3074-9d9c-4d1c-bafc-7a7443ff6618
+		summarizeBy: none
+		sourceColumn: Cafe Good Value
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee Equipment Expense'
+		dataType: string
+		lineageTag: a6645d18-14d2-40e2-902f-bd4f01097b43
+		summarizeBy: none
+		sourceColumn: Coffee Equipment Expense
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coffee Equipment Good Value?'
+		dataType: string
+		lineageTag: b75d0718-a76e-46ce-b78a-ed94554072b9
+		summarizeBy: none
+		sourceColumn: Coffee Equipment Good Value?
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 53eab2e0-b9a8-4d7f-84bf-65d49e39431d
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Education Level'
+		dataType: string
+		lineageTag: 0bea86f1-d03d-4320-85ed-45d94024c27e
+		summarizeBy: none
+		sourceColumn: Education Level
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ethnicity/Race
+		dataType: string
+		lineageTag: 11c0514a-1b3c-4c6e-95b0-a9df5094f7aa
+		summarizeBy: none
+		sourceColumn: Ethnicity/Race
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employment Status'
+		dataType: string
+		lineageTag: 08df5dc1-2fce-4939-99b8-82a6fef9fc9d
+		summarizeBy: none
+		sourceColumn: Employment Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Number of Children'
+		dataType: string
+		lineageTag: 11308cda-8306-4070-a945-806e2ce76cc0
+		summarizeBy: none
+		sourceColumn: Number of Children
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Political Affiliation'
+		dataType: string
+		lineageTag: d879474a-c7b4-451c-9185-063260d09f50
+		summarizeBy: none
+		sourceColumn: Political Affiliation
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Max Monthly Expense'
+		dataType: int64
+		formatString: 0
+		lineageTag: 1c298217-d784-49d4-af16-a0f353943f00
+		summarizeBy: sum
+		sourceColumn: Max Monthly Expense
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Coffee Tasting Fact Table' = m
+		mode: import
+		source = ```
+				let
+				  // Load the cleaned coffee dataset
+				  Source = coffee_dataset_cleaned, 
+				  #"Added Custom" = Table.AddColumn(
+				    Source, 
+				    "Max Monthly Expense", 
+				    each 
+				      if [Monthly Coffee Expense] is null then
+				        null
+				      else if Text.Contains([Monthly Coffee Expense], "-") then
+				        Text.AfterDelimiter([Monthly Coffee Expense], "-$")
+				      else if [Monthly Coffee Expense] = ">$100" then
+				        "100"
+				      else if [Monthly Coffee Expense] = "<$20" then
+				        "20"
+				      else
+				        null
+				  ), 
+				  #"Changed Type" = Table.TransformColumnTypes(
+				    #"Added Custom", 
+				    {{"Max Monthly Expense", Int64.Type}}
+				  ), 
+				  #"Replaced Value" = Table.ReplaceValue(#"Changed Type","","Not Specified",Replacer.ReplaceValue,{"Max Coffee Price Willing to Pay"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","","Not Specified",Replacer.ReplaceValue,{"Coffee Additions"})
+				in
+				    #"Replaced Value1"
+				```
+
+	annotation PBI_ResultType = Table
+

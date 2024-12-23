@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Great American Coffee Taste Test Infographic"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "351b04b1-ebca-43ea-b01c-9476febc98c6"
+  }
+}

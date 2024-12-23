@@ -1,0 +1,31 @@
+table 'Coffee Information'
+	lineageTag: cc4d187e-d560-4381-9019-70b6a290d706
+
+	column Coffee
+		dataType: string
+		lineageTag: 21d33777-720d-44ac-a83a-2ff8061fccf1
+		summarizeBy: none
+		sourceColumn: Coffee
+
+		annotation SummarizationSetBy = Automatic
+
+	column Description
+		dataType: string
+		lineageTag: a9fdb7dc-f447-4174-bf6d-8f3b9c633769
+		summarizeBy: none
+		sourceColumn: Description
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Coffee Information' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("Zc1BCsIwEEDRqwyzUgh4Bm2X3qBkMZgZG9okMplQensDohRcvw9/mnAoIsxwRYdrfM4GWqiag43qzAFeWh5cK3r3S289TRxiS5/2aEO3kXT5l7HL/TjIZE1p/R7gJKyJs3FwIC0v+0W0RdvP6P0b", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Coffee = _t, Description = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Coffee", type text}, {"Description", type text}}),
+				    #"Capitalized Each Word" = Table.TransformColumns(#"Changed Type",{{"Description", Text.Proper, type text}})
+				in
+				    #"Capitalized Each Word"
+
+	annotation PBI_ResultType = Table
+

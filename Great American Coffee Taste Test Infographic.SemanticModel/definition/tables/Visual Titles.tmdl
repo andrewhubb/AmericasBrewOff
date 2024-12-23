@@ -1,0 +1,33 @@
+table 'Visual Titles'
+	lineageTag: 9608a48f-911e-4e91-b998-c31638eb3bcf
+
+	column Title
+		dataType: string
+		lineageTag: 6cb026ca-d1e1-4b26-b382-001bb947e2fd
+		summarizeBy: none
+		sourceColumn: Title
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Title Key'
+		dataType: int64
+		formatString: 0
+		lineageTag: fb64c18a-ff08-43d4-9706-a53fcdaf1655
+		summarizeBy: count
+		sourceColumn: Title Key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Visual Titles' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("hVTLjtpAEPyVFudIWeWSY8TDLJEWBcEKDmQPE7vNdBimnfEMxJ+U78iPpY0NGNtsbramqru6+rHdDjZaeVigi9F6tUPgFCIVaxjK97PjkMHCYYouhzGnKSJMvgzePmwHMz7BhJIK/Iw2QQdr9ggpuxZ0o0kwkdeWYvKE+celijGvAztMOnh08sMwwaNEFKSIukBgw25/wYn0rzl4jRAdMsPFQYqAlVc+nDmvmnOEjeY6VSeP8KMkxMoTW3jBI5oy7Y32QvuGOpipI7YkXt+myuYwCgWMsPwqXZjxAWHk8ER216Kd0c2qIvuTC8mM5M6UhsIas/IO7c7rXvpUHTm4BmnJKvd9JbWcaDHLRtVPr0Umzgs3sl6HnCTefc4qUg9z4sjuy8bMWTQsOAtGORge2O7+15LzVPXUV4MrfyaKXAFk698KdMcfpjJpbFXCvWE8w+qE6NF2HC8DzJUtYByyO2671WO2eZD+ihhTNIyfs6ej8mLdY88lf+2Rb9p3nReYo9ecvONEQ2yI9Z26Zu2rTBYTZLajX4GycjtuSr+Hp6dPn6vtmdFOY9krRzHCQsle/yiuIS/IRuT+MHP1mw7hUIfp3V4l878hY2QlShsWquiW8ti4qp45y0Saoqyr2ft3mSM0JMtQ9/tqB3xLz7ftmcXutTIB22OgySSyeL29aN4DaT1VLizYyJWLlRHDUjJUXZcmr2Pk5ZheEVfvljJKrR3pjOKaZGQUjFX69w+objGP700pd2rOF+D2KqS3fw==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Title = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Title", type text}}),
+				    #"Added Index" = Table.AddIndexColumn(#"Changed Type", "Index", 1, 1, Int64.Type),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Title Key"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+

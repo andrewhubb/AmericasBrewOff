@@ -1,0 +1,2819 @@
+expression coffee_dataset_cleaned = ```
+		let
+		  LocationColumns = {"Home", "Office", "On the Go", "Cafe", "Other Locations"},
+		  Source = coffee_dataset_source,  
+		  #"Added Custom" = Table.AddColumn(
+		    Source,
+		    "New Submission ID",
+		    each [Submission ID] & Text.From(Number.Round(Number.RandomBetween(1000, 9999)))
+		  ),
+		  #"Changed Type1" = Table.TransformColumnTypes(#"Added Custom", {{"New Submission ID", type text}}),
+		  #"Reordered Columns1" = Table.ReorderColumns(
+		    #"Changed Type1",
+		    {  
+		      "New Submission ID",
+		      "Submission ID",
+		      "What is your age?",
+		      "How many cups of coffee do you typically drink per day?",
+		      "Where do you typically drink coffee?",
+		      "Where do you typically drink coffee? (At home)",
+		      "Where do you typically drink coffee? (At the office)",
+		      "Where do you typically drink coffee? (On the go)",
+		      "Where do you typically drink coffee? (At a cafe)",
+		      "Where do you typically drink coffee? (None of these)",
+		      "How do you brew coffee at home?",
+		      "How do you brew coffee at home? (Pour over)",
+		      "How do you brew coffee at home? (French press)",
+		      "How do you brew coffee at home? (Espresso)",
+		      "How do you brew coffee at home? (Coffee brewing machine (e.g. Mr. Coffee))",
+		      "How do you brew coffee at home? (Pod/capsule machine (e.g. Keurig/Nespresso))",
+		      "How do you brew coffee at home? (Instant coffee)",
+		      "How do you brew coffee at home? (Bean-to-cup machine)",
+		      "How do you brew coffee at home? (Cold brew)",
+		      "How do you brew coffee at home? (Coffee extract (e.g. Cometeer))",
+		      "How do you brew coffee at home? (Other)",
+		      "How else do you brew coffee at home?",
+		      "On the go, where do you typically purchase coffee?",
+		      "On the go, where do you typically purchase coffee? (National chain (e.g. Starbucks, Dunkin))",
+		      "On the go, where do you typically purchase coffee? (Local cafe)",
+		      "On the go, where do you typically purchase coffee? (Drive-thru)",
+		      "On the go, where do you typically purchase coffee? (Specialty coffee shop)",
+		      "On the go, where do you typically purchase coffee? (Deli or supermarket)",
+		      "On the go, where do you typically purchase coffee? (Other)",
+		      "Where else do you purchase coffee?",
+		      "What is your favorite coffee drink?",
+		      "Please specify what your favorite coffee drink is",
+		      "Do you usually add anything to your coffee?",
+		      "Do you usually add anything to your coffee? (No - just black)",
+		      "Do you usually add anything to your coffee? (Milk, dairy alternative, or coffee creamer)",
+		      "Do you usually add anything to your coffee? (Sugar or sweetener)",
+		      "Do you usually add anything to your coffee? (Flavor syrup)",
+		      "Do you usually add anything to your coffee? (Other)",
+		      "What else do you add to your coffee?",
+		      "What kind of dairy do you add?",
+		      "What kind of dairy do you add? (Whole milk)",
+		      "What kind of dairy do you add? (Skim milk)",
+		      "What kind of dairy do you add? (Half and half)",
+		      "What kind of dairy do you add? (Coffee creamer)",
+		      "What kind of dairy do you add? (Flavored coffee creamer)",
+		      "What kind of dairy do you add? (Oat milk)",
+		      "What kind of dairy do you add? (Almond milk)",
+		      "What kind of dairy do you add? (Soy milk)",
+		      "What kind of dairy do you add? (Other)",
+		      "What kind of sugar or sweetener do you add?",
+		      "What kind of sugar or sweetener do you add? (Granulated Sugar)",
+		      "What kind of sugar or sweetener do you add? (Artificial Sweeteners (e.g., Splenda))",
+		      "What kind of sugar or sweetener do you add? (Honey)",
+		      "What kind of sugar or sweetener do you add? (Maple Syrup)",
+		      "What kind of sugar or sweetener do you add? (Stevia)",
+		      "What kind of sugar or sweetener do you add? (Agave Nectar)",
+		      "What kind of sugar or sweetener do you add? (Brown Sugar)",
+		      "What kind of sugar or sweetener do you add? (Raw Sugar (Turbinado))",
+		      "What kind of flavorings do you add?",
+		      "What kind of flavorings do you add? (Vanilla Syrup)",
+		      "What kind of flavorings do you add? (Caramel Syrup)",
+		      "What kind of flavorings do you add? (Hazelnut Syrup)",
+		      "What kind of flavorings do you add? (Cinnamon (Ground or Stick))",
+		      "What kind of flavorings do you add? (Peppermint Syrup)",
+		      "What kind of flavorings do you add? (Other)",
+		      "What other flavoring do you use?",
+		      "Before today's tasting, which of the following best described what kind of coffee you like?",
+		      "How strong do you like your coffee?",
+		      "What roast level of coffee do you prefer?",
+		      "How much caffeine do you like in your coffee?",
+		      "Lastly, how would you rate your own coffee expertise?",
+		      "Coffee A - Bitterness",
+		      "Coffee A - Acidity",
+		      "Coffee A - Personal Preference",
+		      "Coffee A - Notes",
+		      "Coffee B - Bitterness",
+		      "Coffee B - Acidity",
+		      "Coffee B - Personal Preference",
+		      "Coffee B - Notes",
+		      "Coffee C - Bitterness",
+		      "Coffee C - Acidity",
+		      "Coffee C - Personal Preference",
+		      "Coffee C - Notes",
+		      "Coffee D - Bitterness",
+		      "Coffee D - Acidity",
+		      "Coffee D - Personal Preference",
+		      "Coffee D - Notes",
+		      "Between Coffee A, Coffee B, and Coffee C which did you prefer?",
+		      "Between Coffee A and Coffee D, which did you prefer?",
+		      "Lastly, what was your favorite overall coffee?",
+		      "Do you work from home or in person?",
+		      "In total, much money do you typically spend on coffee in a month?",
+		      "Why do you drink coffee?",
+		      "Why do you drink coffee? (It tastes good)",
+		      "Why do you drink coffee? (I need the caffeine)",
+		      "Why do you drink coffee? (I need the ritual)",
+		      "Why do you drink coffee? (It makes me go to the bathroom)",
+		      "Why do you drink coffee? (Other)",
+		      "Other reason for drinking coffee",
+		      "Do you like the taste of coffee?",
+		      "Do you know where your coffee comes from?",
+		      "What is the most you've ever paid for a cup of coffee?",
+		      "What is the most you'd ever be willing to pay for a cup of coffee?",
+		      "Do you feel like you’re getting good value for your money when you buy coffee at a cafe?",
+		      "Approximately how much have you spent on coffee equipment in the past 5 years?",
+		      "Do you feel like you’re getting good value for your money with regards to your coffee equipment?",
+		      "Gender",
+		      "Education Level",
+		      "Ethnicity/Race",
+		      "Employment Status",
+		      "Number of Children",
+		      "Political Affiliation"
+		    }
+		  ),
+		  #"Removed Columns" = Table.RemoveColumns(#"Reordered Columns1", {"Submission ID"}),
+		  #"Renamed Columns" = Table.RenameColumns(
+		    #"Removed Columns",
+		    {
+		      {"What is your age?", "Age Group"},
+		      {"How many cups of coffee do you typically drink per day?", "Daily Consumption"},
+		      {"New Submission ID","Submission ID"}
+		    }
+		  ),
+		  #"Replaced Value" = Table.ReplaceValue(
+		    #"Renamed Columns",
+		    "years old",
+		    "",
+		    Replacer.ReplaceText,
+		    {"Age Group"}
+		  ),
+		  #"Trimmed Text" = Table.TransformColumns(#"Replaced Value", {{"Age Group", Text.Trim, type text}}),
+		  #"Replaced Value1" = Table.ReplaceValue(
+		    #"Trimmed Text",
+		    "Less than ",
+		    "< ",
+		    Replacer.ReplaceText,
+		    {"Daily Consumption"}
+		  ),
+		  #"Replaced Value2" = Table.ReplaceValue(
+		    #"Replaced Value1",
+		    "More than ",
+		    "> ",
+		    Replacer.ReplaceText,
+		    {"Daily Consumption"}
+		  ),
+		  #"Renamed Columns1" = Table.RenameColumns(
+		    #"Replaced Value2",
+		    {
+		      {"Where do you typically drink coffee? (At home)", "Home"},
+		      {"Where do you typically drink coffee? (At the office)", "Office"},
+		      {"Where do you typically drink coffee? (On the go)", "On the Go"},
+		      {"Where do you typically drink coffee? (At a cafe)", "Cafe"},
+		      {"Where do you typically drink coffee? (None of these)", "Other Locations"}
+		    }
+		  ),
+		  #"Renamed Columns2" = Table.RenameColumns(
+		    #"Renamed Columns1",
+		    {
+		      {"How do you brew coffee at home? (Pour over)", "Pour Over"},
+		      {"How do you brew coffee at home? (French press)", "French Press"},
+		      {"How do you brew coffee at home? (Espresso)", "Espresso"},
+		      {
+		        "How do you brew coffee at home? (Coffee brewing machine (e.g. Mr. Coffee))",
+		        "Coffee Brewing Machine"
+		      },
+		      {
+		        "How do you brew coffee at home? (Pod/capsule machine (e.g. Keurig/Nespresso))",
+		        "Pod/Capsule Machine"
+		      },
+		      {"How do you brew coffee at home? (Instant coffee)", "Instant coffee"},
+		      {"How do you brew coffee at home? (Bean-to-cup machine)", "Bean-To-Cup Machine)"},
+		      {"How do you brew coffee at home? (Cold brew)", "Cold brew"},
+		      {"How do you brew coffee at home? (Coffee extract (e.g. Cometeer))", "Coffee Extract"},
+		      {"How do you brew coffee at home? (Other)", "Other Brew"},
+		      {"How do you brew coffee at home?", "Home Brew Method"}
+		    }
+		  ),
+		  #"Lowercased Text" = Table.TransformColumns(
+		    #"Renamed Columns2",
+		    {{"How else do you brew coffee at home?", Text.Lower, type text}}
+		  ),
+		  #"Trimmed Text1" = Table.TransformColumns(
+		    #"Lowercased Text",
+		    {{"How else do you brew coffee at home?", Text.Trim, type text}}
+		  ),
+		  #"Replaced Value3" = Table.ReplaceValue(
+		    #"Trimmed Text1",
+		    "aeropress",
+		    "AeroPress",
+		    Replacer.ReplaceText,
+		    {"How else do you brew coffee at home?"}
+		  ),
+		  #"Replaced Value4" = Table.ReplaceValue(
+		    #"Replaced Value3",
+		    "mokkapot",
+		    "Moka Pot",
+		    Replacer.ReplaceText,
+		    {"How else do you brew coffee at home?"}
+		  ),
+		  #"Replaced Value5" = Table.ReplaceValue(
+		    #"Replaced Value4",
+		    "mokapot",
+		    "Moka Pot",
+		    Replacer.ReplaceText,
+		    {"How else do you brew coffee at home?"}
+		  ),
+		  #"Replaced Value6" = Table.ReplaceValue(
+		    #"Replaced Value5",
+		    "AeroPress, clever",
+		    "AeroPess, Clever Dripper",
+		    Replacer.ReplaceText,
+		    {"How else do you brew coffee at home?"}
+		  ),
+		  #"Replaced Value7" = Table.ReplaceValue(
+		    #"Replaced Value6",
+		    "clever",
+		    "Clever Dripper",
+		    Replacer.ReplaceValue,
+		    {"How else do you brew coffee at home?"}
+		  ),
+		  #"Replaced Value8" = Table.ReplaceValue(
+		    #"Replaced Value7",
+		    "mocha pot",
+		    "Moka Pot",
+		    Replacer.ReplaceText,
+		    {"How else do you brew coffee at home?"}
+		  ),
+		  #"Replaced Value9" = Table.ReplaceValue(
+		    #"Replaced Value8",
+		    "moka",
+		    "Moka Pot",
+		    Replacer.ReplaceValue,
+		    {"How else do you brew coffee at home?"}
+		  ),
+		  #"Replaced Value10" = Table.ReplaceValue(
+		    #"Replaced Value9",
+		    "areopress",
+		    "AeroPress",
+		    Replacer.ReplaceText,
+		    {"How else do you brew coffee at home?"}
+		  ),
+		  #"Replaced Value11" = Table.ReplaceValue(
+		    #"Replaced Value10",
+		    "aero press",
+		    "AeroPress",
+		    Replacer.ReplaceText,
+		    {"How else do you brew coffee at home?"}
+		  ),
+		  #"Replaced Value12" = Table.ReplaceValue(
+		    #"Replaced Value11",
+		    "krups ",
+		    "",
+		    Replacer.ReplaceText,
+		    {"How else do you brew coffee at home?"}
+		  ),
+		  #"Replaced Value13" = Table.ReplaceValue(
+		    #"Replaced Value12",
+		    "syhpone",
+		    "Siphon",
+		    Replacer.ReplaceText,
+		    {"How else do you brew coffee at home?"}
+		  ),
+		  #"Replaced Value14" = Table.ReplaceValue(
+		    #"Replaced Value13",
+		    "syphon",
+		    "Siphon",
+		    Replacer.ReplaceText,
+		    {"How else do you brew coffee at home?"}
+		  ),
+		  #"Replaced Value15" = Table.ReplaceValue(
+		    #"Replaced Value14",
+		    "immersion (clever, AeroPress)",
+		    "immersion (clever dripper, AeroPress)",
+		    Replacer.ReplaceText,
+		    {"How else do you brew coffee at home?"}
+		  ),
+		  #"Replaced Value16" = Table.ReplaceValue(
+		    #"Replaced Value15",
+		    "Siphone",
+		    "Siphon",
+		    Replacer.ReplaceText,
+		    {"How else do you brew coffee at home?"}
+		  ),
+		  #"Capitalized Each Word" = Table.TransformColumns(
+		    #"Replaced Value16",
+		    {{"How else do you brew coffee at home?", Text.Proper, type text}}
+		  ),
+		  #"Replaced Value17" = Table.ReplaceValue(
+		    #"Capitalized Each Word",
+		    "Aeropress",
+		    "AeroPress",
+		    Replacer.ReplaceText,
+		    {"How else do you brew coffee at home?"}
+		  ),
+		  #"Renamed Columns3" = Table.RenameColumns(
+		    #"Replaced Value17",
+		    {
+		      {
+		        "On the go, where do you typically purchase coffee? (National chain (e.g. Starbucks, Dunkin))",
+		        "Purchase - National chain"
+		      },
+		      {"On the go, where do you typically purchase coffee? (Local cafe)", "Purchase - Local cafe"},
+		      {"On the go, where do you typically purchase coffee? (Drive-thru)", "Purchase - Drive-Thru"},
+		      {
+		        "On the go, where do you typically purchase coffee? (Specialty coffee shop)",
+		        "Purchase - Specialty Coffee Shop"
+		      },
+		      {
+		        "On the go, where do you typically purchase coffee? (Deli or supermarket)",
+		        "Purchase - Deli or supermarket"
+		      },
+		      {"On the go, where do you typically purchase coffee? (Other)", "Purchase - Other"}
+		    }
+		  ),
+		  #"Renamed Columns4" = Table.RenameColumns(
+		    #"Renamed Columns3",
+		    {
+		      {"What is your favorite coffee drink?", "Favourite Coffee Drink"},
+		      {"Do you usually add anything to your coffee? (No - just black)", "Just Black"},
+		      {
+		        "Do you usually add anything to your coffee? (Milk, dairy alternative, or coffee creamer)",
+		        "Milk, Dairy Alternative, or Coffee Creamer"
+		      },
+		      {"Do you usually add anything to your coffee? (Sugar or sweetener)", "Sugar or Sweetener"},
+		      {"Do you usually add anything to your coffee? (Flavor syrup)", "Flavour Syrup"},
+		      {"What else do you add to your coffee?", "Add Other Type"},
+		      {"Do you usually add anything to your coffee? (Other)", "Add Other"},
+		      {"What kind of dairy do you add? (Whole milk)", "Whole milk"},
+		      {"What kind of dairy do you add? (Skim milk)", "Skim milk"},
+		      {"What kind of dairy do you add? (Half and half)", "Half and half"},
+		      {"What kind of dairy do you add? (Coffee creamer)", "Coffee Creamer"},
+		      {"What kind of dairy do you add? (Flavored coffee creamer)", "Flavored Coffee Creamer"},
+		      {"What kind of dairy do you add? (Oat milk)", "Oat milk"},
+		      {"What kind of dairy do you add? (Almond milk)", "Almond milk"},
+		      {"What kind of dairy do you add? (Soy milk)", "Soy milk"},
+		      {"What kind of dairy do you add? (Other)", "Other Dairy"},
+		      {"How else do you brew coffee at home?", "Other Methods"},
+		      {"Other Brew", "Other Brew Method"},
+		      {"What kind of sugar or sweetener do you add? (Granulated Sugar)", "Granulated Sugar"},
+		      {
+		        "What kind of sugar or sweetener do you add? (Artificial Sweeteners (e.g., Splenda))",
+		        "Artificial Sweeteners"
+		      },
+		      {"What kind of sugar or sweetener do you add? (Honey)", "Honey"},
+		      {"What kind of sugar or sweetener do you add? (Maple Syrup)", "Maple Syrup"},
+		      {"What kind of sugar or sweetener do you add? (Stevia)", "Stevia"},
+		      {"What kind of sugar or sweetener do you add? (Agave Nectar)", "Agave Nectar"},
+		      {"What kind of sugar or sweetener do you add? (Brown Sugar)", "Brown Sugar"},
+		      {"What kind of sugar or sweetener do you add? (Raw Sugar (Turbinado))", "Raw Sugar"}
+		    }
+		  ),
+		    #"Renamed Columns5" = Table.RenameColumns(
+		    #"Renamed Columns4",
+		    {
+		      {
+		        "Before today's tasting, which of the following best described what kind of coffee you like?",
+		        "Preferred Coffee Type"
+		      },
+		      {"How strong do you like your coffee?", "Coffee Strength"},
+		      {"What roast level of coffee do you prefer?", "Roast Level"},
+		      {"How much caffeine do you like in your coffee?", "Caffeine Strength"},
+		      {"Lastly, how would you rate your own coffee expertise?", "Expertise Level"}
+		    }
+		  ),
+		  #"Renamed Columns6" = Table.RenameColumns(
+		    #"Renamed Columns5",
+		    {{"Please specify what your favorite coffee drink is", "Other Coffee Drink"}}
+		  ),
+		  #"Renamed Columns7" = Table.RenameColumns(
+		    #"Renamed Columns6",
+		    {
+		      {"On the go, where do you typically purchase coffee?", "Purchase Coffee Location"},
+		      {"Where do you typically drink coffee?", "Drink Coffee Location"},
+		      {"Where else do you purchase coffee?", "Purchase - Other Location"},
+		      {"What kind of sugar or sweetener do you add?", "Sweetner Type"},
+		      {"What kind of dairy do you add?", "Dairy Type"},
+		      {"Add Other Type", "Other Additions Type"},
+		      {"Do you usually add anything to your coffee?", "Coffee Additions"},
+		      {"What kind of flavorings do you add?", "Flavouring Type"},
+		      {"What kind of flavorings do you add? (Vanilla Syrup)", "Vanilla Syrup"},
+		      {"What kind of flavorings do you add? (Caramel Syrup)", "Caramel Syrup"},
+		      {"What kind of flavorings do you add? (Hazelnut Syrup)", "Hazelnut Syrup"},
+		      {
+		        "What kind of flavorings do you add? (Cinnamon (Ground or Stick))",
+		        "Cinnamon (Ground or Stick))"
+		      },
+		      {"What kind of flavorings do you add? (Peppermint Syrup)", "Peppermint Syrup"},
+		      {"What kind of flavorings do you add? (Other)", "Other Flavouring"},
+		      {"What other flavoring do you use?", "Other Flavouring Type"},
+		      {"Lastly, what was your favorite overall coffee?", "Favourite Coffee"},
+		      {"Between Coffee A and Coffee D, which did you prefer?", "Coffee A or  D Preference"},
+		      {
+		        "Between Coffee A, Coffee B, and Coffee C which did you prefer?",
+		        "Coffee A, B,or C Preference"
+		      },
+		      {"Do you work from home or in person?", "Work Location"},
+		      {
+		        "In total, much money do you typically spend on coffee in a month?",
+		        "Monthly Coffee Expense"
+		      },
+		      {"Why do you drink coffee?", "Coffee Drinking Reason"},
+		      {"Why do you drink coffee? (It tastes good)", "Tastes Good"},
+		      {"Why do you drink coffee? (I need the caffeine)", "Need Caffeine"},
+		      {"Why do you drink coffee? (I need the ritual)", "Need Ritual"},
+		      {"Why do you drink coffee? (It makes me go to the bathroom)", "Helps Bathroom Visits"},
+		      {"Why do you drink coffee? (Other)", "Other Reason"},
+		      {"Other reason for drinking coffee", "Other Reason Type"},
+		      {"Do you like the taste of coffee?", "Like Taste of Coffee"},
+		      {"Do you know where your coffee comes from?", "Coffee Origin Knowledge"},
+		      {"What is the most you've ever paid for a cup of coffee?", "Max Coffee Price Paid"},
+		      {
+		        "What is the most you'd ever be willing to pay for a cup of coffee?",
+		        "Max Coffee Price Willing to Pay"
+		      },
+		      {
+		        "Do you feel like you’re getting good value for your money when you buy coffee at a cafe?",
+		        "Cafe Good Value"
+		      },
+		      {
+		        "Approximately how much have you spent on coffee equipment in the past 5 years?",
+		        "Coffee Equipment Expense"
+		      },
+		      {
+		        "Do you feel like you’re getting good value for your money with regards to your coffee equipment?",
+		        "Coffee Equipment Good Value?"
+		      }
+		    }
+		  ),
+		  #"Replaced Value18" = Table.ReplaceValue(
+		    #"Renamed Columns7",
+		    "More than",
+		    ">",
+		    Replacer.ReplaceText,
+		    {"Number of Children"}
+		  ),
+		  #"Replaced Value19" = Table.ReplaceValue(
+		    #"Replaced Value18",
+		    "Less than",
+		    "<",
+		    Replacer.ReplaceText,
+		    {"Number of Children"}
+		  ),
+		  #"Replaced Value20" = Table.ReplaceValue(
+		    #"Replaced Value19",
+		    "",
+		    "No Preference",
+		    Replacer.ReplaceValue,
+		    {"Preferred Coffee Type"}
+		  ),
+		  #"Replaced Value21" = Table.ReplaceValue(
+		    #"Replaced Value20",
+		    "",
+		    "No Preference",
+		    Replacer.ReplaceValue,
+		    {"Coffee Strength"}
+		  ),
+		  #"Replaced Value22" = Table.ReplaceValue(
+		    #"Replaced Value21",
+		    "",
+		    "No Preference",
+		    Replacer.ReplaceValue,
+		    {"Roast Level"}
+		  ),
+		  #"Replaced Value23" = Table.ReplaceValue(
+		    #"Replaced Value22",
+		    "",
+		    "No Preference",
+		    Replacer.ReplaceValue,
+		    {"Caffeine Strength"}
+		  ),
+		  #"Duplicated Column" = Table.DuplicateColumn(
+		    #"Replaced Value23",
+		    "Drink Coffee Location",
+		    "Drink Coffee Location - Copy"
+		  ),
+		  #"Split Column by Delimiter" = Table.SplitColumn(
+		    #"Duplicated Column",
+		    "Drink Coffee Location - Copy",
+		    Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv),
+		    {
+		      "Drink Coffee Location - Copy.1",
+		      "Drink Coffee Location - Copy.2",
+		      "Drink Coffee Location - Copy.3",
+		      "Drink Coffee Location - Copy.4"
+		    }
+		  ),
+		  #"Changed Type" = Table.TransformColumnTypes(
+		    #"Split Column by Delimiter",
+		    {
+		      {"Drink Coffee Location - Copy.1", type text},
+		      {"Drink Coffee Location - Copy.2", type text},
+		      {"Drink Coffee Location - Copy.3", type text},
+		      {"Drink Coffee Location - Copy.4", type text}
+		    }
+		  ),
+		  #"Unpivoted Only Selected Columns" = Table.Unpivot(
+		    #"Changed Type",
+		    {
+		      "Drink Coffee Location - Copy.1",
+		      "Drink Coffee Location - Copy.2",
+		      "Drink Coffee Location - Copy.3",
+		      "Drink Coffee Location - Copy.4"
+		    },
+		    "Attribute",
+		    "Value"
+		  ),
+		  #"Removed Columns1" = Table.RemoveColumns(#"Unpivoted Only Selected Columns", {"Attribute"}),
+		  #"Reordered Columns" = Table.ReorderColumns(
+		    #"Removed Columns1",
+		    {
+		      "Submission ID",
+		      "Age Group",
+		      "Daily Consumption",
+		      "Drink Coffee Location",
+		      "Value",
+		      "Home",
+		      "Office",
+		      "On the Go",
+		      "Cafe",
+		      "Other Locations",
+		      "Home Brew Method",
+		      "Pour Over",
+		      "French Press",
+		      "Espresso",
+		      "Coffee Brewing Machine",
+		      "Pod/Capsule Machine",
+		      "Instant coffee",
+		      "Bean-To-Cup Machine)",
+		      "Cold brew",
+		      "Coffee Extract",
+		      "Other Brew Method",
+		      "Other Methods",
+		      "Purchase Coffee Location",
+		      "Purchase - National chain",
+		      "Purchase - Local cafe",
+		      "Purchase - Drive-Thru",
+		      "Purchase - Specialty Coffee Shop",
+		      "Purchase - Deli or supermarket",
+		      "Purchase - Other",
+		      "Purchase - Other Location",
+		      "Favourite Coffee Drink",
+		      "Other Coffee Drink",
+		      "Coffee Additions",
+		      "Just Black",
+		      "Milk, Dairy Alternative, or Coffee Creamer",
+		      "Sugar or Sweetener",
+		      "Flavour Syrup",
+		      "Add Other",
+		      "Other Additions Type",
+		      "Dairy Type",
+		      "Whole milk",
+		      "Skim milk",
+		      "Half and half",
+		      "Coffee Creamer",
+		      "Flavored Coffee Creamer",
+		      "Oat milk",
+		      "Almond milk",
+		      "Soy milk",
+		      "Other Dairy",
+		      "Sweetner Type",
+		      "Granulated Sugar",
+		      "Artificial Sweeteners",
+		      "Honey",
+		      "Maple Syrup",
+		      "Stevia",
+		      "Agave Nectar",
+		      "Brown Sugar",
+		      "Raw Sugar",
+		      "Flavouring Type",
+		      "Vanilla Syrup",
+		      "Caramel Syrup",
+		      "Hazelnut Syrup",
+		      "Cinnamon (Ground or Stick))",
+		      "Peppermint Syrup",
+		      "Other Flavouring",
+		      "Other Flavouring Type",
+		      "Preferred Coffee Type",
+		      "Coffee Strength",
+		      "Roast Level",
+		      "Caffeine Strength",
+		      "Expertise Level",
+		      "Coffee A - Bitterness",
+		      "Coffee A - Acidity",
+		      "Coffee A - Personal Preference",
+		      "Coffee A - Notes",
+		      "Coffee B - Bitterness",
+		      "Coffee B - Acidity",
+		      "Coffee B - Personal Preference",
+		      "Coffee B - Notes",
+		      "Coffee C - Bitterness",
+		      "Coffee C - Acidity",
+		      "Coffee C - Personal Preference",
+		      "Coffee C - Notes",
+		      "Coffee D - Bitterness",
+		      "Coffee D - Acidity",
+		      "Coffee D - Personal Preference",
+		      "Coffee D - Notes",
+		      "Coffee A, B,or C Preference",
+		      "Coffee A or  D Preference",
+		      "Favourite Coffee",
+		      "Work Location",
+		      "Monthly Coffee Expense",
+		      "Coffee Drinking Reason",
+		      "Tastes Good",
+		      "Need Caffeine",
+		      "Need Ritual",
+		      "Helps Bathroom Visits",
+		      "Other Reason",
+		      "Other Reason Type",
+		      "Like Taste of Coffee",
+		      "Coffee Origin Knowledge",
+		      "Max Coffee Price Paid",
+		      "Max Coffee Price Willing to Pay",
+		      "Cafe Good Value",
+		      "Coffee Equipment Expense",
+		      "Coffee Equipment Good Value?",
+		      "Gender",
+		      "Education Level",
+		      "Ethnicity/Race",
+		      "Employment Status",
+		      "Number of Children",
+		      "Political Affiliation"
+		    }
+		  ),
+		  #"Renamed Columns8" = Table.RenameColumns(
+		    #"Reordered Columns",
+		    {{"Drink Coffee Location", "Old Drink Coffee Location"}, {"Value", "Drink Coffee Location"}}
+		  ),
+		  #"Trimmed Text2" = Table.TransformColumns(
+		    #"Renamed Columns8",
+		    {{"Drink Coffee Location", Text.Trim, type text}}
+		  ),
+		  #"Duplicated Column1" = Table.DuplicateColumn(
+		    #"Trimmed Text2",
+		    "Home Brew Method",
+		    "Home Brew Method - Copy"
+		  ),
+		  #"Split Column by Delimiter1" = Table.SplitColumn(
+		    #"Duplicated Column1",
+		    "Home Brew Method - Copy",
+		    Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv),
+		    {
+		      "Home Brew Method - Copy.1",
+		      "Home Brew Method - Copy.2",
+		      "Home Brew Method - Copy.3",
+		      "Home Brew Method - Copy.4",
+		      "Home Brew Method - Copy.5",
+		      "Home Brew Method - Copy.6"
+		    }
+		  ),
+		  #"Changed Type2" = Table.TransformColumnTypes(
+		    #"Split Column by Delimiter1",
+		    {
+		      {"Home Brew Method - Copy.1", type text},
+		      {"Home Brew Method - Copy.2", type text},
+		      {"Home Brew Method - Copy.3", type text},
+		      {"Home Brew Method - Copy.4", type text},
+		      {"Home Brew Method - Copy.5", type text},
+		      {"Home Brew Method - Copy.6", type text}
+		    }
+		  ),
+		  #"Unpivoted Only Selected Columns1" = Table.Unpivot(
+		    #"Changed Type2",
+		    {
+		      "Home Brew Method - Copy.1",
+		      "Home Brew Method - Copy.2",
+		      "Home Brew Method - Copy.3",
+		      "Home Brew Method - Copy.4",
+		      "Home Brew Method - Copy.5",
+		      "Home Brew Method - Copy.6"
+		    },
+		    "Attribute",
+		    "Value"
+		  ),
+		  #"Removed Columns2" = Table.RemoveColumns(#"Unpivoted Only Selected Columns1", {"Attribute"}),
+		  #"Reordered Columns2" = Table.ReorderColumns(
+		    #"Removed Columns2",
+		    {
+		      "Submission ID",
+		      "Age Group",
+		      "Daily Consumption",
+		      "Old Drink Coffee Location",
+		      "Drink Coffee Location",
+		      "Home",
+		      "Office",
+		      "On the Go",
+		      "Cafe",
+		      "Other Locations",
+		      "Home Brew Method",
+		      "Value",
+		      "Pour Over",
+		      "French Press",
+		      "Espresso",
+		      "Coffee Brewing Machine",
+		      "Pod/Capsule Machine",
+		      "Instant coffee",
+		      "Bean-To-Cup Machine)",
+		      "Cold brew",
+		      "Coffee Extract",
+		      "Other Brew Method",
+		      "Other Methods",
+		      "Purchase Coffee Location",
+		      "Purchase - National chain",
+		      "Purchase - Local cafe",
+		      "Purchase - Drive-Thru",
+		      "Purchase - Specialty Coffee Shop",
+		      "Purchase - Deli or supermarket",
+		      "Purchase - Other",
+		      "Purchase - Other Location",
+		      "Favourite Coffee Drink",
+		      "Other Coffee Drink",
+		      "Coffee Additions",
+		      "Just Black",
+		      "Milk, Dairy Alternative, or Coffee Creamer",
+		      "Sugar or Sweetener",
+		      "Flavour Syrup",
+		      "Add Other",
+		      "Other Additions Type",
+		      "Dairy Type",
+		      "Whole milk",
+		      "Skim milk",
+		      "Half and half",
+		      "Coffee Creamer",
+		      "Flavored Coffee Creamer",
+		      "Oat milk",
+		      "Almond milk",
+		      "Soy milk",
+		      "Other Dairy",
+		      "Sweetner Type",
+		      "Granulated Sugar",
+		      "Artificial Sweeteners",
+		      "Honey",
+		      "Maple Syrup",
+		      "Stevia",
+		      "Agave Nectar",
+		      "Brown Sugar",
+		      "Raw Sugar",
+		      "Flavouring Type",
+		      "Vanilla Syrup",
+		      "Caramel Syrup",
+		      "Hazelnut Syrup",
+		      "Cinnamon (Ground or Stick))",
+		      "Peppermint Syrup",
+		      "Other Flavouring",
+		      "Other Flavouring Type",
+		      "Preferred Coffee Type",
+		      "Coffee Strength",
+		      "Roast Level",
+		      "Caffeine Strength",
+		      "Expertise Level",
+		      "Coffee A - Bitterness",
+		      "Coffee A - Acidity",
+		      "Coffee A - Personal Preference",
+		      "Coffee A - Notes",
+		      "Coffee B - Bitterness",
+		      "Coffee B - Acidity",
+		      "Coffee B - Personal Preference",
+		      "Coffee B - Notes",
+		      "Coffee C - Bitterness",
+		      "Coffee C - Acidity",
+		      "Coffee C - Personal Preference",
+		      "Coffee C - Notes",
+		      "Coffee D - Bitterness",
+		      "Coffee D - Acidity",
+		      "Coffee D - Personal Preference",
+		      "Coffee D - Notes",
+		      "Coffee A, B,or C Preference",
+		      "Coffee A or  D Preference",
+		      "Favourite Coffee",
+		      "Work Location",
+		      "Monthly Coffee Expense",
+		      "Coffee Drinking Reason",
+		      "Tastes Good",
+		      "Need Caffeine",
+		      "Need Ritual",
+		      "Helps Bathroom Visits",
+		      "Other Reason",
+		      "Other Reason Type",
+		      "Like Taste of Coffee",
+		      "Coffee Origin Knowledge",
+		      "Max Coffee Price Paid",
+		      "Max Coffee Price Willing to Pay",
+		      "Cafe Good Value",
+		      "Coffee Equipment Expense",
+		      "Coffee Equipment Good Value?",
+		      "Gender",
+		      "Education Level",
+		      "Ethnicity/Race",
+		      "Employment Status",
+		      "Number of Children",
+		      "Political Affiliation"
+		    }
+		  ),
+		  #"Renamed Columns9" = Table.RenameColumns(
+		    #"Reordered Columns2",
+		    {{"Home Brew Method", "Old Home Brew Method"}, {"Value", "Home Brew Method"}}
+		  ),
+		  #"Duplicated Column2" = Table.DuplicateColumn(
+		    #"Renamed Columns9",
+		    "Purchase Coffee Location",
+		    "Purchase Coffee Location - Copy"
+		  ),
+		  #"Replaced Value24" = Table.ReplaceValue(
+		    #"Duplicated Column2",
+		    "(e.g. Starbucks, Dunkin)",
+		    "",
+		    Replacer.ReplaceText,
+		    {"Purchase Coffee Location - Copy"}
+		  ),
+		  #"Split Column by Delimiter2" = Table.SplitColumn(
+		    #"Replaced Value24",
+		    "Purchase Coffee Location - Copy",
+		    Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv),
+		    {
+		      "Purchase Coffee Location - Copy.1",
+		      "Purchase Coffee Location - Copy.2",
+		      "Purchase Coffee Location - Copy.3",
+		      "Purchase Coffee Location - Copy.4",
+		      "Purchase Coffee Location - Copy.5"
+		    }
+		  ),
+		  #"Changed Type3" = Table.TransformColumnTypes(
+		    #"Split Column by Delimiter2",
+		    {
+		      {"Purchase Coffee Location - Copy.1", type text},
+		      {"Purchase Coffee Location - Copy.2", type text},
+		      {"Purchase Coffee Location - Copy.3", type text},
+		      {"Purchase Coffee Location - Copy.4", type text},
+		      {"Purchase Coffee Location - Copy.5", type text}
+		    }
+		  ),
+		  #"Unpivoted Only Selected Columns2" = Table.Unpivot(
+		    #"Changed Type3",
+		    {
+		      "Purchase Coffee Location - Copy.1",
+		      "Purchase Coffee Location - Copy.2",
+		      "Purchase Coffee Location - Copy.3",
+		      "Purchase Coffee Location - Copy.4",
+		      "Purchase Coffee Location - Copy.5"
+		    },
+		    "Attribute",
+		    "Value"
+		  ),
+		  #"Removed Columns3" = Table.RemoveColumns(#"Unpivoted Only Selected Columns2", {"Attribute"}),
+		  #"Reordered Columns3" = Table.ReorderColumns(
+		    #"Removed Columns3",
+		    {
+		      "Submission ID",
+		      "Age Group",
+		      "Daily Consumption",
+		      "Old Drink Coffee Location",
+		      "Drink Coffee Location",
+		      "Home",
+		      "Office",
+		      "On the Go",
+		      "Cafe",
+		      "Other Locations",
+		      "Old Home Brew Method",
+		      "Home Brew Method",
+		      "Pour Over",
+		      "French Press",
+		      "Espresso",
+		      "Coffee Brewing Machine",
+		      "Pod/Capsule Machine",
+		      "Instant coffee",
+		      "Bean-To-Cup Machine)",
+		      "Cold brew",
+		      "Coffee Extract",
+		      "Other Brew Method",
+		      "Other Methods",
+		      "Purchase Coffee Location",
+		      "Value",
+		      "Purchase - National chain",
+		      "Purchase - Local cafe",
+		      "Purchase - Drive-Thru",
+		      "Purchase - Specialty Coffee Shop",
+		      "Purchase - Deli or supermarket",
+		      "Purchase - Other",
+		      "Purchase - Other Location",
+		      "Favourite Coffee Drink",
+		      "Other Coffee Drink",
+		      "Coffee Additions",
+		      "Just Black",
+		      "Milk, Dairy Alternative, or Coffee Creamer",
+		      "Sugar or Sweetener",
+		      "Flavour Syrup",
+		      "Add Other",
+		      "Other Additions Type",
+		      "Dairy Type",
+		      "Whole milk",
+		      "Skim milk",
+		      "Half and half",
+		      "Coffee Creamer",
+		      "Flavored Coffee Creamer",
+		      "Oat milk",
+		      "Almond milk",
+		      "Soy milk",
+		      "Other Dairy",
+		      "Sweetner Type",
+		      "Granulated Sugar",
+		      "Artificial Sweeteners",
+		      "Honey",
+		      "Maple Syrup",
+		      "Stevia",
+		      "Agave Nectar",
+		      "Brown Sugar",
+		      "Raw Sugar",
+		      "Flavouring Type",
+		      "Vanilla Syrup",
+		      "Caramel Syrup",
+		      "Hazelnut Syrup",
+		      "Cinnamon (Ground or Stick))",
+		      "Peppermint Syrup",
+		      "Other Flavouring",
+		      "Other Flavouring Type",
+		      "Preferred Coffee Type",
+		      "Coffee Strength",
+		      "Roast Level",
+		      "Caffeine Strength",
+		      "Expertise Level",
+		      "Coffee A - Bitterness",
+		      "Coffee A - Acidity",
+		      "Coffee A - Personal Preference",
+		      "Coffee A - Notes",
+		      "Coffee B - Bitterness",
+		      "Coffee B - Acidity",
+		      "Coffee B - Personal Preference",
+		      "Coffee B - Notes",
+		      "Coffee C - Bitterness",
+		      "Coffee C - Acidity",
+		      "Coffee C - Personal Preference",
+		      "Coffee C - Notes",
+		      "Coffee D - Bitterness",
+		      "Coffee D - Acidity",
+		      "Coffee D - Personal Preference",
+		      "Coffee D - Notes",
+		      "Coffee A, B,or C Preference",
+		      "Coffee A or  D Preference",
+		      "Favourite Coffee",
+		      "Work Location",
+		      "Monthly Coffee Expense",
+		      "Coffee Drinking Reason",
+		      "Tastes Good",
+		      "Need Caffeine",
+		      "Need Ritual",
+		      "Helps Bathroom Visits",
+		      "Other Reason",
+		      "Other Reason Type",
+		      "Like Taste of Coffee",
+		      "Coffee Origin Knowledge",
+		      "Max Coffee Price Paid",
+		      "Max Coffee Price Willing to Pay",
+		      "Cafe Good Value",
+		      "Coffee Equipment Expense",
+		      "Coffee Equipment Good Value?",
+		      "Gender",
+		      "Education Level",
+		      "Ethnicity/Race",
+		      "Employment Status",
+		      "Number of Children",
+		      "Political Affiliation"
+		    }
+		  ),
+		  #"Renamed Columns10" = Table.RenameColumns(
+		    #"Reordered Columns3",
+		    {
+		      {"Value", "Purchase Coffee Location"},
+		      {"Purchase Coffee Location", "Old Purchase Coffee Location"}
+		    }
+		  ),
+		  #"Trimmed Text4" = Table.TransformColumns(
+		    #"Renamed Columns10",
+		    {{"Purchase Coffee Location", Text.Trim, type text}}
+		  ),
+		  #"Duplicated Column3" = Table.DuplicateColumn(
+		    #"Trimmed Text4",
+		    "Coffee Additions",
+		    "Coffee Additions - Copy"
+		  ),
+		  #"Replaced Value26" = Table.ReplaceValue(
+		    #"Duplicated Column3",
+		    ", or",
+		    " or ",
+		    Replacer.ReplaceText,
+		    {"Coffee Additions - Copy"}
+		  ),
+		  #"Split Column by Delimiter3" = Table.SplitColumn(
+		    #"Replaced Value26",
+		    "Coffee Additions - Copy",
+		    Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv),
+		    {
+		      "Coffee Additions - Copy.1",
+		      "Coffee Additions - Copy.2",
+		      "Coffee Additions - Copy.3",
+		      "Coffee Additions - Copy.4",
+		      "Coffee Additions - Copy.5"
+		    }
+		  ),
+		  #"Changed Type4" = Table.TransformColumnTypes(
+		    #"Split Column by Delimiter3",
+		    {
+		      {"Coffee Additions - Copy.1", type text},
+		      {"Coffee Additions - Copy.2", type text},
+		      {"Coffee Additions - Copy.3", type text},
+		      {"Coffee Additions - Copy.4", type text},
+		      {"Coffee Additions - Copy.5", type text}
+		    }
+		  ),
+		  #"Unpivoted Only Selected Columns3" = Table.Unpivot(
+		    #"Changed Type4",
+		    {
+		      "Coffee Additions - Copy.1",
+		      "Coffee Additions - Copy.2",
+		      "Coffee Additions - Copy.3",
+		      "Coffee Additions - Copy.4",
+		      "Coffee Additions - Copy.5"
+		    },
+		    "Attribute",
+		    "Value"
+		  ),
+		  #"Removed Columns5" = Table.RemoveColumns(#"Unpivoted Only Selected Columns3", {"Attribute"}),
+		  #"Reordered Columns4" = Table.ReorderColumns(
+		    #"Removed Columns5",
+		    {
+		      "Submission ID",
+		      "Age Group",
+		      "Daily Consumption",
+		      "Old Drink Coffee Location",
+		      "Drink Coffee Location",
+		      "Home",
+		      "Office",
+		      "On the Go",
+		      "Cafe",
+		      "Other Locations",
+		      "Old Home Brew Method",
+		      "Home Brew Method",
+		      "Pour Over",
+		      "French Press",
+		      "Espresso",
+		      "Coffee Brewing Machine",
+		      "Pod/Capsule Machine",
+		      "Instant coffee",
+		      "Bean-To-Cup Machine)",
+		      "Cold brew",
+		      "Coffee Extract",
+		      "Other Brew Method",
+		      "Other Methods",
+		      "Purchase Coffee Location",
+		      "Purchase - National chain",
+		      "Purchase - Local cafe",
+		      "Purchase - Drive-Thru",
+		      "Purchase - Specialty Coffee Shop",
+		      "Purchase - Deli or supermarket",
+		      "Purchase - Other",
+		      "Purchase - Other Location",
+		      "Favourite Coffee Drink",
+		      "Other Coffee Drink",
+		      "Coffee Additions",
+		      "Value",
+		      "Just Black",
+		      "Milk, Dairy Alternative, or Coffee Creamer",
+		      "Sugar or Sweetener",
+		      "Flavour Syrup",
+		      "Add Other",
+		      "Other Additions Type",
+		      "Dairy Type",
+		      "Whole milk",
+		      "Skim milk",
+		      "Half and half",
+		      "Coffee Creamer",
+		      "Flavored Coffee Creamer",
+		      "Oat milk",
+		      "Almond milk",
+		      "Soy milk",
+		      "Other Dairy",
+		      "Sweetner Type",
+		      "Granulated Sugar",
+		      "Artificial Sweeteners",
+		      "Honey",
+		      "Maple Syrup",
+		      "Stevia",
+		      "Agave Nectar",
+		      "Brown Sugar",
+		      "Raw Sugar",
+		      "Flavouring Type",
+		      "Vanilla Syrup",
+		      "Caramel Syrup",
+		      "Hazelnut Syrup",
+		      "Cinnamon (Ground or Stick))",
+		      "Peppermint Syrup",
+		      "Other Flavouring",
+		      "Other Flavouring Type",
+		      "Preferred Coffee Type",
+		      "Coffee Strength",
+		      "Roast Level",
+		      "Caffeine Strength",
+		      "Expertise Level",
+		      "Coffee A - Bitterness",
+		      "Coffee A - Acidity",
+		      "Coffee A - Personal Preference",
+		      "Coffee A - Notes",
+		      "Coffee B - Bitterness",
+		      "Coffee B - Acidity",
+		      "Coffee B - Personal Preference",
+		      "Coffee B - Notes",
+		      "Coffee C - Bitterness",
+		      "Coffee C - Acidity",
+		      "Coffee C - Personal Preference",
+		      "Coffee C - Notes",
+		      "Coffee D - Bitterness",
+		      "Coffee D - Acidity",
+		      "Coffee D - Personal Preference",
+		      "Coffee D - Notes",
+		      "Coffee A, B,or C Preference",
+		      "Coffee A or  D Preference",
+		      "Favourite Coffee",
+		      "Work Location",
+		      "Monthly Coffee Expense",
+		      "Coffee Drinking Reason",
+		      "Tastes Good",
+		      "Need Caffeine",
+		      "Need Ritual",
+		      "Helps Bathroom Visits",
+		      "Other Reason",
+		      "Other Reason Type",
+		      "Like Taste of Coffee",
+		      "Coffee Origin Knowledge",
+		      "Max Coffee Price Paid",
+		      "Max Coffee Price Willing to Pay",
+		      "Cafe Good Value",
+		      "Coffee Equipment Expense",
+		      "Coffee Equipment Good Value?",
+		      "Gender",
+		      "Education Level",
+		      "Ethnicity/Race",
+		      "Employment Status",
+		      "Number of Children",
+		      "Political Affiliation"
+		    }
+		  ),
+		  #"Removed Columns6" = Table.RemoveColumns(#"Reordered Columns4", {"Coffee Additions"}),
+		  #"Renamed Columns11" = Table.RenameColumns(#"Removed Columns6", {{"Value", "Coffee Additions"}}),
+		  #"Duplicated Column4" = Table.DuplicateColumn(
+		    #"Renamed Columns11",
+		    "Dairy Type",
+		    "Dairy Type - Copy"
+		  ),
+		  #"Split Column by Delimiter4" = Table.SplitColumn(
+		    #"Duplicated Column4",
+		    "Dairy Type - Copy",
+		    Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv),
+		    {"Dairy Type - Copy.1", "Dairy Type - Copy.2"}
+		  ),
+		  #"Changed Type5" = Table.TransformColumnTypes(
+		    #"Split Column by Delimiter4",
+		    {{"Dairy Type - Copy.1", type text}, {"Dairy Type - Copy.2", type text}}
+		  ),
+		  #"Unpivoted Only Selected Columns4" = Table.Unpivot(
+		    #"Changed Type5",
+		    {"Dairy Type - Copy.1", "Dairy Type - Copy.2"},
+		    "Attribute",
+		    "Value"
+		  ),
+		  #"Removed Columns7" = Table.RemoveColumns(#"Unpivoted Only Selected Columns4", {"Attribute"}),
+		  #"Reordered Columns5" = Table.ReorderColumns(
+		    #"Removed Columns7",
+		    {
+		      "Submission ID",
+		      "Age Group",
+		      "Daily Consumption",
+		      "Old Drink Coffee Location",
+		      "Drink Coffee Location",
+		      "Home",
+		      "Office",
+		      "On the Go",
+		      "Cafe",
+		      "Other Locations",
+		      "Old Home Brew Method",
+		      "Home Brew Method",
+		      "Pour Over",
+		      "French Press",
+		      "Espresso",
+		      "Coffee Brewing Machine",
+		      "Pod/Capsule Machine",
+		      "Instant coffee",
+		      "Bean-To-Cup Machine)",
+		      "Cold brew",
+		      "Coffee Extract",
+		      "Other Brew Method",
+		      "Other Methods",
+		      "Purchase Coffee Location",
+		      "Purchase - National chain",
+		      "Purchase - Local cafe",
+		      "Purchase - Drive-Thru",
+		      "Purchase - Specialty Coffee Shop",
+		      "Purchase - Deli or supermarket",
+		      "Purchase - Other",
+		      "Purchase - Other Location",
+		      "Favourite Coffee Drink",
+		      "Other Coffee Drink",
+		      "Coffee Additions",
+		      "Just Black",
+		      "Milk, Dairy Alternative, or Coffee Creamer",
+		      "Sugar or Sweetener",
+		      "Flavour Syrup",
+		      "Add Other",
+		      "Other Additions Type",
+		      "Dairy Type",
+		      "Value",
+		      "Whole milk",
+		      "Skim milk",
+		      "Half and half",
+		      "Coffee Creamer",
+		      "Flavored Coffee Creamer",
+		      "Oat milk",
+		      "Almond milk",
+		      "Soy milk",
+		      "Other Dairy",
+		      "Sweetner Type",
+		      "Granulated Sugar",
+		      "Artificial Sweeteners",
+		      "Honey",
+		      "Maple Syrup",
+		      "Stevia",
+		      "Agave Nectar",
+		      "Brown Sugar",
+		      "Raw Sugar",
+		      "Flavouring Type",
+		      "Vanilla Syrup",
+		      "Caramel Syrup",
+		      "Hazelnut Syrup",
+		      "Cinnamon (Ground or Stick))",
+		      "Peppermint Syrup",
+		      "Other Flavouring",
+		      "Other Flavouring Type",
+		      "Preferred Coffee Type",
+		      "Coffee Strength",
+		      "Roast Level",
+		      "Caffeine Strength",
+		      "Expertise Level",
+		      "Coffee A - Bitterness",
+		      "Coffee A - Acidity",
+		      "Coffee A - Personal Preference",
+		      "Coffee A - Notes",
+		      "Coffee B - Bitterness",
+		      "Coffee B - Acidity",
+		      "Coffee B - Personal Preference",
+		      "Coffee B - Notes",
+		      "Coffee C - Bitterness",
+		      "Coffee C - Acidity",
+		      "Coffee C - Personal Preference",
+		      "Coffee C - Notes",
+		      "Coffee D - Bitterness",
+		      "Coffee D - Acidity",
+		      "Coffee D - Personal Preference",
+		      "Coffee D - Notes",
+		      "Coffee A, B,or C Preference",
+		      "Coffee A or  D Preference",
+		      "Favourite Coffee",
+		      "Work Location",
+		      "Monthly Coffee Expense",
+		      "Coffee Drinking Reason",
+		      "Tastes Good",
+		      "Need Caffeine",
+		      "Need Ritual",
+		      "Helps Bathroom Visits",
+		      "Other Reason",
+		      "Other Reason Type",
+		      "Like Taste of Coffee",
+		      "Coffee Origin Knowledge",
+		      "Max Coffee Price Paid",
+		      "Max Coffee Price Willing to Pay",
+		      "Cafe Good Value",
+		      "Coffee Equipment Expense",
+		      "Coffee Equipment Good Value?",
+		      "Gender",
+		      "Education Level",
+		      "Ethnicity/Race",
+		      "Employment Status",
+		      "Number of Children",
+		      "Political Affiliation"
+		    }
+		  ),
+		  #"Renamed Columns12" = Table.RenameColumns(
+		    #"Reordered Columns5",
+		    {{"Dairy Type", "Old Dairy Type"}, {"Value", "Dairy Type"}}
+		  ),
+		  #"Duplicated Column5" = Table.DuplicateColumn(
+		    #"Renamed Columns12",
+		    "Sweetner Type",
+		    "Sweetner Type - Copy"
+		  ),
+		  #"Replaced Value25" = Table.ReplaceValue(
+		    #"Duplicated Column5",
+		    "e.g.,",
+		    "e.g.",
+		    Replacer.ReplaceText,
+		    {"Sweetner Type - Copy"}
+		  ),
+		  #"Split Column by Delimiter5" = Table.SplitColumn(
+		    #"Replaced Value25",
+		    "Sweetner Type - Copy",
+		    Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv),
+		    {"Sweetner Type - Copy.1", "Sweetner Type - Copy.2"}
+		  ),
+		  #"Changed Type6" = Table.TransformColumnTypes(
+		    #"Split Column by Delimiter5",
+		    {{"Sweetner Type - Copy.1", type text}, {"Sweetner Type - Copy.2", type text}}
+		  ),
+		  #"Unpivoted Only Selected Columns5" = Table.Unpivot(
+		    #"Changed Type6",
+		    {"Sweetner Type - Copy.1", "Sweetner Type - Copy.2"},
+		    "Attribute",
+		    "Value"
+		  ),
+		  #"Removed Columns8" = Table.RemoveColumns(#"Unpivoted Only Selected Columns5", {"Attribute"}),
+		  #"Reordered Columns6" = Table.ReorderColumns(
+		    #"Removed Columns8",
+		    {
+		      "Submission ID",
+		      "Age Group",
+		      "Daily Consumption",
+		      "Old Drink Coffee Location",
+		      "Drink Coffee Location",
+		      "Home",
+		      "Office",
+		      "On the Go",
+		      "Cafe",
+		      "Other Locations",
+		      "Old Home Brew Method",
+		      "Home Brew Method",
+		      "Pour Over",
+		      "French Press",
+		      "Espresso",
+		      "Coffee Brewing Machine",
+		      "Pod/Capsule Machine",
+		      "Instant coffee",
+		      "Bean-To-Cup Machine)",
+		      "Cold brew",
+		      "Coffee Extract",
+		      "Other Brew Method",
+		      "Other Methods",
+		      "Purchase Coffee Location",
+		      "Purchase - National chain",
+		      "Purchase - Local cafe",
+		      "Purchase - Drive-Thru",
+		      "Purchase - Specialty Coffee Shop",
+		      "Purchase - Deli or supermarket",
+		      "Purchase - Other",
+		      "Purchase - Other Location",
+		      "Favourite Coffee Drink",
+		      "Other Coffee Drink",
+		      "Coffee Additions",
+		      "Just Black",
+		      "Milk, Dairy Alternative, or Coffee Creamer",
+		      "Sugar or Sweetener",
+		      "Flavour Syrup",
+		      "Add Other",
+		      "Other Additions Type",
+		      "Old Dairy Type",
+		      "Dairy Type",
+		      "Whole milk",
+		      "Skim milk",
+		      "Half and half",
+		      "Coffee Creamer",
+		      "Flavored Coffee Creamer",
+		      "Oat milk",
+		      "Almond milk",
+		      "Soy milk",
+		      "Other Dairy",
+		      "Sweetner Type",
+		      "Value",
+		      "Granulated Sugar",
+		      "Artificial Sweeteners",
+		      "Honey",
+		      "Maple Syrup",
+		      "Stevia",
+		      "Agave Nectar",
+		      "Brown Sugar",
+		      "Raw Sugar",
+		      "Flavouring Type",
+		      "Vanilla Syrup",
+		      "Caramel Syrup",
+		      "Hazelnut Syrup",
+		      "Cinnamon (Ground or Stick))",
+		      "Peppermint Syrup",
+		      "Other Flavouring",
+		      "Other Flavouring Type",
+		      "Preferred Coffee Type",
+		      "Coffee Strength",
+		      "Roast Level",
+		      "Caffeine Strength",
+		      "Expertise Level",
+		      "Coffee A - Bitterness",
+		      "Coffee A - Acidity",
+		      "Coffee A - Personal Preference",
+		      "Coffee A - Notes",
+		      "Coffee B - Bitterness",
+		      "Coffee B - Acidity",
+		      "Coffee B - Personal Preference",
+		      "Coffee B - Notes",
+		      "Coffee C - Bitterness",
+		      "Coffee C - Acidity",
+		      "Coffee C - Personal Preference",
+		      "Coffee C - Notes",
+		      "Coffee D - Bitterness",
+		      "Coffee D - Acidity",
+		      "Coffee D - Personal Preference",
+		      "Coffee D - Notes",
+		      "Coffee A, B,or C Preference",
+		      "Coffee A or  D Preference",
+		      "Favourite Coffee",
+		      "Work Location",
+		      "Monthly Coffee Expense",
+		      "Coffee Drinking Reason",
+		      "Tastes Good",
+		      "Need Caffeine",
+		      "Need Ritual",
+		      "Helps Bathroom Visits",
+		      "Other Reason",
+		      "Other Reason Type",
+		      "Like Taste of Coffee",
+		      "Coffee Origin Knowledge",
+		      "Max Coffee Price Paid",
+		      "Max Coffee Price Willing to Pay",
+		      "Cafe Good Value",
+		      "Coffee Equipment Expense",
+		      "Coffee Equipment Good Value?",
+		      "Gender",
+		      "Education Level",
+		      "Ethnicity/Race",
+		      "Employment Status",
+		      "Number of Children",
+		      "Political Affiliation"
+		    }
+		  ),
+		  #"Renamed Columns13" = Table.RenameColumns(
+		    #"Reordered Columns6",
+		    {{"Sweetner Type", "Old Sweetner Type"}, {"Value", "Sweetner Type"}}
+		  ),
+		  #"Trimmed Text3" = Table.TransformColumns(
+		    #"Renamed Columns13",
+		    {
+		      {"Sweetner Type", Text.Trim, type text},
+		      {"Dairy Type", Text.Trim, type text},
+		      {"Coffee Additions", Text.Trim, type text},
+		      {"Purchase Coffee Location", Text.Trim, type text},
+		      {"Home Brew Method", Text.Trim, type text},
+		      {"Drink Coffee Location", Text.Trim, type text}
+		    }
+		  ),
+		  #"Removed Columns4" = Table.RemoveColumns(
+		    #"Trimmed Text3",
+		    {
+		      "Flavouring Type",
+		      "Vanilla Syrup",
+		      "Caramel Syrup",
+		      "Hazelnut Syrup",
+		      "Cinnamon (Ground or Stick))",
+		      "Peppermint Syrup",
+		      "Other Flavouring",
+		      "Other Flavouring Type"
+		    }
+		  ),
+		  #"Duplicated Column6" = Table.DuplicateColumn(
+		    #"Removed Columns4",
+		    "Coffee Drinking Reason",
+		    "Coffee Drinking Reason - Copy"
+		  ),
+		  #"Split Column by Delimiter6" = Table.SplitColumn(
+		    #"Duplicated Column6",
+		    "Coffee Drinking Reason - Copy",
+		    Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv),
+		    {"Coffee Drinking Reason - Copy.1", "Coffee Drinking Reason - Copy.2"}
+		  ),
+		  #"Changed Type7" = Table.TransformColumnTypes(
+		    #"Split Column by Delimiter6",
+		    {{"Coffee Drinking Reason - Copy.1", type text}, {"Coffee Drinking Reason - Copy.2", type text}}
+		  ),
+		  #"Unpivoted Only Selected Columns6" = Table.Unpivot(
+		    #"Changed Type7",
+		    {"Coffee Drinking Reason - Copy.1", "Coffee Drinking Reason - Copy.2"},
+		    "Attribute",
+		    "Value"
+		  ),
+		  #"Removed Columns9" = Table.RemoveColumns(#"Unpivoted Only Selected Columns6", {"Attribute"}),
+		  #"Reordered Columns7" = Table.ReorderColumns(
+		    #"Removed Columns9",
+		    {
+		      "Submission ID",
+		      "Age Group",
+		      "Daily Consumption",
+		      "Old Drink Coffee Location",
+		      "Drink Coffee Location",
+		      "Home",
+		      "Office",
+		      "On the Go",
+		      "Cafe",
+		      "Other Locations",
+		      "Old Home Brew Method",
+		      "Home Brew Method",
+		      "Pour Over",
+		      "French Press",
+		      "Espresso",
+		      "Coffee Brewing Machine",
+		      "Pod/Capsule Machine",
+		      "Instant coffee",
+		      "Bean-To-Cup Machine)",
+		      "Cold brew",
+		      "Coffee Extract",
+		      "Other Brew Method",
+		      "Other Methods",
+		      "Old Purchase Coffee Location",
+		      "Purchase Coffee Location",
+		      "Purchase - National chain",
+		      "Purchase - Local cafe",
+		      "Purchase - Drive-Thru",
+		      "Purchase - Specialty Coffee Shop",
+		      "Purchase - Deli or supermarket",
+		      "Purchase - Other",
+		      "Purchase - Other Location",
+		      "Favourite Coffee Drink",
+		      "Other Coffee Drink",
+		      "Coffee Additions",
+		      "Just Black",
+		      "Milk, Dairy Alternative, or Coffee Creamer",
+		      "Sugar or Sweetener",
+		      "Flavour Syrup",
+		      "Add Other",
+		      "Other Additions Type",
+		      "Old Dairy Type",
+		      "Dairy Type",
+		      "Whole milk",
+		      "Skim milk",
+		      "Half and half",
+		      "Coffee Creamer",
+		      "Flavored Coffee Creamer",
+		      "Oat milk",
+		      "Almond milk",
+		      "Soy milk",
+		      "Other Dairy",
+		      "Old Sweetner Type",
+		      "Sweetner Type",
+		      "Granulated Sugar",
+		      "Artificial Sweeteners",
+		      "Honey",
+		      "Maple Syrup",
+		      "Stevia",
+		      "Agave Nectar",
+		      "Brown Sugar",
+		      "Raw Sugar",
+		      "Preferred Coffee Type",
+		      "Coffee Strength",
+		      "Roast Level",
+		      "Caffeine Strength",
+		      "Expertise Level",
+		      "Coffee A - Bitterness",
+		      "Coffee A - Acidity",
+		      "Coffee A - Personal Preference",
+		      "Coffee A - Notes",
+		      "Coffee B - Bitterness",
+		      "Coffee B - Acidity",
+		      "Coffee B - Personal Preference",
+		      "Coffee B - Notes",
+		      "Coffee C - Bitterness",
+		      "Coffee C - Acidity",
+		      "Coffee C - Personal Preference",
+		      "Coffee C - Notes",
+		      "Coffee D - Bitterness",
+		      "Coffee D - Acidity",
+		      "Coffee D - Personal Preference",
+		      "Coffee D - Notes",
+		      "Coffee A, B,or C Preference",
+		      "Coffee A or  D Preference",
+		      "Favourite Coffee",
+		      "Work Location",
+		      "Monthly Coffee Expense",
+		      "Coffee Drinking Reason",
+		      "Value",
+		      "Tastes Good",
+		      "Need Caffeine",
+		      "Need Ritual",
+		      "Helps Bathroom Visits",
+		      "Other Reason",
+		      "Other Reason Type",
+		      "Like Taste of Coffee",
+		      "Coffee Origin Knowledge",
+		      "Max Coffee Price Paid",
+		      "Max Coffee Price Willing to Pay",
+		      "Cafe Good Value",
+		      "Coffee Equipment Expense",
+		      "Coffee Equipment Good Value?",
+		      "Gender",
+		      "Education Level",
+		      "Ethnicity/Race",
+		      "Employment Status",
+		      "Number of Children",
+		      "Political Affiliation"
+		    }
+		  ),
+		  #"Renamed Columns14" = Table.RenameColumns(
+		    #"Reordered Columns7",
+		    {{"Coffee Drinking Reason", "Old Coffee Drinking Reason"}, {"Value", "Coffee Drinking Reason"}}
+		  ),
+		  #"Removed Duplicates" = Table.Distinct(#"Renamed Columns14"),
+		  #"Trimmed Text5" = Table.TransformColumns(
+		    #"Removed Duplicates",
+		    {{"Coffee Additions", Text.Trim, type text}}
+		  ),
+		  #"Removed Columns10" = Table.RemoveColumns(
+		    #"Trimmed Text5",
+		    {
+		      "Old Drink Coffee Location",
+		      "Old Home Brew Method",
+		      "Old Purchase Coffee Location",
+		      "Old Dairy Type",
+		      "Old Sweetner Type",
+		      "Old Coffee Drinking Reason"
+		    }
+		  ),
+		  #"Trimmed Teext Columns" = Table.TransformColumns(
+		    #"Removed Columns10",
+		    {
+		      {"Drink Coffee Location", Text.Trim, type text},
+		      {"Home Brew Method", Text.Trim, type text},
+		      {"Purchase Coffee Location", Text.Trim, type text},
+		      {"Favourite Coffee Drink", Text.Trim, type text},
+		      {"Other Coffee Drink", Text.Trim, type text},
+		      {"Coffee Additions", Text.Trim, type text},
+		      {"Other Additions Type", Text.Trim, type text},
+		      {"Dairy Type", Text.Trim, type text},
+		      {"Sweetner Type", Text.Trim, type text},
+		      {"Preferred Coffee Type", Text.Trim, type text},
+		      {"Coffee Strength", Text.Trim, type text},
+		      {"Roast Level", Text.Trim, type text},
+		      {"Caffeine Strength", Text.Trim, type text},
+		      {"Coffee A - Notes", Text.Trim, type text},
+		      {"Coffee B - Notes", Text.Trim, type text},
+		      {"Coffee C - Notes", Text.Trim, type text},
+		      {"Coffee D - Notes", Text.Trim, type text},
+		      {"Coffee A, B,or C Preference", Text.Trim, type text},
+		      {"Coffee A or  D Preference", Text.Trim, type text},
+		      {"Favourite Coffee", Text.Trim, type text},
+		      {"Work Location", Text.Trim, type text},
+		      {"Monthly Coffee Expense", Text.Trim, type text},
+		      {"Coffee Drinking Reason", Text.Trim, type text},
+		      {"Other Reason Type", Text.Trim, type text},
+		      {"Like Taste of Coffee", Text.Trim, type text},
+		      {"Coffee Origin Knowledge", Text.Trim, type text},
+		      {"Max Coffee Price Paid", Text.Trim, type text},
+		      {"Max Coffee Price Willing to Pay", Text.Trim, type text},
+		      {"Cafe Good Value", Text.Trim, type text},
+		      {"Coffee Equipment Expense", Text.Trim, type text},
+		      {"Coffee Equipment Good Value?", Text.Trim, type text},
+		      {"Gender", Text.Trim, type text},
+		      {"Education Level", Text.Trim, type text},
+		      {"Ethnicity/Race", Text.Trim, type text},
+		      {"Employment Status", Text.Trim, type text},
+		      {"Number of Children", Text.Trim, type text},
+		      {"Political Affiliation", Text.Trim, type text}
+		    }
+		  ),
+		  #"Replaced Value27" = Table.ReplaceValue(
+		    #"Trimmed Teext Columns",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Favourite Coffee"}
+		  ),
+		  #"Replaced Value28" = Table.ReplaceValue(
+		    #"Replaced Value27",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Age Group"}
+		  ),
+		  #"Replaced Value29" = Table.ReplaceValue(
+		    #"Replaced Value28",
+		    "More than",
+		    ">",
+		    Replacer.ReplaceText,
+		    {"Coffee Equipment Expense"}
+		  ),
+		  #"Replaced Value30" = Table.ReplaceValue(
+		    #"Replaced Value29",
+		    "Less than",
+		    "<",
+		    Replacer.ReplaceText,
+		    {"Coffee Equipment Expense"}
+		  ),
+		  #"Replaced Value31" = Table.ReplaceValue(
+		    #"Replaced Value30",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Home Brew Method"}
+		  ),
+		  #"Replaced Value32" = Table.ReplaceValue(
+		    #"Replaced Value31",
+		    "(e.g. Keurig/Nespresso)",
+		    "",
+		    Replacer.ReplaceText,
+		    {"Home Brew Method"}
+		  ),
+		  #"Replaced Value33" = Table.ReplaceValue(
+		    #"Replaced Value32",
+		    "(e.g. Mr. Coffee)",
+		    "",
+		    Replacer.ReplaceText,
+		    {"Home Brew Method"}
+		  ),
+		  #"Replaced Value34" = Table.ReplaceValue(
+		    #"Replaced Value33",
+		    "(e.g. Cometeer)",
+		    "",
+		    Replacer.ReplaceText,
+		    {"Home Brew Method"}
+		  ),
+		  #"Filtered Rows1" = Table.SelectRows(#"Replaced Value34", each true),
+		  #"Replaced Value35" = Table.ReplaceValue(
+		    #"Filtered Rows1",
+		    "",
+		    "None",
+		    Replacer.ReplaceValue,
+		    {"Dairy Type"}
+		  ),
+		  #"Replaced Value36" = Table.ReplaceValue(
+		    #"Replaced Value35",
+		    "",
+		    "Not Sweetened",
+		    Replacer.ReplaceValue,
+		    {"Sweetner Type"}
+		  ),
+		  #"Replaced Value37" = Table.ReplaceValue(
+		    #"Replaced Value36",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Drink Coffee Location"}
+		  ),
+		  #"Replaced Value38" = Table.ReplaceValue(
+		    #"Replaced Value37",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Purchase Coffee Location"}
+		  ),
+		  #"Removed Columns11" = Table.RemoveColumns(
+		    #"Replaced Value38",
+		    {
+		      "Just Black",
+		      "Milk, Dairy Alternative, or Coffee Creamer",
+		      "Sugar or Sweetener",
+		      "Flavour Syrup",
+		      "Add Other",
+		      "Whole milk",
+		      "Skim milk",
+		      "Half and half",
+		      "Coffee Creamer",
+		      "Flavored Coffee Creamer",
+		      "Oat milk",
+		      "Almond milk",
+		      "Soy milk",
+		      "Other Dairy",
+		      "Granulated Sugar",
+		      "Artificial Sweeteners",
+		      "Honey",
+		      "Maple Syrup",
+		      "Stevia",
+		      "Agave Nectar",
+		      "Brown Sugar",
+		      "Raw Sugar"
+		    }
+		  ),
+		  #"Replaced Value39" = Table.ReplaceValue(
+		    #"Removed Columns11",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Work Location"}
+		  ),
+		  #"Replaced Value40" = Table.ReplaceValue(
+		    #"Replaced Value39",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Monthly Coffee Expense"}
+		  ),
+		  #"Replaced Value41" = Table.ReplaceValue(
+		    #"Replaced Value40",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Coffee Drinking Reason"}
+		  ),
+		  #"Removed Columns12" = Table.RemoveColumns(
+		    #"Replaced Value41",
+		    {"Tastes Good", "Need Caffeine", "Need Ritual", "Helps Bathroom Visits", "Other Reason"}
+		  ),
+		  #"Replaced Value42" = Table.ReplaceValue(
+		    #"Removed Columns12",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Max Coffee Price Paid"}
+		  ),
+		  #"Replaced Value43" = Table.ReplaceValue(
+		    #"Replaced Value42",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Max Coffee Price Willing to Pay"}
+		  ),
+		  #"Replaced Value44" = Table.ReplaceValue(
+		    #"Replaced Value43",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Cafe Good Value"}
+		  ),
+		  #"Replaced Value45" = Table.ReplaceValue(
+		    #"Replaced Value44",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Coffee Equipment Expense"}
+		  ),
+		  #"Replaced Value46" = Table.ReplaceValue(
+		    #"Replaced Value45",
+		    "Not Specified",
+		    "",
+		    Replacer.ReplaceText,
+		    {"Coffee Equipment Good Value?"}
+		  ),
+		  #"Replaced Value47" = Table.ReplaceValue(
+		    #"Replaced Value46",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Gender"}
+		  ),
+		  #"Replaced Value48" = Table.ReplaceValue(
+		    #"Replaced Value47",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Education Level"}
+		  ),
+		  #"Replaced Value49" = Table.ReplaceValue(
+		    #"Replaced Value48",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Ethnicity/Race"}
+		  ),
+		  #"Replaced Value50" = Table.ReplaceValue(
+		    #"Replaced Value49",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Employment Status"}
+		  ),
+		  #"Replaced Value51" = Table.ReplaceValue(
+		    #"Replaced Value50",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Number of Children"}
+		  ),
+		  #"Replaced Value52" = Table.ReplaceValue(
+		    #"Replaced Value51",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Political Affiliation"}
+		  ),
+		  #"Removed Columns13" = Table.RemoveColumns(
+		    #"Replaced Value52",
+		    {
+		      "Home",
+		      "Office",
+		      "On the Go",
+		      "Cafe",
+		      "Other Locations",
+		      "Pour Over",
+		      "French Press",
+		      "Espresso",
+		      "Coffee Brewing Machine",
+		      "Pod/Capsule Machine",
+		      "Instant coffee",
+		      "Bean-To-Cup Machine)",
+		      "Cold brew",
+		      "Coffee Extract",
+		      "Other Brew Method",
+		      "Purchase - National chain",
+		      "Purchase - Local cafe",
+		      "Purchase - Drive-Thru",
+		      "Purchase - Specialty Coffee Shop",
+		      "Purchase - Deli or supermarket",
+		      "Purchase - Other"
+		    }
+		  ),
+		  #"Capitalized Each Word1" = Table.TransformColumns(
+		    #"Removed Columns13",
+		    {
+		      {"Purchase - Other Location", Text.Proper, type text},
+		      {"Favourite Coffee Drink", Text.Proper, type text},
+		      {"Other Coffee Drink", Text.Proper, type text},
+		      {"Coffee Additions", Text.Proper, type text},
+		      {"Other Additions Type", Text.Proper, type text},
+		      {"Other Reason Type", Text.Proper, type text}
+		    }
+		  ),
+		  #"Replaced Value53" = Table.ReplaceValue(
+		    #"Capitalized Each Word1",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Like Taste of Coffee"}
+		  ),
+		  #"Replaced Value54" = Table.ReplaceValue(
+		    #"Replaced Value53",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Coffee Origin Knowledge"}
+		  ),
+		  #"Replaced Value55" = Table.ReplaceValue(
+		    #"Replaced Value54",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Coffee Equipment Good Value?"}
+		  ),
+		  #"Replaced Value56" = Table.ReplaceValue(
+		    #"Replaced Value55",
+		    "Don’T",
+		    "Don't",
+		    Replacer.ReplaceText,
+		    {"Purchase - Other Location"}
+		  ),
+		  #"Replaced Value57" = Table.ReplaceValue(
+		    #"Replaced Value56",
+		    "",
+		    "Not Specified",
+		    Replacer.ReplaceValue,
+		    {"Coffee Additions"}
+		  ),
+		    #"Replaced Value58" = Table.ReplaceValue(#"Replaced Value57","I do a ","",Replacer.ReplaceText,{"Work Location"}),
+		    #"Replaced Value59" = Table.ReplaceValue(#"Replaced Value58","I primarily","",Replacer.ReplaceText,{"Work Location"}),
+		    #"Capitalized Each Word2" = Table.TransformColumns(#"Replaced Value59",{{"Work Location", Text.Proper, type text}}),
+		    #"Replaced Value60" = Table.ReplaceValue(#"Capitalized Each Word2","cafe","café",Replacer.ReplaceText,{"Drink Coffee Location"}),
+		    #"Replaced Value61" = Table.ReplaceValue(#"Replaced Value60","cafe","café",Replacer.ReplaceText,{"Purchase Coffee Location"}),
+		    #"Replaced Value62" = Table.ReplaceValue(#"Replaced Value61","(E.G. Frappuccino)","",Replacer.ReplaceText,{"Favourite Coffee Drink"}),
+		    #"Replaced Value63" = Table.ReplaceValue(#"Replaced Value62","","Not Specified",Replacer.ReplaceValue,{"Favourite Coffee Drink"}),
+		    #"Renamed Columns15" = Table.RenameColumns(#"Replaced Value63",{{"Sweetner Type", "Sweetener Type"}}),
+		    // #"Removed Duplicates1" = Table.Distinct(#"Renamed Columns15", {"Submission ID"}),
+		    #"Cleaned Text" = Table.TransformColumns(#"Renamed Columns15",{{"Favourite Coffee", Text.Clean, type text}}),
+		    #"Trimmed Text6" = Table.TransformColumns(#"Cleaned Text",{{"Favourite Coffee", Text.Trim, type text}})
+		in
+		    #"Trimmed Text6"
+		```
+	lineageTag: 942388ae-bc90-4356-94b1-590ca47d656d
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression coffee_dataset_source =
+		let
+		    Source = Csv.Document(File.Contents(#"File Path"),[Delimiter=",", Columns=111, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+		    #"Load Into Buffer" = Table.Buffer(Source),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Submission ID", type text}, {"What is your age?", type text}, {"How many cups of coffee do you typically drink per day?", type text}, {"Where do you typically drink coffee?", type text}, {"Where do you typically drink coffee? (At home)", type logical}, {"Where do you typically drink coffee? (At the office)", type logical}, {"Where do you typically drink coffee? (On the go)", type logical}, {"Where do you typically drink coffee? (At a cafe)", type logical}, {"Where do you typically drink coffee? (None of these)", type logical}, {"How do you brew coffee at home?", type text}, {"How do you brew coffee at home? (Pour over)", type logical}, {"How do you brew coffee at home? (French press)", type logical}, {"How do you brew coffee at home? (Espresso)", type logical}, {"How do you brew coffee at home? (Coffee brewing machine (e.g. Mr. Coffee))", type logical}, {"How do you brew coffee at home? (Pod/capsule machine (e.g. Keurig/Nespresso))", type logical}, {"How do you brew coffee at home? (Instant coffee)", type logical}, {"How do you brew coffee at home? (Bean-to-cup machine)", type logical}, {"How do you brew coffee at home? (Cold brew)", type logical}, {"How do you brew coffee at home? (Coffee extract (e.g. Cometeer))", type logical}, {"How do you brew coffee at home? (Other)", type logical}, {"How else do you brew coffee at home?", type text}, {"On the go, where do you typically purchase coffee?", type text}, {"On the go, where do you typically purchase coffee? (National chain (e.g. Starbucks, Dunkin))", type logical}, {"On the go, where do you typically purchase coffee? (Local cafe)", type logical}, {"On the go, where do you typically purchase coffee? (Drive-thru)", type logical}, {"On the go, where do you typically purchase coffee? (Specialty coffee shop)", type logical}, {"On the go, where do you typically purchase coffee? (Deli or supermarket)", type logical}, {"On the go, where do you typically purchase coffee? (Other)", type logical}, {"Where else do you purchase coffee?", type text}, {"What is your favorite coffee drink?", type text}, {"Please specify what your favorite coffee drink is", type text}, {"Do you usually add anything to your coffee?", type text}, {"Do you usually add anything to your coffee? (No - just black)", type logical}, {"Do you usually add anything to your coffee? (Milk, dairy alternative, or coffee creamer)", type logical}, {"Do you usually add anything to your coffee? (Sugar or sweetener)", type logical}, {"Do you usually add anything to your coffee? (Flavor syrup)", type logical}, {"Do you usually add anything to your coffee? (Other)", type logical}, {"What else do you add to your coffee?", type text}, {"What kind of dairy do you add?", type text}, {"What kind of dairy do you add? (Whole milk)", type logical}, {"What kind of dairy do you add? (Skim milk)", type logical}, {"What kind of dairy do you add? (Half and half)", type logical}, {"What kind of dairy do you add? (Coffee creamer)", type logical}, {"What kind of dairy do you add? (Flavored coffee creamer)", type logical}, {"What kind of dairy do you add? (Oat milk)", type logical}, {"What kind of dairy do you add? (Almond milk)", type logical}, {"What kind of dairy do you add? (Soy milk)", type logical}, {"What kind of dairy do you add? (Other)", type logical}, {"What kind of sugar or sweetener do you add?", type text}, {"What kind of sugar or sweetener do you add? (Granulated Sugar)", type logical}, {"What kind of sugar or sweetener do you add? (Artificial Sweeteners (e.g., Splenda))", type logical}, {"What kind of sugar or sweetener do you add? (Honey)", type logical}, {"What kind of sugar or sweetener do you add? (Maple Syrup)", type logical}, {"What kind of sugar or sweetener do you add? (Stevia)", type logical}, {"What kind of sugar or sweetener do you add? (Agave Nectar)", type logical}, {"What kind of sugar or sweetener do you add? (Brown Sugar)", type logical}, {"What kind of sugar or sweetener do you add? (Raw Sugar (Turbinado))", type logical}, {"What kind of flavorings do you add?", type text}, {"What kind of flavorings do you add? (Vanilla Syrup)", type text}, {"What kind of flavorings do you add? (Caramel Syrup)", type text}, {"What kind of flavorings do you add? (Hazelnut Syrup)", type text}, {"What kind of flavorings do you add? (Cinnamon (Ground or Stick))", type text}, {"What kind of flavorings do you add? (Peppermint Syrup)", type text}, {"What kind of flavorings do you add? (Other)", type text}, {"What other flavoring do you use?", type text}, {"Before today's tasting, which of the following best described what kind of coffee you like?", type text}, {"How strong do you like your coffee?", type text}, {"What roast level of coffee do you prefer?", type text}, {"How much caffeine do you like in your coffee?", type text}, {"Lastly, how would you rate your own coffee expertise?", Int64.Type}, {"Coffee A - Bitterness", Int64.Type}, {"Coffee A - Acidity", Int64.Type}, {"Coffee A - Personal Preference", Int64.Type}, {"Coffee A - Notes", type text}, {"Coffee B - Bitterness", Int64.Type}, {"Coffee B - Acidity", Int64.Type}, {"Coffee B - Personal Preference", Int64.Type}, {"Coffee B - Notes", type text}, {"Coffee C - Bitterness", Int64.Type}, {"Coffee C - Acidity", Int64.Type}, {"Coffee C - Personal Preference", Int64.Type}, {"Coffee C - Notes", type text}, {"Coffee D - Bitterness", Int64.Type}, {"Coffee D - Acidity", Int64.Type}, {"Coffee D - Personal Preference", Int64.Type}, {"Coffee D - Notes", type text}, {"Between Coffee A, Coffee B, and Coffee C which did you prefer?", type text}, {"Between Coffee A and Coffee D, which did you prefer?", type text}, {"Lastly, what was your favorite overall coffee?", type text}, {"Do you work from home or in person?", type text}, {"In total, much money do you typically spend on coffee in a month?", type text}, {"Why do you drink coffee?", type text}, {"Why do you drink coffee? (It tastes good)", type logical}, {"Why do you drink coffee? (I need the caffeine)", type logical}, {"Why do you drink coffee? (I need the ritual)", type logical}, {"Why do you drink coffee? (It makes me go to the bathroom)", type logical}, {"Why do you drink coffee? (Other)", type logical}, {"Other reason for drinking coffee", type text}, {"Do you like the taste of coffee?", type text}, {"Do you know where your coffee comes from?", type text}, {"What is the most you've ever paid for a cup of coffee?", type text}, {"What is the most you'd ever be willing to pay for a cup of coffee?", type text}, {"Do you feel like you’re getting good value for your money when you buy coffee at a cafe?", type text}, {"Approximately how much have you spent on coffee equipment in the past 5 years?", type text}, {"Do you feel like you’re getting good value for your money with regards to your coffee equipment?", type text}, {"Gender", type text}, {"Education Level", type text}, {"Ethnicity/Race", type text}, {"Employment Status", type text}, {"Number of Children", type text}, {"Political Affiliation", type text}}),
+		    #"Removed Duplicates" = Table.Distinct(#"Changed Type", {"Submission ID"})
+		in
+		    #"Removed Duplicates"
+	lineageTag: 4f4a059d-cd13-4686-873e-fc35a188cdf4
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression 'Coffee Equipment Expense Coffee A' =
+		let
+		    Source = coffee_dataset_source,
+		    #"Filtered Rows1" = Table.SelectRows(Source, each ([#"Lastly, what was your favorite overall coffee?"] = "Coffee A")),
+		    #"Grouped Rows" = Table.Group(#"Filtered Rows1", {"Approximately how much have you spent on coffee equipment in the past 5 years?"}, {{"Count", each Table.RowCount(Table.Distinct(_)), Int64.Type}}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Grouped Rows","More than",">",Replacer.ReplaceText,{"Approximately how much have you spent on coffee equipment in the past 5 years?"}),
+		    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","Less than","<",Replacer.ReplaceText,{"Approximately how much have you spent on coffee equipment in the past 5 years?"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Replaced Value1", each [#"Approximately how much have you spent on coffee equipment in the past 5 years?"] <> null and [#"Approximately how much have you spent on coffee equipment in the past 5 years?"] <> ""),
+		    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"Approximately how much have you spent on coffee equipment in the past 5 years?", "Equipment Expense Group"}, {"Count", "Count Coffee A"}})
+		in
+		    #"Renamed Columns"
+	lineageTag: 7a687cd6-281a-463c-bb82-449dfa81fedd
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Coffee Equipment Expense Coffee B' =
+		let
+		    Source = coffee_dataset_source,
+		    #"Filtered Rows1" = Table.SelectRows(Source, each [#"Lastly, what was your favorite overall coffee?"] = "Coffee B"),
+		    #"Grouped Rows" = Table.Group(#"Filtered Rows1", {"Approximately how much have you spent on coffee equipment in the past 5 years?"}, {{"Count", each Table.RowCount(Table.Distinct(_)), Int64.Type}}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Grouped Rows","More than",">",Replacer.ReplaceText,{"Approximately how much have you spent on coffee equipment in the past 5 years?"}),
+		    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","Less than","<",Replacer.ReplaceText,{"Approximately how much have you spent on coffee equipment in the past 5 years?"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Replaced Value1", each [#"Approximately how much have you spent on coffee equipment in the past 5 years?"] <> null and [#"Approximately how much have you spent on coffee equipment in the past 5 years?"] <> ""),
+		    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"Approximately how much have you spent on coffee equipment in the past 5 years?", "Equipment Expense Group"}, {"Count", "Count Coffee B"}})
+		in
+		    #"Renamed Columns"
+	lineageTag: 10bb9cf9-c723-46d8-b801-07f6ecc3d883
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Coffee Equipment Expense Coffee C' =
+		let
+		    Source = coffee_dataset_source,
+		    #"Filtered Rows1" = Table.SelectRows(Source, each [#"Lastly, what was your favorite overall coffee?"] = "Coffee C"),
+		    #"Grouped Rows" = Table.Group(#"Filtered Rows1", {"Approximately how much have you spent on coffee equipment in the past 5 years?"}, {{"Count", each Table.RowCount(Table.Distinct(_)), Int64.Type}}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Grouped Rows","More than",">",Replacer.ReplaceText,{"Approximately how much have you spent on coffee equipment in the past 5 years?"}),
+		    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","Less than","<",Replacer.ReplaceText,{"Approximately how much have you spent on coffee equipment in the past 5 years?"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Replaced Value1", each [#"Approximately how much have you spent on coffee equipment in the past 5 years?"] <> null and [#"Approximately how much have you spent on coffee equipment in the past 5 years?"] <> ""),
+		    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"Approximately how much have you spent on coffee equipment in the past 5 years?", "Equipment Expense Group"}, {"Count", "Count Coffee C"}})
+		in
+		    #"Renamed Columns"
+	lineageTag: 03c327cd-b426-4b5d-8428-b5c1d6f5ed4b
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Coffee Equipment Expense Coffee D' =
+		let
+		    Source = coffee_dataset_source,
+		    #"Filtered Rows1" = Table.SelectRows(Source, each [#"Lastly, what was your favorite overall coffee?"] = "Coffee D"),
+		    #"Grouped Rows" = Table.Group(#"Filtered Rows1", {"Approximately how much have you spent on coffee equipment in the past 5 years?"}, {{"Count", each Table.RowCount(Table.Distinct(_)), Int64.Type}}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Grouped Rows","More than",">",Replacer.ReplaceText,{"Approximately how much have you spent on coffee equipment in the past 5 years?"}),
+		    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","Less than","<",Replacer.ReplaceText,{"Approximately how much have you spent on coffee equipment in the past 5 years?"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Replaced Value1", each [#"Approximately how much have you spent on coffee equipment in the past 5 years?"] <> null and [#"Approximately how much have you spent on coffee equipment in the past 5 years?"] <> ""),
+		    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"Approximately how much have you spent on coffee equipment in the past 5 years?", "Equipment Expense Group"}, {"Count", "Count Coffee D"}})
+		in
+		    #"Renamed Columns"
+	lineageTag: 079ef228-393b-4b93-b8df-81d4ff3d0d72
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Willing To Pay' =
+		let
+		    Source = coffee_dataset_source,
+		    #"Filtered Rows" = Table.SelectRows(Source, each ([#"Lastly, what was your favorite overall coffee?"] = "Coffee D") and ([#"What is the most you'd ever be willing to pay for a cup of coffee?"] <> "")),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"What is the most you'd ever be willing to pay for a cup of coffee?", "Submission ID"}),
+		    #"Grouped Rows" = Table.Group(#"Removed Other Columns", {"What is the most you'd ever be willing to pay for a cup of coffee?"}, {{"Count", each Table.RowCount(Table.Distinct(_)), Int64.Type}})
+		in
+		    #"Grouped Rows"
+	lineageTag: 0ee51729-5c19-4a80-b9b6-beadcaca6349
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Coffee Tasting Fact Table - Backup' = ```
+		let
+		  Source = coffee_dataset_cleaned,
+		  //#"Merged Queries" = Table.NestedJoin(
+		 //   Source, 
+		 //   {"Drink Coffee Location"}, 
+		 //   #"Drink Coffee Location Dim", 
+		 //   {"Drink Coffee Location"}, 
+		 //   "Drink Coffee Location Dim", 
+		 //   JoinKind.LeftOuter
+		 // ), 
+		//  #"Expanded Drink Coffee Location Dim" = Table.ExpandTableColumn(
+		//    #"Merged Queries", 
+		//    "Drink Coffee Location Dim", 
+		//    {"Drink Coffee Location Key"}, 
+		//    {"Drink Coffee Location Key"}
+		//  ), 
+		//  #"Removed Columns" = Table.RemoveColumns(
+		//    #"Expanded Drink Coffee Location Dim", 
+		//    {"Drink Coffee Location"}
+		//  ), 
+		  #"Merged Queries1" = Table.NestedJoin(    
+		 //   #"Removed Columns", 
+		    Source,
+		    {"Home Brew Method"}, 
+		    #"Home Brew Method Dim", 
+		    {"Home Brew Method"}, 
+		    "Home Brew Method Dim", 
+		    JoinKind.LeftOuter
+		  ), 
+		  #"Expanded Home Brew Method Dim" = Table.ExpandTableColumn(
+		    #"Merged Queries1", 
+		    "Home Brew Method Dim", 
+		    {"Home Brew Method Key"}, 
+		    {"Home Brew Method Key"}
+		  ), 
+		  #"Removed Columns1" = Table.RemoveColumns(
+		    #"Expanded Home Brew Method Dim", 
+		    {"Home Brew Method", "Other Methods"}
+		  ), 
+		  //#"Merged Queries2" = Table.NestedJoin(
+		  //  #"Removed Columns1", 
+		  //  {"Purchase Coffee Location"}, 
+		  //  #"Purchase Coffee Location Dim", 
+		  //  {"Purchase Coffee Location"}, 
+		  //  "Purchase Coffee Location Dim", 
+		 //   JoinKind.LeftOuter
+		 // ), 
+		//#"Expanded Purchase Coffee Location Dim" = Table.ExpandTableColumn(
+		//   #"Merged Queries2", 
+		//    #"Removed Columns1",
+		//    "Purchase Coffee Location Dim", 
+		//    {"Purchase Coffee Location Key"}, 
+		//    {"Purchase Coffee Location Key"}
+		//  ), 
+		// #"Removed Columns2" = Table.RemoveColumns(
+		//    #"Expanded Purchase Coffee Location Dim", 
+		//  #"Removed Columns1",
+		//    {"Purchase Coffee Location"}
+		//  ), 
+		  #"Merged Queries3" = Table.NestedJoin(
+		    #"Removed Columns1", 
+		    {"Favourite Coffee Drink"}, 
+		    #"Favourite Coffee Drink Dim", 
+		    {"Favourite Coffee Drink"}, 
+		    "Favourite Coffee Drink Dim", 
+		    JoinKind.LeftOuter
+		  ), 
+		  #"Expanded Favourite Coffee Drink Dim" = Table.ExpandTableColumn(
+		    #"Merged Queries3", 
+		    "Favourite Coffee Drink Dim", 
+		    {"Favourite Coffee Drink Key"}, 
+		    {"Favourite Coffee Drink Key"}
+		  ), 
+		  #"Removed Columns3" = Table.RemoveColumns(
+		    #"Expanded Favourite Coffee Drink Dim", 
+		    {"Favourite Coffee Drink"}
+		  ), 
+		  #"Merged Queries4" = Table.NestedJoin(
+		    #"Removed Columns3", 
+		    {"Coffee Additions"}, 
+		    #"Coffee Additions Dim", 
+		    {"Coffee Additions"}, 
+		    "Coffee Additions Dim", 
+		    JoinKind.LeftOuter
+		  ), 
+		  #"Expanded Coffee Additions Dim" = Table.ExpandTableColumn(
+		    #"Merged Queries4", 
+		    "Coffee Additions Dim", 
+		    {"Coffe Additions Key"}, 
+		    {"Coffe Additions Key"}
+		  ), 
+		  #"Removed Columns4" = Table.RemoveColumns(#"Expanded Coffee Additions Dim", {"Coffee Additions"}), 
+		  #"Merged Queries5" = Table.NestedJoin(
+		    #"Removed Columns4", 
+		    {"Dairy Type"}, 
+		    #"Dairy Type Dim", 
+		    {"Dairy Type"}, 
+		    "Dairy Type Dim", 
+		    JoinKind.LeftOuter
+		  ), 
+		  #"Expanded Dairy Type Dim" = Table.ExpandTableColumn(
+		    #"Merged Queries5", 
+		    "Dairy Type Dim", 
+		    {"Diary Type Key"}, 
+		    {"Diary Type Key"}
+		  ), 
+		  #"Removed Columns5" = Table.RemoveColumns(#"Expanded Dairy Type Dim", {"Dairy Type"}), 
+		  #"Merged Queries6" = Table.NestedJoin(
+		    #"Removed Columns5", 
+		    {"Sweetener Type"}, 
+		    #"Sweetener Type Dim", 
+		    {"Sweetener Type"}, 
+		    "Sweetener Type Dim", 
+		    JoinKind.LeftOuter
+		  ), 
+		  #"Expanded Sweetener Type Dim" = Table.ExpandTableColumn(
+		    #"Merged Queries6", 
+		    "Sweetener Type Dim", 
+		    {"Sweetener Type Key"}, 
+		    {"Sweetener Type Key"}
+		  ), 
+		  #"Removed Columns6" = Table.RemoveColumns(#"Expanded Sweetener Type Dim", {"Sweetener Type"}), 
+		  #"Merged Queries7" = Table.NestedJoin(
+		    #"Removed Columns6", 
+		    {"Preferred Coffee Type"}, 
+		    #"Preferred Coffee Type Dim", 
+		    {"Preferred Coffee Type"}, 
+		    "Preferred Coffee Type Dim", 
+		    JoinKind.LeftOuter
+		  ), 
+		  #"Expanded Preferred Coffee Type Dim" = Table.ExpandTableColumn(
+		    #"Merged Queries7", 
+		    "Preferred Coffee Type Dim", 
+		    {"Preferred Coffee Type Key"}, 
+		    {"Preferred Coffee Type Key"}
+		  ), 
+		  #"Removed Columns7" = Table.RemoveColumns(
+		    #"Expanded Preferred Coffee Type Dim", 
+		    {"Preferred Coffee Type"}
+		  ), 
+		  #"Merged Queries8" = Table.NestedJoin(
+		    #"Removed Columns7", 
+		    {"Coffee Strength"}, 
+		    #"Coffee Strength Dim", 
+		    {"Coffee Strength"}, 
+		    "Coffee Strength Dim", 
+		    JoinKind.LeftOuter
+		  ), 
+		  #"Expanded Coffee Strength Dim" = Table.ExpandTableColumn(
+		    #"Merged Queries8", 
+		    "Coffee Strength Dim", 
+		    {"Coffee Strength Key"}, 
+		    {"Coffee Strength Key"}
+		  ), 
+		  #"Removed Columns8" = Table.RemoveColumns(#"Expanded Coffee Strength Dim", {"Coffee Strength"}), 
+		  #"Merged Queries9" = Table.NestedJoin(
+		    #"Removed Columns8", 
+		    {"Roast Level"}, 
+		    #"Roast Level Dim", 
+		    {"Roast Level"}, 
+		    "Roast Level Dim", 
+		    JoinKind.LeftOuter
+		  ), 
+		  #"Expanded Roast Level Dim" = Table.ExpandTableColumn(
+		    #"Merged Queries9", 
+		    "Roast Level Dim", 
+		    {"Roast Level Key"}, 
+		    {"Roast Level Key"}
+		  ), 
+		  #"Removed Columns9" = Table.RemoveColumns(#"Expanded Roast Level Dim", {"Roast Level"}), 
+		  #"Merged Queries11" = Table.NestedJoin(
+		    #"Removed Columns9", 
+		    {"Work Location"}, 
+		    #"Work Location Dim", 
+		    {"Work Location"}, 
+		    "Work Location Dim", 
+		    JoinKind.LeftOuter
+		  ), 
+		  #"Expanded Work Location Dim" = Table.ExpandTableColumn(
+		    #"Merged Queries11", 
+		    "Work Location Dim", 
+		    {"Work Location Key"}, 
+		    {"Work Location Key"}
+		  ), 
+		  #"Removed Columns11" = Table.RemoveColumns(#"Expanded Work Location Dim", {"Work Location"}), 
+		  #"Merged Queries12" = Table.NestedJoin(
+		    #"Removed Columns11", 
+		    {"Coffee Drinking Reason"}, 
+		    #"Coffee Drinking Reason Dim", 
+		    {"Coffee Drinking Reason"}, 
+		    "Coffee Drinking Reason Dim", 
+		    JoinKind.LeftOuter
+		  ), 
+		  #"Expanded Coffee Drinking Reason Dim" = Table.ExpandTableColumn(
+		    #"Merged Queries12", 
+		    "Coffee Drinking Reason Dim", 
+		    {"Coffee Drinking Reason Key"}, 
+		    {"Coffee Drinking Reason Key"}
+		  ), 
+		  #"Removed Columns12" = Table.RemoveColumns(
+		    #"Expanded Coffee Drinking Reason Dim", 
+		    {"Coffee Drinking Reason"}
+		  ), 
+		  #"Merged Queries13" = Table.NestedJoin(
+		    #"Removed Columns12", 
+		    {"Gender"}, 
+		    #"Gender Dim", 
+		    {"Gender"}, 
+		    "Gender Dim", 
+		    JoinKind.LeftOuter
+		  ), 
+		  #"Expanded Gender Dim" = Table.ExpandTableColumn(
+		    #"Merged Queries13", 
+		    "Gender Dim", 
+		    {"Gender Key"}, 
+		    {"Gender Key"}
+		  ), 
+		  #"Merged Queries10" = Table.NestedJoin(
+		    #"Expanded Gender Dim", 
+		    {"Caffeine Strength"}, 
+		    #"Caffeine Strength Dim", 
+		    {"Caffeine Strength"}, 
+		    "Caffeine Strength Dim", 
+		    JoinKind.LeftOuter
+		  ), 
+		  #"Expanded Caffeine Strength Dim" = Table.ExpandTableColumn(
+		    #"Merged Queries10", 
+		    "Caffeine Strength Dim", 
+		    {"Caffeine Strength Key"}, 
+		    {"Caffeine Strength Key"}
+		  ), 
+		  #"Removed Columns10" = Table.RemoveColumns(
+		    #"Expanded Caffeine Strength Dim", 
+		    {"Caffeine Strength"}
+		  ), 
+		  #"Merged Queries14" = Table.NestedJoin(
+		    #"Removed Columns10", 
+		    {"Coffee Equipment Expense"}, 
+		    #"Coffee Equipment Expense Dim", 
+		    {"Coffee Equipment Expense"}, 
+		    "Coffee Exquipment Expense Dim", 
+		    JoinKind.LeftOuter
+		  ), 
+		  #"Expanded Coffee Exquipment Expense Dim" = Table.ExpandTableColumn(
+		    #"Merged Queries14", 
+		    "Coffee Exquipment Expense Dim", 
+		    {"Coffee Equipment Expense Key"}, 
+		    {"Coffee Equipment Expense Key"}
+		  ), 
+		  #"Removed Columns13" = Table.RemoveColumns(
+		    #"Expanded Coffee Exquipment Expense Dim", 
+		    {"Coffee Equipment Expense"}
+		  )
+		in
+		    #"Removed Columns13"
+		```
+	lineageTag: d958d56f-9f0d-4bed-832c-f64c6813d545
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Drink Coffee Location Dim' =
+		let
+		    //TextStr = "Drink Coffee Location Dim"
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Drink Coffee Location"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns", {"Drink Coffee Location"}),
+		    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Drink Coffee Location Key"}})
+		in
+		    #"Renamed Columns"
+		    //TextStr
+	lineageTag: 4ebc4ac6-49f8-44b0-a2e6-6463cc57afbe
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression description =
+		let
+		    Source = coffee_dataset_source,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Submission ID", "Coffee D - Notes"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each [#"Coffee D - Notes"] <> null and [#"Coffee D - Notes"] <> ""),
+		    #"Removed Duplicates" = Table.Distinct(#"Filtered Rows"),
+		    #"Cleaned Text" = Table.TransformColumns(#"Removed Duplicates",{{"Coffee D - Notes", Text.Clean, type text}}),
+		    #"Trimmed Text" = Table.TransformColumns(#"Cleaned Text",{{"Coffee D - Notes", Text.Trim, type text}}),
+		    #"Replaced Value10" = Table.ReplaceValue(#"Trimmed Text","/"," ",Replacer.ReplaceText,{"Coffee D - Notes"}),
+		    #"Split Column by Delimiter" = Table.SplitColumn(#"Replaced Value10", "Coffee D - Notes", Splitter.SplitTextByDelimiter(" ", QuoteStyle.Csv), {"Coffee D - Notes.1", "Coffee D - Notes.2", "Coffee D - Notes.3", "Coffee D - Notes.4", "Coffee D - Notes.5", "Coffee D - Notes.6", "Coffee D - Notes.7", "Coffee D - Notes.8", "Coffee D - Notes.9", "Coffee D - Notes.10", "Coffee D - Notes.11", "Coffee D - Notes.12", "Coffee D - Notes.13", "Coffee D - Notes.14", "Coffee D - Notes.15", "Coffee D - Notes.16", "Coffee D - Notes.17", "Coffee D - Notes.18", "Coffee D - Notes.19", "Coffee D - Notes.20", "Coffee D - Notes.21", "Coffee D - Notes.22", "Coffee D - Notes.23", "Coffee D - Notes.24", "Coffee D - Notes.25", "Coffee D - Notes.26", "Coffee D - Notes.27", "Coffee D - Notes.28", "Coffee D - Notes.29", "Coffee D - Notes.30", "Coffee D - Notes.31", "Coffee D - Notes.32", "Coffee D - Notes.33", "Coffee D - Notes.34", "Coffee D - Notes.35", "Coffee D - Notes.36", "Coffee D - Notes.37", "Coffee D - Notes.38", "Coffee D - Notes.39", "Coffee D - Notes.40", "Coffee D - Notes.41", "Coffee D - Notes.42", "Coffee D - Notes.43", "Coffee D - Notes.44", "Coffee D - Notes.45", "Coffee D - Notes.46", "Coffee D - Notes.47", "Coffee D - Notes.48", "Coffee D - Notes.49", "Coffee D - Notes.50", "Coffee D - Notes.51", "Coffee D - Notes.52", "Coffee D - Notes.53", "Coffee D - Notes.54", "Coffee D - Notes.55", "Coffee D - Notes.56", "Coffee D - Notes.57", "Coffee D - Notes.58", "Coffee D - Notes.59", "Coffee D - Notes.60", "Coffee D - Notes.61", "Coffee D - Notes.62", "Coffee D - Notes.63", "Coffee D - Notes.64", "Coffee D - Notes.65", "Coffee D - Notes.66", "Coffee D - Notes.67", "Coffee D - Notes.68", "Coffee D - Notes.69"}),
+		    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(#"Split Column by Delimiter", {"Submission ID"}, "Attribute", "Value"),
+		    #"Removed Columns" = Table.RemoveColumns(#"Unpivoted Other Columns",{"Attribute"}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Removed Columns",",","",Replacer.ReplaceText,{"Value"}),
+		    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value",".","",Replacer.ReplaceText,{"Value"}),
+		    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","?","",Replacer.ReplaceText,{"Value"}),
+		    #"Replaced Value3" = Table.ReplaceValue(#"Replaced Value2",";","",Replacer.ReplaceText,{"Value"}),
+		    #"Replaced Value4" = Table.ReplaceValue(#"Replaced Value3",":","",Replacer.ReplaceText,{"Value"}),
+		    #"Replaced Value5" = Table.ReplaceValue(#"Replaced Value4","(","",Replacer.ReplaceText,{"Value"}),
+		    #"Replaced Value6" = Table.ReplaceValue(#"Replaced Value5",")","",Replacer.ReplaceText,{"Value"}),
+		    #"Replaced Value7" = Table.ReplaceValue(#"Replaced Value6","-","",Replacer.ReplaceText,{"Value"}),
+		    #"Replaced Value8" = Table.ReplaceValue(#"Replaced Value7","!","",Replacer.ReplaceText,{"Value"}),
+		    #"Filtered Rows1" = Table.SelectRows(#"Replaced Value8", each([Value] <> "" and [Value] <> "#(cr)#(lf)")),
+		    #"Replaced Value9" = Table.ReplaceValue(#"Filtered Rows1","#(cr)#(lf)","",Replacer.ReplaceText,{"Value"}),
+		    #"Added Custom" = Table.AddColumn(#"Replaced Value9", "Custom", each Value.Is(Value.FromText([Value]), type number)),
+		    #"Filtered Out Numbers" = Table.SelectRows(#"Added Custom", each ([Custom] = false)),
+		    #"Removed Columns1" = Table.RemoveColumns(#"Filtered Out Numbers",{"Custom"}),
+		    #"Added Custom1" = Table.AddColumn(#"Removed Columns1", "Length", each Text.Length([Value]),Int64.Type),
+		    #"Filtered Rows2" = Table.SelectRows(#"Added Custom1", each [Length] > 3),
+		    #"Removed Columns2" = Table.RemoveColumns(#"Filtered Rows2",{"Length"}),
+		    #"Lowercased Text" = Table.TransformColumns(#"Removed Columns2",{{"Value", Text.Lower, type text}}),
+		    #"Filtered Rows3" = Table.SelectRows(#"Lowercased Text", each ([Value] <> "about" and [Value] <> "absolute" and [Value] <> "absolutely" and [Value] <> "acquired" and [Value] <> "actually" and [Value] <> "added" and [Value] <> "addicted" and [Value] <> "adding" and [Value] <> "after" and [Value] <> "again" and [Value] <> "aggressively" and [Value] <> "agree" and [Value] <> "almost" and [Value] <> "along" and [Value] <> "also" and [Value] <> "amount" and [Value] <> "another" and [Value] <> "answers" and [Value] <> "aroma" and [Value] <> "artificially" and [Value] <> "aspect" and [Value] <> "associate" and [Value] <> "assume" and [Value] <> "away" and [Value] <> "back" and [Value] <> "bakers" and [Value] <> "baking" and [Value] <> "based" and [Value] <> "beans" and [Value] <> "became" and [Value] <> "because" and [Value] <> "become" and [Value] <> "beef" and [Value] <> "been" and [Value] <> "before" and [Value] <> "beginning" and [Value] <> "being" and [Value] <> "below" and [Value] <> "best" and [Value] <> "bile" and [Value] <> "bing" and [Value] <> "blast" and [Value] <> "blood" and [Value] <> "blown" and [Value] <> "bodies" and [Value] <> "bomb" and [Value] <> "boozygraperoundfermented" and [Value] <> "both" and [Value] <> "breakfast" and [Value] <> "brings" and [Value] <> "brookside" and [Value] <> "brought" and [Value] <> "bunch" and [Value] <> "bunches" and [Value] <> "burned" and [Value] <> "bush" and [Value] <> "bushgrowing" and [Value] <> "call" and [Value] <> "came" and [Value] <> "can't" and [Value] <> "care" and [Value] <> "cereal" and [Value] <> "challenging" and [Value] <> "change" and [Value] <> "changed" and [Value] <> "changes" and [Value] <> "changing" and [Value] <> "chat" and [Value] <> "choice" and [Value] <> "choose" and [Value] <> "chose" and [Value] <> "clarifying" and [Value] <> "clarity" and [Value] <> "clearly" and [Value] <> "closely" and [Value] <> "coffee" and [Value] <> "coffees" and [Value] <> "colombiamonteblancopassionfruitwashed" and [Value] <> "come" and [Value] <> "compared" and [Value] <> "comparing" and [Value] <> "comparison" and [Value] <> "completely" and [Value] <> "consider" and [Value] <> "constantly" and [Value] <> "cooked" and [Value] <> "cookies" and [Value] <> "cool" and [Value] <> "cooled" and [Value] <> "cools" and [Value] <> "cortado" and [Value] <> "cotton" and [Value] <> "could" and [Value] <> "couple" and [Value] <> "cover" and [Value] <> "covered" and [Value] <> "covid" and [Value] <> "current" and [Value] <> "daily" and [Value] <> "date" and [Value] <> "dates" and [Value] <> "days" and [Value] <> "decide" and [Value] <> "deciding" and [Value] <> "deep" and [Value] <> "definitely" and [Value] <> "deli" and [Value] <> "delicious" and [Value] <> "detected" and [Value] <> "determine" and [Value] <> "didn't" and [Value] <> "didnt" and [Value] <> "didn’t" and [Value] <> "difference" and [Value] <> "diner" and [Value] <> "dinery" and [Value] <> "distant" and [Value] <> "doesn't" and [Value] <> "doesn’t" and [Value] <> "doing" and [Value] <> "don't" and [Value] <> "don’t" and [Value] <> "down" and [Value] <> "dramatically" and [Value] <> "drank" and [Value] <> "drift" and [Value] <> "drink" and [Value] <> "drinking" and [Value] <> "driver" and [Value] <> "dunkinhotroasty" and [Value] <> "each" and [Value] <> "earl" and [Value] <> "easier" and [Value] <> "easily" and [Value] <> "east" and [Value] <> "easy" and [Value] <> "elementary" and [Value] <> "else" and [Value] <> "enough" and [Value] <> "especially" and [Value] <> "even" and [Value] <> "every" and [Value] <> "everyday" and [Value] <> "excellent" and [Value] <> "expected" and [Value] <> "experience" and [Value] <> "experimental" and [Value] <> "explains" and [Value] <> "extreme" and [Value] <> "extremely" and [Value] <> "fairly" and [Value] <> "fairy" and [Value] <> "familiar" and [Value] <> "feel" and [Value] <> "feelearl" and [Value] <> "feeling" and [Value] <> "feels" and [Value] <> "feinty" and [Value] <> "felt" and [Value] <> "ferment" and [Value] <> "figure" and [Value] <> "figured" and [Value] <> "filling" and [Value] <> "find" and [Value] <> "finding" and [Value] <> "finish" and [Value] <> "finished" and [Value] <> "first" and [Value] <> "fits" and [Value] <> "flat" and [Value] <> "followed" and [Value] <> "fool" and [Value] <> "fooled" and [Value] <> "forward" and [Value] <> "found" and [Value] <> "four" and [Value] <> "frequent" and [Value] <> "friend" and [Value] <> "from" and [Value] <> "front" and [Value] <> "full" and [Value] <> "fuller" and [Value] <> "fully" and [Value] <> "gala" and [Value] <> "galore" and [Value] <> "general" and [Value] <> "generally" and [Value] <> "gets" and [Value] <> "give" and [Value] <> "goes" and [Value] <> "going" and [Value] <> "good" and [Value] <> "gotta" and [Value] <> "graham" and [Value] <> "granny" and [Value] <> "guys" and [Value] <> "happiness" and [Value] <> "happy" and [Value] <> "have" and [Value] <> "having" and [Value] <> "high" and [Value] <> "higher" and [Value] <> "hoffmann" and [Value] <> "holds" and [Value] <> "honest" and [Value] <> "hours" and [Value] <> "however" and [Value] <> "https" and [Value] <> "i'll" and [Value] <> "iced" and [Value] <> "immediate" and [Value] <> "immediately" and [Value] <> "improved" and [Value] <> "inability" and [Value] <> "interpreted" and [Value] <> "into" and [Value] <> "involved" and [Value] <> "iron" and [Value] <> "isn't" and [Value] <> "isn’t" and [Value] <> "it's" and [Value] <> "itprobably" and [Value] <> "james" and [Value] <> "juicytwizzlers" and [Value] <> "just" and [Value] <> "keep" and [Value] <> "keeping" and [Value] <> "kinda" and [Value] <> "knew" and [Value] <> "last" and [Value] <> "later" and [Value] <> "lays" and [Value] <> "least" and [Value] <> "left" and [Value] <> "less" and [Value] <> "lessens" and [Value] <> "living" and [Value] <> "long" and [Value] <> "look" and [Value] <> "lost" and [Value] <> "make" and [Value] <> "makes" and [Value] <> "maltiness" and [Value] <> "many" and [Value] <> "maybe" and [Value] <> "meant" and [Value] <> "meat" and [Value] <> "mellow" and [Value] <> "memories" and [Value] <> "method" and [Value] <> "might" and [Value] <> "mistake" and [Value] <> "mode" and [Value] <> "moment" and [Value] <> "more" and [Value] <> "morning" and [Value] <> "most" and [Value] <> "mostthis" and [Value] <> "motor" and [Value] <> "mountains" and [Value] <> "much" and [Value] <> "must")),
+		    #"Trimmed Text1" = Table.TransformColumns(#"Filtered Rows3",{{"Value", Text.Trim, type text}}),
+		    #"Filtered Rows4" = Table.SelectRows(#"Trimmed Text1", each ([Value] <> "'bright'" and [Value] <> "alcoholic" and [Value] <> "among" and [Value] <> "arresting" and [Value] <> "assassination" and [Value] <> "attention" and [Value] <> "available" and [Value] <> "avoid" and [Value] <> "baked" and [Value] <> "bark" and [Value] <> "barrel" and [Value] <> "battery" and [Value] <> "beer" and [Value] <> "blind" and [Value] <> "boil" and [Value] <> "booze" and [Value] <> "bordering" and [Value] <> "brisk" and [Value] <> "bubble" and [Value] <> "cannot" and [Value] <> "caught" and [Value] <> "china" and [Value] <> "comparativelywas" and [Value] <> "couldn't" and [Value] <> "describe" and [Value] <> "describes" and [Value] <> "during" and [Value] <> "everyotherday" and [Value] <> "finishthis" and [Value] <> "floralteasouraftertaste" and [Value] <> "frontal" and [Value] <> "fruitfragrantchocolate" and [Value] <> "fruitybalancedsemisweetvery" and [Value] <> "getting" and [Value] <> "gone" and [Value] <> "greyesque" and [Value] <> "heard" and [Value] <> "here" and [Value] <> "hint" and [Value] <> "hints" and [Value] <> "i've" and [Value] <> "i’ve" and [Value] <> "kind" and [Value] <> "limefruitytropical" and [Value] <> "little" and [Value] <> "local" and [Value] <> "loops" and [Value] <> "made" and [Value] <> "mediumcomplexity" and [Value] <> "mediumlight" and [Value] <> "merit" and [Value] <> "moves" and [Value] <> "naturallyprocessed" and [Value] <> "naturalprocess" and [Value] <> "never" and [Value] <> "next" and [Value] <> "nibs" and [Value] <> "none" and [Value] <> "nose" and [Value] <> "number" and [Value] <> "offering" and [Value] <> "once" and [Value] <> "only" and [Value] <> "opposed" and [Value] <> "option" and [Value] <> "options" and [Value] <> "origin" and [Value] <> "origins" and [Value] <> "other" and [Value] <> "others" and [Value] <> "otherwise" and [Value] <> "over" and [Value] <> "pack" and [Value] <> "pancakes" and [Value] <> "papayacolombia" and [Value] <> "past" and [Value] <> "peaking" and [Value] <> "pebbles" and [Value] <> "pected" and [Value] <> "perhaps" and [Value] <> "personal" and [Value] <> "pick" and [Value] <> "piefermented" and [Value] <> "pint" and [Value] <> "place" and [Value] <> "please" and [Value] <> "polarizing" and [Value] <> "possible" and [Value] <> "possibly" and [Value] <> "potentially" and [Value] <> "powerful" and [Value] <> "preferit" and [Value] <> "present" and [Value] <> "probably" and [Value] <> "process" and [Value] <> "pronounced" and [Value] <> "punchorigin" and [Value] <> "putting" and [Value] <> "quite" and [Value] <> "rancher" and [Value] <> "range" and [Value] <> "rather" and [Value] <> "reads" and [Value] <> "realized" and [Value] <> "reall" and [Value] <> "really…this" and [Value] <> "recorded" and [Value] <> "reduction" and [Value] <> "relatively" and [Value] <> "relaxed" and [Value] <> "remained" and [Value] <> "remind" and [Value] <> "reminded" and [Value] <> "reminds" and [Value] <> "resort" and [Value] <> "results" and [Value] <> "right" and [Value] <> "room" and [Value] <> "roommate" and [Value] <> "routinely" and [Value] <> "sadness" and [Value] <> "said" and [Value] <> "salad" and [Value] <> "same" and [Value] <> "sample" and [Value] <> "sampling" and [Value] <> "sauce" and [Value] <> "school" and [Value] <> "score" and [Value] <> "scores" and [Value] <> "scotch" and [Value] <> "second" and [Value] <> "seeing" and [Value] <> "seem" and [Value] <> "seemed" and [Value] <> "seems" and [Value] <> "selection" and [Value] <> "sense" and [Value] <> "served" and [Value] <> "settled" and [Value] <> "several" and [Value] <> "shouldn't" and [Value] <> "sidamo" and [Value] <> "side" and [Value] <> "significantly" and [Value] <> "similar" and [Value] <> "similarly" and [Value] <> "single" and [Value] <> "sips" and [Value] <> "sitting" and [Value] <> "skewed" and [Value] <> "skin" and [Value] <> "small" and [Value] <> "smellcurrantprunesugar" and [Value] <> "smith" and [Value] <> "smooooth" and [Value] <> "sniff" and [Value] <> "sold" and [Value] <> "some" and [Value] <> "somehow" and [Value] <> "someone" and [Value] <> "someplace" and [Value] <> "something" and [Value] <> "sometimes" and [Value] <> "somewhat" and [Value] <> "sort" and [Value] <> "sourdough" and [Value] <> "specifically" and [Value] <> "spend" and [Value] <> "splash" and [Value] <> "split" and [Value] <> "spring" and [Value] <> "square" and [Value] <> "stand" and [Value] <> "start" and [Value] <> "started" and [Value] <> "starter" and [Value] <> "starting" and [Value] <> "state" and [Value] <> "still" and [Value] <> "stomach" and [Value] <> "stone" and [Value] <> "stood" and [Value] <> "store" and [Value] <> "strayed" and [Value] <> "street" and [Value] <> "strongreally" and [Value] <> "struck" and [Value] <> "struggled" and [Value] <> "subsequent" and [Value] <> "subsides" and [Value] <> "sure" and [Value] <> "surprised" and [Value] <> "suspect" and [Value] <> "swap" and [Value] <> "sweetfermentedtropical" and [Value] <> "take" and [Value] <> "takes" and [Value] <> "taste" and [Value] <> "tasted" and [Value] <> "tasters" and [Value] <> "tastes" and [Value] <> "tasting" and [Value] <> "tastings" and [Value] <> "techniques" and [Value] <> "tell" and [Value] <> "temp" and [Value] <> "temperature" and [Value] <> "temperatures" and [Value] <> "test" and [Value] <> "than" and [Value] <> "that" and [Value] <> "that's" and [Value] <> "that’s" and [Value] <> "their" and [Value] <> "them" and [Value] <> "then" and [Value] <> "there" and [Value] <> "these" and [Value] <> "they" and [Value] <> "thing" and [Value] <> "things" and [Value] <> "think" and [Value] <> "thinking" and [Value] <> "this" and [Value] <> "thisso" and [Value] <> "thoroughly" and [Value] <> "those" and [Value] <> "though" and [Value] <> "thought" and [Value] <> "threw" and [Value] <> "throughout" and [Value] <> "throw" and [Value] <> "time" and [Value] <> "tisane" and [Value] <> "together" and [Value] <> "tongue" and [Value] <> "tons" and [Value] <> "towards" and [Value] <> "tried" and [Value] <> "true" and [Value] <> "trying" and [Value] <> "tsukikoya’s" and [Value] <> "turn" and [Value] <> "turned" and [Value] <> "type" and [Value] <> "types" and [Value] <> "typically" and [Value] <> "undertones2nd" and [Value] <> "undertonesfermented" and [Value] <> "unsure" and [Value] <> "until" and [Value] <> "unwraps" and [Value] <> "usage" and [Value] <> "used" and [Value] <> "usual" and [Value] <> "usually" and [Value] <> "vaguely" and [Value] <> "various" and [Value] <> "version" and [Value] <> "very" and [Value] <> "vibes" and [Value] <> "waffles" and [Value] <> "wallop" and [Value] <> "want" and [Value] <> "wanted" and [Value] <> "warm" and [Value] <> "washed" and [Value] <> "wasn't" and [Value] <> "wasnt" and [Value] <> "wave" and [Value] <> "weekend" and [Value] <> "weirdsourfunkyvery" and [Value] <> "well" and [Value] <> "went" and [Value] <> "were" and [Value] <> "what" and [Value] <> "what's" and [Value] <> "when" and [Value] <> "which" and [Value] <> "while" and [Value] <> "whiskey" and [Value] <> "white" and [Value] <> "whole" and [Value] <> "wild" and [Value] <> "will" and [Value] <> "with" and [Value] <> "within" and [Value] <> "without" and [Value] <> "worcestershire" and [Value] <> "word" and [Value] <> "work" and [Value] <> "worse" and [Value] <> "would" and [Value] <> "wouldn't" and [Value] <> "wouldn’t" and [Value] <> "wwwdrinktradecom" and [Value] <> "yippee" and [Value] <> "your" and [Value] <> "you’d" and [Value] <> "you’re" and [Value] <> "yuckyoverall" and [Value] <> "[after")),
+		    #"Replaced Value11" = Table.ReplaceValue(#"Filtered Rows4","cherryi","cherry",Replacer.ReplaceText,{"Value"}),
+		    #"Replaced Value12" = Table.ReplaceValue(#"Replaced Value11","chery","cherry",Replacer.ReplaceText,{"Value"}),
+		    #"Replaced Value13" = Table.ReplaceValue(#"Replaced Value12","citris","citrus",Replacer.ReplaceText,{"Value"}),
+		    #"Replaced Value14" = Table.ReplaceValue(#"Replaced Value13","cream]","cream",Replacer.ReplaceText,{"Value"}),
+		    #"Replaced Value15" = Table.ReplaceValue(#"Replaced Value14","lemmon","lemon",Replacer.ReplaceText,{"Value"}),
+		    #"Replaced Value16" = Table.ReplaceValue(#"Replaced Value15","trpical","tropical",Replacer.ReplaceText,{"Value"}),
+		    #"Replaced Value17" = Table.ReplaceValue(#"Replaced Value16","'","",Replacer.ReplaceText,{"Value"}),
+		    #"Filtered Rows5" = Table.SelectRows(#"Replaced Value17", each ([Value] <> "3finish" and [Value] <> "4blackberry" and [Value] <> "4tastes" and [Value] <> "acidityflavor" and [Value] <> "adventure" and [Value] <> "aged" and [Value] <> "altered" and [Value] <> "always" and [Value] <> "anything" and [Value] <> "appreciated" and [Value] <> "aquired" and [Value] <> "backwards" and [Value] <> "bags" and [Value] <> "basis" and [Value] <> "berrycitrus" and [Value] <> "berrygood" and [Value] <> "berrygrapefruit" and [Value] <> "berrysourflavorful" and [Value] <> "bestfruity" and [Value] <> "between" and [Value] <> "blueberriescitrus" and [Value] <> "blueberryloved" and [Value] <> "blueberrysour" and [Value] <> "blueberrythick" and [Value] <> "bodyunique" and [Value] <> "boots" and [Value] <> "bottom" and [Value] <> "boysenberry" and [Value] <> "brighter" and [Value] <> "brightno" and [Value] <> "burbon" and [Value] <> "butt" and [Value] <> "candybody" and [Value] <> "candybright" and [Value] <> "candylike" and [Value] <> "cherryalcohol" and [Value] <> "clarityjuicyberry" and [Value] <> "cloudberries" and [Value] <> "coating" and [Value] <> "coats" and [Value] <> "coffee nerd" and [Value] <> "colormore" and [Value] <> "comment" and [Value] <> "consumptions" and [Value] <> "cookie" and [Value] <> "cooledmellower" and [Value] <> "cooling" and [Value] <> "couldn’t" and [Value] <> "course" and [Value] <> "creamsicle" and [Value] <> "dailydriver" and [Value] <> "damp" and [Value] <> "dang" and [Value] <> "distantly" and [Value] <> "dominated…" and [Value] <> "done" and [Value] <> "elephant" and [Value] <> "ends" and [Value] <> "ever" and [Value] <> "evolution" and [Value] <> "exactly" and [Value] <> "except" and [Value] <> "expect" and [Value] <> "expectationspersonally" and [Value] <> "expert" and [Value] <> "expired" and [Value] <> "explain" and [Value] <> "exploring" and [Value] <> "explosion" and [Value] <> "explosive" and [Value] <> "extra" and [Value] <> "face" and [Value] <> "factor" and [Value] <> "fairground" and [Value] <> "familiarity" and [Value] <> "fermented grain" and [Value] <> "fermentyfunky" and [Value] <> "finally" and [Value] <> "freezedried" and [Value] <> "friends" and [Value] <> "fruitlight" and [Value] <> "fruitlightest" and [Value] <> "fruitslight" and [Value] <> "fruitsripe" and [Value] <> "fruitydried" and [Value] <> "fruityflorallight" and [Value] <> "fruityhoney" and [Value] <> "gauge" and [Value] <> "gget" and [Value] <> "given" and [Value] <> "glad" and [Value] <> "goto" and [Value] <> "grab" and [Value] <> "grass" and [Value] <> "grew" and [Value] <> "grocery" and [Value] <> "group" and [Value] <> "growing" and [Value] <> "handle" and [Value] <> "hecka" and [Value] <> "hits" and [Value] <> "hollow" and [Value] <> "honestly" and [Value] <> "hour" and [Value] <> "idea" and [Value] <> "identical" and [Value] <> "illegal" and [Value] <> "implied" and [Value] <> "induces" and [Value] <> "initial" and [Value] <> "initially" and [Value] <> "insect" and [Value] <> "instead" and [Value] <> "introduction" and [Value] <> "itd" and [Value] <> "itself" and [Value] <> "jucyness" and [Value] <> "kept" and [Value] <> "large" and [Value] <> "lasting" and [Value] <> "late" and [Value] <> "leaf" and [Value] <> "leather" and [Value] <> "lemon2nd" and [Value] <> "likely" and [Value] <> "lineup" and [Value] <> "longer" and [Value] <> "lots" and [Value] <> "markers" and [Value] <> "marks" and [Value] <> "mean" and [Value] <> "mentioned" and [Value] <> "monkey" and [Value] <> "mood" and [Value] <> "mostly" and [Value] <> "necessarily" and [Value] <> "needed" and [Value] <> "notesfig" and [Value] <> "nothing" and [Value] <> "occasional" and [Value] <> "occasionally" and [Value] <> "oddly" and [Value] <> "offer" and [Value] <> "once in a blue moon if im feeling particularly fancy" and [Value] <> "onethis" and [Value] <> "open" and [Value] <> "opens" and [Value] <> "opinions" and [Value] <> "orangeyellow" and [Value] <> "orchard" and [Value] <> "order" and [Value] <> "oxygen" and [Value] <> "packused" and [Value] <> "pain" and [Value] <> "pair" and [Value] <> "parse" and [Value] <> "particular" and [Value] <> "particularly" and [Value] <> "parties" and [Value] <> "party" and [Value] <> "peachescherries" and [Value] <> "pencil" and [Value] <> "phase" and [Value] <> "pink" and [Value] <> "pitted" and [Value] <> "pleasent" and [Value] <> "positive" and [Value] <> "presence" and [Value] <> "previous" and [Value] <> "profile" and [Value] <> "ranked" and [Value] <> "reach" and [Value] <> "reaction" and [Value] <> "really" and [Value] <> "reason" and [Value] <> "recently" and [Value] <> "refreshing" and [Value] <> "relatable" and [Value] <> "residence" and [Value] <> "rest" and [Value] <> "revealed" and [Value] <> "reversed" and [Value] <> "rings" and [Value] <> "salivation" and [Value] <> "salmonberries" and [Value] <> "sangria" and [Value] <> "scentgrassy" and [Value] <> "seeking" and [Value] <> "seeming" and [Value] <> "should" and [Value] <> "show" and [Value] <> "smokeydried" and [Value] <> "soil" and [Value] <> "soon" and [Value] <> "sorry" and [Value] <> "sounds" and [Value] <> "special occasion coffee" and [Value] <> "sweetness…" and [Value] <> "tastetobacco" and [Value] <> "tastingcitrusy" and [Value] <> "teablueberry" and [Value] <> "teatasting" and [Value] <> "teetering" and [Value] <> "temphigh" and [Value] <> "tend" and [Value] <> "thermos" and [Value] <> "thickfruitygrape" and [Value] <> "thoughtfruity" and [Value] <> "three" and [Value] <> "through" and [Value] <> "thumbs" and [Value] <> "times" and [Value] <> "tolerated" and [Value] <> "tough" and [Value] <> "traits" and [Value] <> "treat" and [Value] <> "turns" and [Value] <> "twice" and [Value] <> "twigs" and [Value] <> "twisty" and [Value] <> "understanding" and [Value] <> "upon" and [Value] <> "variance" and [Value] <> "variety" and [Value] <> "wake up power" and [Value] <> "waterfermented" and [Value] <> "week" and [Value] <> "weirdfermented" and [Value] <> "where" and [Value] <> "wish" and [Value] <> "worth" and [Value] <> "wush" and [Value] <> "xoffees" and [Value] <> "‘fermented’" and [Value] <> "“red”"))
+		in
+		    #"Filtered Rows5"
+	lineageTag: f4dd6c8e-e522-4934-a8e7-1249cc4fc06f
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Word Summary_pqe' =
+		let
+		    Source = description,
+		    #"Removed Columns" = Table.RemoveColumns(Source,{"Submission ID"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Columns"),
+		    #"Removed Blank Rows" = Table.SelectRows(#"Removed Duplicates", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+		    #"Replaced Value" = Table.ReplaceValue(#"Removed Blank Rows","""","",Replacer.ReplaceText,{"Value"}),
+		    #"Trimmed Text" = Table.TransformColumns(#"Replaced Value",{{"Value", Text.Trim, type text}}),
+		    #"Capitalized Each Word" = Table.TransformColumns(#"Trimmed Text",{{"Value", Text.Proper, type text}}),
+		    #"Filtered Rows" = Table.SelectRows(#"Capitalized Each Word", each ([Value] <> "*Science*" and [Value] <> "120Ml" and [Value] <> "Able" and [Value] <> "Acidic…Not"))
+		in
+		    #"Filtered Rows"
+	lineageTag: 4f96ad0d-5798-4e1f-b3bf-6076649c7f93
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression z_word_rank =
+		let
+		    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMlSK1YlWMgKTxmDSBEyagkkzMGkOJi3ApCWYNDRQio0FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Rank = _t]),
+		    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Rank", Int64.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: 2a5e3fdf-7bcb-4d9d-9f7a-281ac62e7fd5
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Home Brew Method Dim' = ```
+		let
+		    //TextStr = "Home Brew Method Dim"    
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Home Brew Method", "Other Methods"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns", {"Home Brew Method"}),
+		    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Home Brew Method Key"}})
+		in
+		    #"Renamed Columns"
+		    //TextStr
+		```
+	lineageTag: ada1d92c-fbc0-447e-aee6-f3c5338875ce
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Employmernt Status Dim' =
+		let
+		    //TextStr = "Employment Status Dim"
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Employment Status"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+		    #"Filtered Rows" = Table.SelectRows(#"Removed Duplicates", each [Employment Status] <> null and [Employment Status] <> ""),
+		    #"Added Index" = Table.AddIndexColumn(#"Filtered Rows", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Employment Status Key"}})
+		in
+		    #"Renamed Columns"
+		    //TextStr
+	lineageTag: 431beaf6-c931-4993-9afb-599134766a7a
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Ethinicity / Race Dim' =
+		let
+		    //TextStr = "Ethinicity / Race Dim"
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Ethnicity/Race"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+		    #"Filtered Rows" = Table.SelectRows(#"Removed Duplicates", each [#"Ethnicity/Race"] <> null and [#"Ethnicity/Race"] <> ""),
+		    #"Added Index" = Table.AddIndexColumn(#"Filtered Rows", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Ethnicity/Race Key"}})
+		in
+		    #"Renamed Columns"
+		    //TextStr
+	lineageTag: a3fc1447-2723-4a21-b60d-1534f09ffcdb
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Education Level Dim' =
+		let
+		    //TextStr = "Education Level Dim"
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Education Level"}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Removed Other Columns","",null,Replacer.ReplaceValue,{"Education Level"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Replaced Value", each ([Education Level] <> null)),
+		    #"Removed Duplicates" = Table.Distinct(#"Filtered Rows"),
+		    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Education Level Key"}})
+		in
+		    #"Renamed Columns"
+		    //TextStr
+	lineageTag: fe87aca2-f4df-4006-80de-43ce84614b15
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Gender Dim' =
+		let
+		    //TextStr = "Gender Dim"
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Gender"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+		    #"Filtered Rows" = Table.SelectRows(#"Removed Duplicates", each [Gender] <> null and [Gender] <> ""),
+		    #"Added Index" = Table.AddIndexColumn(#"Filtered Rows", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Gender Key"}})
+		in
+		    #"Renamed Columns"
+		    //TextStr
+	lineageTag: 5aed038d-796f-4925-839a-9ee60ae9affb
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Political Affiliation Dim' =
+		let
+		    //TextStr =  "Political Affiliation Dim"
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Political Affiliation"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+		    #"Filtered Rows" = Table.SelectRows(#"Removed Duplicates", each [Political Affiliation] <> null and [Political Affiliation] <> ""),
+		    #"Added Index" = Table.AddIndexColumn(#"Filtered Rows", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Political Affiliation Key"}})
+		in
+		    #"Renamed Columns"
+		    //TextStr
+	lineageTag: 8a064ad0-4f2c-49ab-bf8c-ebd28e1430e3
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Other Methods Dim' =
+		let
+		    //TextStr = "Other Methods Dim"
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Other Methods"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+		    #"Filtered Rows" = Table.SelectRows(#"Removed Duplicates", each ([Other Methods] <> null)),
+		    #"Filtered Rows1" = Table.SelectRows(#"Filtered Rows", each [Other Methods] <> null and [Other Methods] <> ""),
+		    #"Added Index" = Table.AddIndexColumn(#"Filtered Rows1", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Other Merthods Key"}})
+		in
+		    #"Renamed Columns"
+		    //TextStr
+	lineageTag: f5444da9-1991-4947-8441-b6df1f147063
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Coffee Type Dim' =
+		let
+		    //TextStr = "Coffee Type Dim"
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Preferred Coffee Type"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+		    #"Filtered Rows" = Table.SelectRows(#"Removed Duplicates", each [Preferred Coffee Type] <> null and [Preferred Coffee Type] <> ""),
+		    #"Added Index" = Table.AddIndexColumn(#"Filtered Rows", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Preferred Coffee Type Key"}})
+		in
+		    #"Renamed Columns"
+		    //TextStr
+	lineageTag: a4624647-a02e-473a-a33c-41ab3198397a
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Coffee Strength Dim' =
+		let
+		    //TextStr = "Coffee Strength Dim"
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Coffee Strength"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+		    #"Filtered Rows" = Table.SelectRows(#"Removed Duplicates", each [Coffee Strength] <> null and [Coffee Strength] <> ""),
+		    #"Added Index" = Table.AddIndexColumn(#"Filtered Rows", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Coffee Strength Key"}})
+		in
+		    #"Renamed Columns"
+		    //TextStr
+	lineageTag: 46bd9468-408b-4212-b193-b0c87454d94d
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Favourite Coffee Drink Dim' =
+		let
+		    //TextStr = "Favourite Coffee Drink Dim"
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Favourite Coffee Drink"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+		    #"Filtered Rows" = Table.SelectRows(#"Removed Duplicates", each [Favourite Coffee Drink] <> null and [Favourite Coffee Drink] <> ""),
+		    #"Added Index" = Table.AddIndexColumn(#"Filtered Rows", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Favourite Coffee Drink Key"}})
+		in
+		    #"Renamed Columns"
+		    //TextStr
+	lineageTag: 48a2e7a0-c99c-4252-9e04-3b1df5039f00
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Coffee Additions Dim' =
+		let
+		    //TextStr = "Coffee Additions Dim"
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Coffee Additions"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+		    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Coffe Additions Key"}})
+		in
+		    #"Renamed Columns"
+		    //TextStr
+	lineageTag: 7254bfd7-31b1-4438-95ef-bd28c652d716
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Dairy Type Dim' =
+		let
+		    //TextStr = "Dairy Type Dim"
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Dairy Type"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+		    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates", "Index", 0, 1, Int64.Type),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Diary Type Key"}})
+		in
+		    #"Renamed Columns"
+		    //TextStr
+	lineageTag: 2eb959e0-7896-41dd-8086-cf089226debb
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Sweetener Type Dim' =
+		let
+		    //TextStr = "Sweetnet Type Dim"
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Sweetener Type"}),
+		    #"Trimmed Text" = Table.TransformColumns(#"Removed Other Columns",{{"Sweetener Type", Text.Trim, type text}}),
+		    #"Removed Duplicates" = Table.Distinct(#"Trimmed Text", {"Sweetener Type"}),
+		    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Sweetener Type Key"}})
+		in
+		    #"Renamed Columns"
+		    //TextStr
+	lineageTag: e36eee1a-d64c-46ca-8000-e2a640677a24
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Preferred Coffee Type Dim' =
+		let
+		    //TextStr = "Preferred Coffee Type Dim"
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Preferred Coffee Type"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+		    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Preferred Coffee Type Key"}})
+		in
+		    #"Renamed Columns"
+		    //TextStr
+	lineageTag: a907f178-d7d6-48ea-a044-990fe4716409
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Caffeine Strength Dim' =
+		let
+		    //TextStr = "Caffeine Strength Dim"
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Caffeine Strength"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+		    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Caffeine Strength Key"}})
+		in
+		    #"Renamed Columns"
+		    //TextStr
+	lineageTag: 96c539cf-efbf-413c-b978-efef3ec87dae
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Coffee Drinking Reason Dim' =
+		let
+		    //TextStr = "Coffee Drinking Reason"
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Coffee Drinking Reason"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+		    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Coffee Drinking Reason Key"}})
+		in
+		    #"Renamed Columns"
+		    //TextStr
+	lineageTag: 7881a619-3f69-4c4e-855c-2b5c8add1208
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Work Location Dim' =
+		let
+		    //TextStr = "Work Location Dim"
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Work Location"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+		    #"Filtered Rows" = Table.SelectRows(#"Removed Duplicates", each [Work Location] <> null and [Work Location] <> ""),
+		    #"Added Index" = Table.AddIndexColumn(#"Filtered Rows", "Work Location Key", 1, 1, Int64.Type)
+		in
+		    #"Added Index"
+		    //TextStr
+	lineageTag: 355d207d-777c-4b6a-a91e-3d1458c2b104
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Coffee Equipment Expense Dim' =
+		let
+		    //TextStr = "Coffee Equipment Expense Dim"
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Coffee Equipment Expense"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+		    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Coffee Equipment Expense Key"}})
+		in
+		    #"Renamed Columns"
+		    //TextStr
+	lineageTag: 4c264eff-7246-47d0-b756-a9803e1f12cf
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Roast Level Dim' =
+		let
+		    //TextStr = "Roast Level Dim"
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Roast Level"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+		    #"Filtered Rows" = Table.SelectRows(#"Removed Duplicates", each [Roast Level] <> null and [Roast Level] <> ""),
+		    #"Added Index" = Table.AddIndexColumn(#"Filtered Rows", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Roast Level Key"}})
+		in
+		    #"Renamed Columns"
+		    //TextStr
+	lineageTag: 85c8da7a-1a23-4a53-b3df-1ffa16698da9
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Purchase Coffee Location Dim' =
+		let
+		    //TextStr = "Purchase Coffee Location Dim"
+		    Source = coffee_dataset_cleaned,
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Purchase Coffee Location"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns", {"Purchase Coffee Location"}),
+		    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Purchase Coffee Location Key"}})
+		in
+		    #"Renamed Columns"
+		    //TextStr
+	lineageTag: 9ae4a069-efc7-400a-9766-5dd5825c47ca
+	queryGroup: 'Dimension Tables'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'File Path' = "D:\OneDrive - DataVizExpert\Data\006 - Maven Analytics\Great American Coffe Taste Test\GACTT_RESULTS_ANONYMIZED_v2.csv" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 5b715ece-e999-455a-abd5-19b3ca2ef509
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

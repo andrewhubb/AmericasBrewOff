@@ -1,0 +1,230 @@
+table '_00 - Core Measures'
+	lineageTag: 3b3c29f1-b57c-42aa-9a89-420270495572
+
+	measure 'No of People' = ```
+			
+			VAR SelectedCoffee = [Selected Coffee]
+			RETURN    
+			    CALCULATE (
+			        DISTINCTCOUNT(
+			            'Coffee Tasting Fact Table'[Submission ID]
+			        ),
+			        FILTER ( 
+			            'Coffee Tasting Fact Table',
+			            'Coffee Tasting Fact Table'[Favourite Coffee] = SelectedCoffee
+			    ))
+			```
+		formatString: #,0
+		lineageTag: 7befb3c3-4bec-4059-94a8-708e7014fc83
+
+	measure '% of People' =
+			
+			DIVIDE ( [No of People], [Total for All People Who Voted] )
+		formatString: 0%;-0%;0%
+		lineageTag: 27e44358-b17a-4496-8bb0-4434e1f798e6
+
+	measure '% Votes by Age Group' = ```
+			
+			VAR SelectedCoffee = [Selected Coffee]
+			VAR CoffeeVotes =
+			    CALCULATE (
+			        DISTINCTCOUNT ( 'Coffee Tasting Fact Table'[Submission ID] ),        
+			        FILTER (
+			            ALL ( 'Coffee Tasting Fact Table' ),
+			            'Coffee Tasting Fact Table'[Favourite Coffee] <> "Not Specified"
+			                && 'Coffee Tasting Fact Table'[Age Group]
+			                    = SELECTEDVALUE ( 'Coffee Tasting Fact Table'[Age Group] )
+			        )
+			    )
+			RETURN
+			    DIVIDE ( [No of People], CoffeeVotes )
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: 2474d787-7c49-41a5-b725-fa5bbf2e3388
+
+	measure 'Total Target Age Group' = ```
+			
+			CALCULATE(
+			    DISTINCTCOUNT(
+			        'Coffee Tasting Fact Table'[Submission ID]
+			    ),
+			    FILTER(
+			        'Coffee Tasting Fact Table',
+			        CONTAINSROW(        
+			            {"18-24","25-34", "35-44"},
+			            'Coffee Tasting Fact Table'[Age Group]
+			        ) &&
+			    'Coffee Tasting Fact Table'[Favourite Coffee] <> "Not Specified"
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: 77eac3a1-4fb9-4d3d-b29d-104ec94ff7f8
+
+	measure '% Votes Top Work Location' = ```
+			
+			VAR SelectedCoffee = [Selected Coffee]
+			VAR CoffeeVotes = 
+			    CALCULATE(
+			        [No of People],
+			        FILTER(
+			            All('Coffee Tasting Fact Table'),
+			            'Coffee Tasting Fact Table'[Favourite Coffee] = SelectedCoffee
+			        )
+			    )
+			VAR WorkLocationVotes = 
+			    CALCULATE(
+			        [No of People],
+			        FILTER(
+			            'Coffee Tasting Fact Table',
+			            'Coffee Tasting Fact Table'[Favourite Coffee] = SelectedCoffee
+			        )
+			    )
+			RETURN
+			    DIVIDE(
+			    WorkLocationVotes,
+			    CoffeeVotes    
+			)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 075c67c0-104d-4f55-bd1b-b01d018c4431
+
+	measure 'No of Submissions' =
+			
+			DISTINCTCOUNT ( 'Coffee Tasting Fact Table'[Submission ID] )
+		formatString: #,0
+		lineageTag: 05ab5d80-7ee7-4d4d-a08d-65c8e4f28f9b
+
+	measure 'Total for All People Who Voted' =
+			
+			CALCULATE (
+			    [No of Submissions],
+			    FILTER (
+			        ALL ( 'Coffee Tasting Fact Table' ),
+			        'Coffee Tasting Fact Table'[Favourite Coffee] <> "Not Specified"
+			    )
+			)
+		formatString: #,0
+		lineageTag: 1e1d2a3c-7f72-448a-9211-ae34f8f45e0f
+
+	measure 'Total for Selected Coffee' =
+			
+			VAR SelectedCoffee = [Selected Coffee]
+			RETURN
+			CALCULATE (
+			    [No of Submissions],
+			    FILTER (
+			        ALL ( 'Coffee Tasting Fact Table' ),
+			        'Coffee Tasting Fact Table'[Favourite Coffee] = SelectedCoffee
+			    )
+			)
+		formatString: #,0
+		lineageTag: bdff6afb-fdf7-4a4a-96f7-3beeb26b7136
+
+	measure '% Votes For Coffee' =
+			
+			DIVIDE ( [No of People], [Total for Selected Coffee] )
+		formatString: 0%;-0%;0%
+		lineageTag: 6cfcf305-692c-48ae-a74f-4caa25e97127
+
+	measure 'Home Consumption People' =
+			
+			VAR SelectedCoffee = [Selected Coffee]
+			RETURN
+			CALCULATE (
+			    [No of Submissions],
+			    FILTER (
+			        'Coffee Tasting Fact Table',
+			        'Coffee Tasting Fact Table'[Favourite Coffee] = SelectedCoffee &&
+			        'Coffee Tasting Fact Table'[Drink Coffee Location] = "At home"
+			    )
+			)
+		formatString: 0
+		lineageTag: fc1a633b-5c17-4b89-afc6-10820a56cfdd
+
+	measure 'Total Home Coffee Drinkers' =
+			
+			VAR SelectedCoffee = [Selected Coffee]
+			RETURN
+			CALCULATE (
+			    [No of Submissions],
+			    FILTER (
+			        ALL ( 'Coffee Tasting Fact Table' ),
+			        'Coffee Tasting Fact Table'[Favourite Coffee] = SelectedCoffee &&
+			        'Coffee Tasting Fact Table'[Drink Coffee Location] = "At home" &&
+			        'Coffee Tasting Fact Table'[Purchase Coffee Location] <> "Not Specified"
+			    )
+			)
+		formatString: 0
+		lineageTag: 368d6a75-57e5-4bcd-b0c5-0b804b14feeb
+
+	measure 'Home Consumption %' =
+			
+			DIVIDE ( [Home Consumption People], [Total Home Coffee Drinkers] )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 381d1c5c-fb6d-4526-bd32-aa49ee0e8956
+
+	measure 'Maximum People' = ```
+			
+			VAR SelectedCoffee = [Selected Coffee]
+			RETURN    
+			    MAXX (
+			        VALUES ( 'Coffee Tasting Fact Table'[Favourite Coffee] ),
+			        CALCULATE (
+			            COUNTROWS ( 'Coffee Tasting Fact Table' ),
+			            'Coffee Tasting Fact Table'[Favourite Coffee] = SelectedCoffee
+			        )
+			    )
+			
+			```
+		formatString: 0
+		lineageTag: 50219997-720e-4cdc-850a-71a86210d2b0
+
+	measure 'Title Text' = ```
+			
+			VAR SelectedKey = 
+			    MIN('Visual Titles'[Title Key])
+			VAR SelectedCoffee = [Selected Coffee]
+			VAR VisualTitle = 
+			    CALCULATE(
+			        MIN(
+			            'Visual Titles'[Title]
+			        ),
+			        'Visual Titles'[Title Key] = SelectedKey
+			    )
+			
+			RETURN
+			IF(
+			    SelectedCoffee = "Coffee D", 
+			    VisualTitle,
+			    SUBSTITUTE(
+			        VisualTitle,
+			        "Coffee D",
+			        [Selected Coffee]
+			    )
+			)
+			```
+		lineageTag: 17afb112-37fd-4f47-86d4-33ec7e9e8e59
+
+	column Column1
+		dataType: string
+		isHidden
+		lineageTag: f4f390f9-064d-40d9-b1f5-ee14d76333ff
+		summarizeBy: none
+		sourceColumn: Column1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition '_00 - Core Measures' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,168 @@
+table 'Coffee Equipment Expense'
+	lineageTag: f69ca9ae-b6cd-409f-ab47-1daa6793245a
+
+	measure FullTimeCoffeeDVoters =
+			
+			CALCULATE (
+			    [No of People],
+			    'Coffee Tasting Fact Table'[Employment Status] = "Employed full-time",
+			    'Coffee Tasting Fact Table'[Favourite Coffee] = "Coffee D"
+			)
+		formatString: 0
+		lineageTag: 9e3c8d17-ca50-4e8c-b2be-15a76f4e47e2
+
+	column 'Equipment Expense Group'
+		dataType: string
+		lineageTag: 69bd5a7e-7cd3-4110-beb3-7a8b552b50c1
+		summarizeBy: none
+		sourceColumn: Equipment Expense Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column Count
+		dataType: int64
+		formatString: 0
+		lineageTag: 7f245c64-3287-43e1-99da-efa081bb9f85
+		summarizeBy: sum
+		sourceColumn: Count
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Count Coffee A'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c8790cd-7673-4d4a-9434-6e6571a12541
+		summarizeBy: sum
+		sourceColumn: Count Coffee A
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Count Coffee B'
+		dataType: int64
+		formatString: 0
+		lineageTag: bd2fd831-a1f6-4395-a149-6d8d5d656c11
+		summarizeBy: sum
+		sourceColumn: Count Coffee B
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Count Coffee C'
+		dataType: int64
+		formatString: 0
+		lineageTag: 49116d3f-ab43-48fd-a282-adcc8fb8ddcf
+		summarizeBy: sum
+		sourceColumn: Count Coffee C
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Count Coffee D'
+		dataType: int64
+		formatString: 0
+		lineageTag: 465ea0f7-b019-465c-afa5-2a24a2ad7494
+		summarizeBy: sum
+		sourceColumn: Count Coffee D
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Coffee Equipment Expense' = m
+		mode: import
+		source = ```
+				let
+				  Source = coffee_dataset_source,   
+				  #"Grouped Rows" = Table.Group(
+				    Source, 
+				    {"Approximately how much have you spent on coffee equipment in the past 5 years?"}, 
+				    {{"Count", each Table.RowCount(Table.Distinct(_)), Int64.Type}}
+				  ), 
+				  #"Replaced Value" = Table.ReplaceValue(
+				    #"Grouped Rows", 
+				    "More than", 
+				    ">", 
+				    Replacer.ReplaceText, 
+				    {"Approximately how much have you spent on coffee equipment in the past 5 years?"}
+				  ), 
+				  #"Replaced Value1" = Table.ReplaceValue(
+				    #"Replaced Value", 
+				    "Less than", 
+				    "<", 
+				    Replacer.ReplaceText, 
+				    {"Approximately how much have you spent on coffee equipment in the past 5 years?"}
+				  ), 
+				  #"Filtered Rows" = Table.SelectRows(
+				    #"Replaced Value1", 
+				    each [#"Approximately how much have you spent on coffee equipment in the past 5 years?"]
+				      <> null
+				        and [#"Approximately how much have you spent on coffee equipment in the past 5 years?"]
+				      <> ""
+				  ), 
+				  #"Renamed Columns" = Table.RenameColumns(
+				    #"Filtered Rows", 
+				    {
+				      {
+				        "Approximately how much have you spent on coffee equipment in the past 5 years?", 
+				        "Equipment Expense Group"
+				      }
+				    }
+				  ), 
+				  #"Merged Queries" = Table.NestedJoin(
+				    #"Renamed Columns", 
+				    {"Equipment Expense Group"}, 
+				    #"Coffee Equipment Expense Coffee A", 
+				    {"Equipment Expense Group"}, 
+				    "Coffee Equipment Expense Coffee A", 
+				    JoinKind.LeftOuter
+				  ), 
+				  #"Expanded Coffee Equipment Expense Coffee A" = Table.ExpandTableColumn(
+				    #"Merged Queries", 
+				    "Coffee Equipment Expense Coffee A", 
+				    {"Count Coffee A"}, 
+				    {"Count Coffee A"}
+				  ), 
+				  #"Merged Queries1" = Table.NestedJoin(
+				    #"Expanded Coffee Equipment Expense Coffee A", 
+				    {"Equipment Expense Group"}, 
+				    #"Coffee Equipment Expense Coffee B", 
+				    {"Equipment Expense Group"}, 
+				    "Coffee Equipment Expense Coffee B", 
+				    JoinKind.LeftOuter
+				  ), 
+				  #"Expanded Coffee Equipment Expense Coffee B" = Table.ExpandTableColumn(
+				    #"Merged Queries1", 
+				    "Coffee Equipment Expense Coffee B", 
+				    {"Count Coffee B"}, 
+				    {"Count Coffee B"}
+				  ), 
+				  #"Merged Queries2" = Table.NestedJoin(
+				    #"Expanded Coffee Equipment Expense Coffee B", 
+				    {"Equipment Expense Group"}, 
+				    #"Coffee Equipment Expense Coffee C", 
+				    {"Equipment Expense Group"}, 
+				    "Coffee Equipment Expense Coffee C", 
+				    JoinKind.LeftOuter
+				  ), 
+				  #"Expanded Coffee Equipment Expense Coffee C" = Table.ExpandTableColumn(
+				    #"Merged Queries2", 
+				    "Coffee Equipment Expense Coffee C", 
+				    {"Count Coffee C"}, 
+				    {"Count Coffee C"}
+				  ), 
+				  #"Merged Queries3" = Table.NestedJoin(
+				    #"Expanded Coffee Equipment Expense Coffee C", 
+				    {"Equipment Expense Group"}, 
+				    #"Coffee Equipment Expense Coffee D", 
+				    {"Equipment Expense Group"}, 
+				    "Coffee Equipment Expense Coffee D", 
+				    JoinKind.LeftOuter
+				  ), 
+				  #"Expanded Coffee Equipment Expense Coffee D" = Table.ExpandTableColumn(
+				    #"Merged Queries3", 
+				    "Coffee Equipment Expense Coffee D", 
+				    {"Count Coffee D"}, 
+				    {"Count Coffee D"}
+				  )
+				in
+				  #"Expanded Coffee Equipment Expense Coffee D"
+				```
+
+	annotation PBI_ResultType = Table
+

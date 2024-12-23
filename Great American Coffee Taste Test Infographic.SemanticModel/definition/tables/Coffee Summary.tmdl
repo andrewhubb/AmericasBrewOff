@@ -1,0 +1,86 @@
+table 'Coffee Summary'
+	lineageTag: b391b5ee-3fdf-4f8c-b731-1264059e30f1
+
+	column 'Avg Acidity'
+		lineageTag: 026537a1-846b-4f85-b206-faafaf2d148f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Avg Acidity]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Avg Bitterness'
+		lineageTag: dff99dd4-36c4-4265-b4e6-1fa89cb97a4b
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Avg Bitterness]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Coffee =
+			
+			IF([Favourite Coffee] = BLANK(),
+			    "Not Specified",
+			    [Favourite Coffee]
+			)
+		lineageTag: 36cb3f7f-03ce-4e21-bb5f-bc4e52cff6c9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Favourite Coffee'
+		lineageTag: 457087f6-957b-44d4-9af9-5ba0ed68eb4e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Coffee Tasting Fact Table[Favourite Coffee]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Coffee Summary' = calculated
+		mode: import
+		source =
+				
+				VAR Acidity_Coffee_A =
+				    AVERAGE ( 'Coffee Tasting Fact Table'[Coffee A - Acidity] )
+				VAR Acidity_Coffee_B =
+				    AVERAGE ( 'Coffee Tasting Fact Table'[Coffee B - Acidity] )
+				VAR Acidity_Coffee_C =
+				    AVERAGE ( 'Coffee Tasting Fact Table'[Coffee C - Acidity] )
+				VAR Acidity_Coffee_D =
+				    AVERAGE ( 'Coffee Tasting Fact Table'[Coffee D - Acidity] )
+				VAR Bitterness_Coffee_A =
+				    AVERAGE ( 'Coffee Tasting Fact Table'[Coffee A - Bitterness] )
+				VAR Bitterness_Coffee_B =
+				    AVERAGE ( 'Coffee Tasting Fact Table'[Coffee B - Bitterness] )
+				VAR Bitterness_Coffee_C =
+				    AVERAGE ( 'Coffee Tasting Fact Table'[Coffee C - Bitterness] )
+				VAR Bitterness_Coffee_D =
+				    AVERAGE ( 'Coffee Tasting Fact Table'[Coffee D - Bitterness] )
+				RETURN
+				    SUMMARIZE(
+				        'Coffee Tasting Fact Table',
+				        'Coffee Tasting Fact Table'[Favourite Coffee],
+				        "Avg Acidity",
+				        SWITCH(
+				            'Coffee Tasting Fact Table'[Favourite Coffee],
+				            "Coffee A", Acidity_Coffee_A,
+				            "Coffee B", Acidity_Coffee_B,
+				            "Coffee C", Acidity_Coffee_C,
+				            "Coffee D", Acidity_Coffee_D
+				        ),
+				        "Avg Bitterness",
+				        SWITCH(
+				            'Coffee Tasting Fact Table'[Favourite Coffee],
+				            "Coffee A", Bitterness_Coffee_A,
+				            "Coffee B", Bitterness_Coffee_B,
+				            "Coffee C", Bitterness_Coffee_C,
+				            "Coffee D", Bitterness_Coffee_D
+				        )
+				    )
+
+	annotation PBI_Id = f4a81a4b29f0412cb84fcd9beaf2c281
+

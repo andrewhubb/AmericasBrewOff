@@ -1,0 +1,102 @@
+table '_01 - Core Measures'
+	lineageTag: bbbc8023-8b7d-4541-ab1a-1dc1f086ac02
+
+	measure 'No of People Who Voted' =
+			
+			CALCULATE (
+			    DISTINCTCOUNT ( 'Coffee Tasting Fact Table'[Submission ID] ),
+			    FILTER (
+			        ALL ( 'Coffee Tasting Fact Table' ),
+			        'Coffee Tasting Fact Table'[Favourite Coffee] <> "Not Specified"
+			    )
+			)
+		formatString: #,0
+		lineageTag: 743756dd-17d9-42b5-bde4-b1499cd335ca
+
+	measure 'Tasters Who Did Not Select' =
+			
+			CALCULATE (
+			    [No of Submissions],
+			    'Coffee Tasting Fact Table'[Favourite Coffee] = "Not Specified"
+			)
+		formatString: 0
+		lineageTag: 2fe3ed09-1c9f-48bb-a4a6-cdb45a42adac
+
+	measure '% of People Who Voted' =
+			
+			VAR TotalTasters =
+			    COUNTROWS ( ALL ( 'Coffee Tasting Fact Table' ) )
+			RETURN
+			    DIVIDE ( [No of People Who Voted], TotalTasters )
+		formatString: 0%;-0%;0%
+		lineageTag: 72970732-f09e-497e-811a-517fc7923f2a
+
+	measure 'Selected Coffee' =
+			
+			VAR SelectedRank =
+			    MIN ( 'Coffee Ranking'[Rank] )
+			RETURN
+			    CALCULATE (
+			        MIN ( 'Coffee Ranking'[Coffee] ),
+			        'Coffee Ranking'[Rank] = SelectedRank
+			    )
+		lineageTag: 57e9e83d-505e-415e-a7ee-27204e3ce29e
+
+	measure 'Coffee Title' =
+			
+			SWITCH (
+			    TRUE (),
+			    [Selected Rank] = 1, "Favourite Coffee",
+			    [Selected Rank] = 2, "2nd Favourite Coffee",
+			    [Selected Rank] = 3, "3rd Favourite Coffee",
+			    [Selected Rank] = 4, "Least Favourite Coffee",
+			    "Selected Coffee"
+			)
+		lineageTag: b2fed915-4726-4f62-ba6b-c7d10788e9f5
+
+	measure 'Coffee Acidity' =
+			
+			VAR SelectedRank = [Selected Rank]
+			RETURN
+			    CALCULATE (
+			        MIN ( 'Coffee Summary'[Avg Acidity] ),
+			        'Coffee Ranking'[Rank] = SelectedRank
+			    )
+		lineageTag: 50a65032-5ec3-494f-93ba-d8ac2328a9f0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Coffee Bitterness' =
+			
+			VAR SelectedRank = [Selected Rank]
+			RETURN
+			    CALCULATE (
+			        MIN ( 'Coffee Summary'[Avg Bitterness] ),
+			        'Coffee Ranking'[Rank] = SelectedRank
+			    )
+		lineageTag: d7a2e42d-e7c5-4672-bbf0-cad990d9ae09
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column1
+		dataType: string
+		isHidden
+		lineageTag: 82d2f813-385c-4106-9ad8-c6508c5fa007
+		summarizeBy: none
+		sourceColumn: Column1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition '_01 - Core Measures' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

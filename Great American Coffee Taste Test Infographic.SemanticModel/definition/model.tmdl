@@ -1,0 +1,33 @@
+model Model
+	culture: en-GB
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup 'Dimension Tables'
+
+	annotation PBI_QueryGroupOrder = 0
+
+annotation PBI_QueryOrder = ["coffee_dataset_source","coffee_dataset_cleaned","Home Brew Method Dim","Coffee Tasting Fact Table","Employmernt Status Dim","Ethinicity / Race Dim","Education Level Dim","Gender Dim","Political Affiliation Dim","Other Methods Dim","Coffee Type Dim","Coffee Strength Dim","Roast Level Dim","Purchase Coffee Location Dim","Drink Coffee Location Dim","Favourite Coffee Drink Dim","Coffee Additions Dim","Dairy Type Dim","Sweetener Type Dim","Preferred Coffee Type Dim","Caffeine Strength Dim","Coffee Drinking Reason Dim","Work Location Dim","_01 - Core Measures","Coffee Equipment Expense","Coffee Equipment Expense Coffee A","Coffee Equipment Expense Coffee B","Coffee Equipment Expense Coffee C","Coffee Equipment Expense Coffee D","Coffee Tasting Fact Table - Backup","Coffee Information","_00 - Core Measures","Coffee Equipment Expense Dim","description","Word Summary_pqe","z_word_rank","_02 - Smart Text Measures","Willing To Pay","Visual Titles","File Path"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.138.1452.0 (24.11)
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table DateTableTemplate_fc36830d-7bca-414a-b30f-832e5de9cf0d
+ref table '_01 - Core Measures'
+ref table 'Coffee Ranking'
+ref table 'Coffee Summary'
+ref table 'Coffee Equipment Expense'
+ref table 'Coffee Information'
+ref table '_00 - Core Measures'
+ref table '_02 - Smart Text Measures'
+ref table 'Coffee Tasting Fact Table'
+ref table 'Visual Titles'
+
+ref cultureInfo en-GB
+

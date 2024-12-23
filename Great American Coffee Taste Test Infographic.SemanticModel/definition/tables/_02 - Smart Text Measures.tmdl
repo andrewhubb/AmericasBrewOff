@@ -1,0 +1,1248 @@
+table '_02 - Smart Text Measures'
+	lineageTag: d6e5cda1-4017-4b9d-9484-aac3549e0e14
+
+	measure '% Monthly Expense Votes' = ```
+			
+			VAR SelectedCoffee = [Selected Coffee]
+			RETURN
+			DIVIDE(
+			    [Monthly Coffee Expense Votes],
+			    CALCULATE(
+			        [No of People],    
+			        FILTER(
+			            ALL('Coffee Tasting Fact Table'),
+			            'Coffee Tasting Fact Table'[Favourite Coffee] = SelectedCoffee
+			        )
+			    )
+			)
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: 700d0c4f-b0b3-4b75-b547-b53ebbc02662
+
+	measure '% Total for Target Age Group' =
+			
+			DIVIDE(
+			    [Total Target Age Group],
+			    [Total for All People Who Voted]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 53b5ba41-fe0c-456b-97f8-4ffa1d0e3d03
+
+	measure 'Coffee Type Votes' = ```
+			
+			VAR CoffeeType = 
+			    [Coffee Type Text]
+			RETURN
+			CALCULATE(    
+			    [No of People], 
+			    FILTER(
+			        'Coffee Tasting Fact Table',
+			        'Coffee Tasting Fact Table'[Preferred Coffee Type] = CoffeeType
+			    )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 4ec7a95e-dbc0-485c-958f-f8b01012bc03
+
+	measure 'Dairy Type Text' = ```
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Dairy Type]),
+			        'Coffee Tasting Fact Table'[Dairy Type] <> "None"
+			    ),
+			    [No of People],
+			    DESC
+			) 
+			
+			```
+		lineageTag: 6797cf63-89c8-405c-9a64-7a420ff71c25
+
+	measure 'Dairy Type Votes' = ```
+			
+			VAR DairyType = [Dairy Type Text] 
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',
+			        'Coffee Tasting Fact Table'[Dairy Type] = DairyType
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: 123f351c-1d00-4a14-97d1-9eac4fec69c3
+
+	measure 'Monthly Coffee Expense Text' = ```
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Monthly Coffee Expense]),
+			        'Coffee Tasting Fact Table'[Monthly Coffee Expense] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			) 
+			
+			```
+		lineageTag: 9eb07e98-8f77-4fab-84b7-33a4fd359aa1
+
+	measure 'Monthly Coffee Expense Votes' = ```
+			
+			VAR CoffeeExpense = [Monthly Coffee Expense Text] 
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',
+			        'Coffee Tasting Fact Table'[Monthly Coffee Expense] = CoffeeExpense
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: 03177720-e917-4690-9582-ab9aa3e98687
+
+	measure 'Maximum Price Paid Text' = ```
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Max Coffee Price Paid]),
+			        'Coffee Tasting Fact Table'[Max Coffee Price Paid] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			) 
+			```
+		lineageTag: 3599afe2-3353-475e-835f-c6ebb606510b
+
+	measure 'Maximum Price Paid Votes' = ```
+			
+			VAR MaxPaid = 
+			TOPN(
+			    1,    
+			    FILTER(        
+			        VALUES('Coffee Tasting Fact Table'[Max Coffee Price Paid]),
+			        'Coffee Tasting Fact Table'[Max Coffee Price Paid] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			) 
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',
+			        'Coffee Tasting Fact Table'[Max Coffee Price Paid] = MaxPaid
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: 53e28e6e-25bd-4f8b-a75f-f13e7d2fe9bc
+
+	measure 'Maximum Price Willing to Pay Votes' = ```
+			
+			VAR MaxWilling = [Maximum Price Willing to Pay Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',
+			        'Coffee Tasting Fact Table'[Max Coffee Price Willing to Pay] = MaxWilling
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: 6efbe9fb-07ea-4e8c-bd71-a3bf765f1239
+
+	measure 'Maximum Price Willing to Pay Text' = ```
+			
+			VAR SelectedCoffee = [Selected Coffee]
+			VAR MaxVotes = 
+			    MAXX(
+			        SUMMARIZE(
+			            FILTER(
+			                'Coffee Tasting Fact Table',
+			                'Coffee Tasting Fact Table'[Favourite Coffee] = SelectedCoffee &&
+			                'Coffee Tasting Fact Table'[Max Coffee Price Willing to Pay] <> "Not Specified"
+			            ),
+			            'Coffee Tasting Fact Table'[Max Coffee Price Willing to Pay],
+			            "VoteCount", CALCULATE(DISTINCTCOUNT('Coffee Tasting Fact Table'[Submission ID]))
+			        ),
+			        [VoteCount]
+			    )
+			RETURN
+			    MAXX(
+			        FILTER(
+			            SUMMARIZE(
+			                FILTER(
+			                    'Coffee Tasting Fact Table',
+			                    'Coffee Tasting Fact Table'[Favourite Coffee] = SelectedCoffee &&
+			                    'Coffee Tasting Fact Table'[Max Coffee Price Willing to Pay] <> "Not Specified"
+			                ),
+			                'Coffee Tasting Fact Table'[Max Coffee Price Willing to Pay],
+			                "VoteCount", CALCULATE(DISTINCTCOUNT('Coffee Tasting Fact Table'[Submission ID]))
+			            ),
+			            [VoteCount] = MaxVotes
+			        ),
+			        'Coffee Tasting Fact Table'[Max Coffee Price Willing to Pay]
+			    )
+			```
+		lineageTag: e16b7e97-720e-4711-ba26-f45ee3657b29
+
+	measure 'Selected Rank' =
+			
+			IF (
+			    SELECTEDVALUE ( 'Coffee Ranking'[Rank] ) = BLANK (),
+			    1,
+			    SELECTEDVALUE ( 'Coffee Ranking'[Rank] )
+			)
+		formatString: 0
+		lineageTag: 702859cd-84dd-4f41-b60d-bc0973da7f5e
+
+	measure 'Ethnicity / Race Text' = ```
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Ethnicity/Race]),
+			        'Coffee Tasting Fact Table'[Ethnicity/Race] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			) 
+			```
+		lineageTag: 1fb1a04e-13d3-4e23-b720-e316e5f1d057
+
+	measure 'Gender Text' = ```
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Gender]),
+			        'Coffee Tasting Fact Table'[Gender] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			) 
+			```
+		lineageTag: 07525846-3258-4cb7-95fa-fdc5016c991b
+
+	measure 'Education Level Text' =
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Education Level]),
+			        'Coffee Tasting Fact Table'[Education Level] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			)
+		lineageTag: 8f197f4f-6973-4096-b1a9-af8c7696adbd
+
+	measure 'Purchase Location Text' =
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Purchase Coffee Location]),
+			        'Coffee Tasting Fact Table'[Purchase Coffee Location] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			)
+		lineageTag: 760e1e8f-dce8-40ea-b7f0-174ca38c2cc7
+
+	measure 'Drink Coffee Location Text' =
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Drink Coffee Location]),
+			        'Coffee Tasting Fact Table'[Drink Coffee Location] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			)
+		lineageTag: 4486a4b3-9ee6-4920-b1bb-a90603559874
+
+	measure 'Coffee Strength Text' =
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Coffee Strength]),
+			        'Coffee Tasting Fact Table'[Coffee Strength] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			)
+		lineageTag: dadc3c81-922d-4c77-b5f6-a36234ecd127
+
+	measure 'Roast Level Text' =
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Roast Level]),
+			        'Coffee Tasting Fact Table'[Roast Level] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			)
+		lineageTag: 21a00b66-d29b-49e3-b1bd-627b934ef4c5
+
+	measure 'Coffee Type Text' =
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Preferred Coffee Type]),
+			        'Coffee Tasting Fact Table'[Preferred Coffee Type] <> "No Preference"
+			    ),
+			    [No of People],
+			    DESC
+			)
+		lineageTag: 5aacdb19-7b00-4185-8db4-6915e5f975cb
+
+	measure 'Work Location Text' =
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Work Location]),
+			        'Coffee Tasting Fact Table'[Work Location] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			)
+		lineageTag: be9da4ad-76d1-46c1-9076-fbc33fddd437
+
+	measure 'Education Level Votes' = ```
+			
+			VAR Education = 
+			[Education Level Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',
+			        'Coffee Tasting Fact Table'[Education Level] = Education
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: 8ee0a8e2-4c96-41c4-b7fd-d5007eb5b866
+
+	measure 'Education Level %' =
+			
+			DIVIDE(
+			    [Education Level Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 3c3234a9-d8e2-4857-8804-b26a45f83928
+
+	measure 'Purchase Location Votes' = ```
+			
+			VAR PurchaseLocation = 
+			[Purchase Location Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',
+			        'Coffee Tasting Fact Table'[Drink Coffee Location] = "At home" &&
+			        'Coffee Tasting Fact Table'[Purchase Coffee Location] = PurchaseLocation
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: fa34f053-a6c5-452e-9741-8defeb937554
+
+	measure 'Purchase Location %' =
+			
+			DIVIDE(
+			    [Purchase Location Votes],
+			    [Total Home Coffee Drinkers]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 54363f9a-b368-4288-b08a-a64647468065
+
+	measure 'Sweetener Text' = ```
+			
+			Var Sweetener =
+			    TOPN(
+			        1,
+			        VALUES('Coffee Tasting Fact Table'[Sweetener Type]),
+			        [No of People],
+			        DESC
+			    ) 
+			RETURN
+			SWITCH(
+			    Sweetener,
+			    "Not Sweetened",LOWER(Sweetener),
+			    "with " & LOWER(Sweetener)
+			)
+			```
+		lineageTag: e62bd05e-d11c-4561-81b6-7bdf575da43e
+
+	measure 'Coffee Description' =
+			
+			VAR SelectedRank = [Selected Rank]
+			RETURN
+			    CALCULATE (
+			        MIN ( 'Coffee Information'[Description] ),
+			        'Coffee Ranking'[Rank] = SelectedRank
+			    )
+		lineageTag: 31de792c-01ab-42ed-8055-c3ce9290ca0c
+
+	measure 'Drink Coffee Location Votes' = ```
+			
+			VAR Location = 
+			[Drink Coffee Location Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',        
+			        'Coffee Tasting Fact Table'[Drink Coffee Location] = Location
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: 66e1427a-5c7d-4cb1-90d9-3cd610c0adaa
+
+	measure 'Drink Coffee Location %' =
+			
+			DIVIDE(
+			    [Drink Coffee Location Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 9ec255d7-6e93-497c-85d8-c74bdac07fe1
+
+	measure 'Work Location Votes' = ```
+			
+			VAR WorkLocation = 
+			[Work Location Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',        
+			        'Coffee Tasting Fact Table'[Work Location] = WorkLocation
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: 012bea2e-98ad-476a-9c03-563c6f26ad7f
+
+	measure 'Work Location %' =
+			
+			DIVIDE(
+			    [Work Location Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 3ac7f6e4-45f8-4bf4-8a4e-79fa44135801
+
+	measure 'Coffee Strength Votes' = ```
+			
+			VAR CoffeeStrength = 
+			[Coffee Strength Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',        
+			        'Coffee Tasting Fact Table'[Coffee Strength] = CoffeeStrength
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: 40015963-c556-46d6-8fbd-35e7d5b8662d
+
+	measure 'Coffee Strength %' =
+			
+			DIVIDE(
+			    [Coffee Strength Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 6c55da98-a334-4072-896b-28ad6466ae52
+
+	measure 'Roast Level Votes' = ```
+			
+			VAR RoastingLevel = 
+			[Roast Level Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',        
+			        'Coffee Tasting Fact Table'[Roast Level] = RoastingLevel
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: 32dc8351-f124-41ff-a565-761de2b7091c
+
+	measure 'Roast Level %' =
+			
+			DIVIDE(
+			    [Roast Level Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: b13ca928-85ab-4679-95cf-ebb2e3889464
+
+	measure 'Coffee Type %' =
+			
+			DIVIDE(
+			    [Coffee Type Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 90a76f14-2bdd-44f9-92ca-58a009d55342
+
+	measure 'Employment Status Text' =
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Employment Status]),
+			        'Coffee Tasting Fact Table'[Employment Status] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			)
+		lineageTag: 08c72326-22e3-4f38-8f22-455a5aed88e6
+
+	measure 'Employment Status Votes' = ```
+			
+			VAR EmploymentStatus = 
+			[Employment Status Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    'Coffee Tasting Fact Table'[Employment Status] = EmploymentStatus  
+			    )
+			
+			```
+		formatString: #,0
+		lineageTag: e42fb0cf-a821-48a3-8f38-c8c1bb785e60
+
+	measure 'Employment Status %' =
+			
+			DIVIDE(
+			    [Employment Status Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: fac15e7a-42e3-4f4f-bfe6-196c51f10d33
+
+	measure 'Coffee Drinking Reason Text' =
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Coffee Drinking Reason]),
+			        'Coffee Tasting Fact Table'[Coffee Drinking Reason] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			)
+		lineageTag: f40063b0-fda7-4f6f-b133-9a9eba2eedf4
+
+	measure 'Coffee Drinking Reason Votes' = ```
+			
+			VAR DrinkReason = 
+			[Coffee Drinking Reason Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',        
+			        'Coffee Tasting Fact Table'[Coffee Drinking Reason] = DrinkReason
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: 9e9e7ea4-119d-4770-8366-415961340348
+
+	measure 'Coffee Drinking Reason %' =
+			
+			DIVIDE(
+			    [Coffee Drinking Reason Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 9d6b6878-9769-4f08-92e5-a7e6e791eb3b
+
+	measure 'Sweetener Votes' = ```
+			
+			VAR Sweetener = 
+			[Sweetener Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',        
+			        'Coffee Tasting Fact Table'[Sweetener Type] = Sweetener
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: daea1c7f-e7a8-4dd7-b6ad-ca0be089831a
+
+	measure 'Sweetener %' =
+			
+			DIVIDE(
+			    [Sweetener Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: abd4ef6d-53f4-4ab9-98b7-fd7c82c63b52
+
+	measure 'Dairy Type %' =
+			
+			DIVIDE(
+			    [Dairy Type Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 66929dd2-0042-48ec-8331-dd2273e0b41c
+
+	measure 'Home Brew Method Text' =
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Home Brew Method]),
+			        'Coffee Tasting Fact Table'[Home Brew Method] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			)
+		lineageTag: 32210328-5cde-4084-a0a7-8ef85bc6f037
+
+	measure 'Home Brew Method Votes' = ```
+			
+			VAR HomeBrew = 
+			[Home Brew Method Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',        
+			        'Coffee Tasting Fact Table'[Home Brew Method] = HomeBrew
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: 7a626dc5-d5f6-4929-bdc8-ca59e4870015
+
+	measure 'Home Brew Method %' =
+			
+			DIVIDE(
+			    [Home Brew Method Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 4c949ea4-247b-4fca-bec7-440d2a3c4d44
+
+	measure 'Ethnicity / Race Votes' = ```
+			
+			VAR Race = 
+			[Ethnicity / Race Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',        
+			        'Coffee Tasting Fact Table'[Ethnicity/Race] = Race
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: cef32cff-d222-474c-9644-19e367266c7d
+
+	measure 'Ethnicity / Race %' =
+			
+			DIVIDE(
+			    [Ethnicity / Race Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 4c04001d-a9c5-4003-a412-dd17502c372f
+
+	measure 'Gender Votes' = ```
+			
+			VAR Gender = 
+			[Gender Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',        
+			        'Coffee Tasting Fact Table'[Gender] = Gender
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: 58b9492b-5c1b-44d7-8709-c20029d9c161
+
+	measure 'Gender %' =
+			
+			DIVIDE(
+			    [Gender Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 0de05fcf-e987-4c55-9969-c18c59d64ab6
+
+	measure 'Monthly Coffee Expense %' =
+			
+			DIVIDE(
+			    [Monthly Coffee Expense Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: b79cfc91-00b8-4aef-8f7e-724c108e914c
+
+	measure 'Coffee Equipment Expense Text' = ```
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Coffee Equipment Expense]),
+			        'Coffee Tasting Fact Table'[Coffee Equipment Expense] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			) 
+			
+			```
+		lineageTag: dbc181c4-43af-423d-b2a1-19739f41b5d2
+
+	measure 'Coffee Equipment Expense Votes' = ```
+			
+			VAR Equipment = 
+			[Coffee Equipment Expense Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',        
+			        'Coffee Tasting Fact Table'[Coffee Equipment Expense] = Equipment
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: db61edcc-51f8-4bc2-a059-3550f5149c03
+
+	measure 'Coffee Equipment Expense %' =
+			
+			DIVIDE(
+			    [Coffee Equipment Expense Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 47749936-acb0-4fa3-aba8-d46c5e5f6a8f
+
+	measure 'Coffee Equipment Good Value Text' = ```
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Coffee Equipment Good Value?]),
+			        'Coffee Tasting Fact Table'[Coffee Equipment Good Value?] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			) 
+			
+			```
+		lineageTag: 0ef08d47-51d0-4ff2-bed0-b89dff00c30f
+
+	measure 'Coffee Equipment Good Value Votes' = ```
+			
+			VAR EquipmentValue = 
+			[Coffee Equipment Good Value Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',        
+			        'Coffee Tasting Fact Table'[Coffee Equipment Good Value?] = EquipmentValue
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: 6c7cea3f-9cc0-4c7f-b820-a3127b879b76
+
+	measure 'Coffee Equipment Good Value %' =
+			
+			DIVIDE(
+			    [Coffee Equipment Good Value Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: f409551e-d7ff-4bb4-9daf-f3a7e9c06cec
+
+	measure 'Like Taste of Coffee Text' =
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Like Taste of Coffee]),
+			        'Coffee Tasting Fact Table'[Like Taste of Coffee] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			)
+		lineageTag: 293384bd-6c3f-407d-8020-87848c8e7688
+
+	measure 'Like Taste of Coffee Votes' = ```
+			
+			VAR LikeTaste = 
+			[Like Taste of Coffee Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',        
+			        'Coffee Tasting Fact Table'[Like Taste of Coffee] = LikeTaste
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: bcac7a65-3e36-4916-8df9-513c1b49cd25
+
+	measure 'Like Taste of Coffee %' =
+			
+			DIVIDE(
+			    [Like Taste of Coffee Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 5215f78c-9e05-4947-af3c-ea69cf3def8c
+
+	measure 'Maximum Price Willing to Pay %' =
+			
+			DIVIDE(
+			    [Maximum Price Willing to Pay Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 35cdae74-2b8b-4a41-91d4-914b62e24c22
+
+	measure 'Maximum Price Paid %' =
+			
+			DIVIDE(
+			    [Maximum Price Paid Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 7b291131-cb7d-4a40-bf4c-2bfd306cf6fa
+
+	measure 'Cafe Good Value Text' =
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Cafe Good Value]),
+			        'Coffee Tasting Fact Table'[Cafe Good Value] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			)
+		lineageTag: 482cf3a7-5bd0-418a-8fd2-24b9f1b73a8f
+
+	measure 'Cafe Good Value Votes' = ```
+			
+			VAR GoodValue = 
+			[Cafe Good Value Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',        
+			        'Coffee Tasting Fact Table'[Cafe Good Value] = GoodValue
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: 48c3c410-e3f4-41de-b9f9-e7574ff2048d
+
+	measure 'Cafe Good Value %' =
+			
+			DIVIDE(
+			    [Cafe Good Value Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: fe74e528-5366-48e7-bfa5-c5f7a9d568d1
+
+	measure 'Favourite Coffee Drink Text' =
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Favourite Coffee Drink]),
+			        'Coffee Tasting Fact Table'[Favourite Coffee Drink] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			)
+		lineageTag: d8c42a9c-1960-4929-884b-d069d9783f87
+
+	measure 'Favourite Coffee Drink Votes' = ```
+			
+			VAR CoffeeDrink = 
+			[Favourite Coffee Drink Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',        
+			        'Coffee Tasting Fact Table'[Favourite Coffee Drink] = CoffeeDrink
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: 0651d59e-5ee0-4555-a23a-b7a99f3b134a
+
+	measure 'Favourite Coffee Drink %' =
+			
+			DIVIDE(
+			    [Favourite Coffee Drink Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 0b31ec07-1418-42a5-a981-fe4841b331a9
+
+	measure 'Sweetener (Sweetened) Text' =
+			
+			LOWER(
+			    TOPN(
+			        1,
+			        FILTER(
+			            VALUES('Coffee Tasting Fact Table'[Sweetener Type]),
+			            'Coffee Tasting Fact Table'[Sweetener Type] <> "Not Sweetened" &&
+			            'Coffee Tasting Fact Table'[Sweetener Type] <> "Not Specified"
+			        ),
+			        [No of People],
+			        DESC
+			    )
+			)
+		lineageTag: af408a65-b095-4812-9a9f-429bb48c7dfe
+
+	measure 'Sweetener (Sweetened) Votes' = ```
+			
+			VAR Sweetener = 
+			[Sweetener (Sweetened) Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',        
+			        'Coffee Tasting Fact Table'[Sweetener Type] = Sweetener
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: be4f9c01-b21a-436a-8863-f935252583a5
+
+	measure 'Sweetener (Sweetened) %' =
+			
+			DIVIDE(
+			    [Sweetener (Sweetened) Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: e33c9a56-c750-4195-a22b-8470d7d711bc
+
+	measure 'No Dairy Type Text' = ```
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Dairy Type]),
+			        'Coffee Tasting Fact Table'[Dairy Type] = "None"
+			    ),
+			    [No of People],
+			    DESC
+			) 
+			
+			```
+		lineageTag: 64ddf87d-53ae-4aa9-83de-ca59dd13c741
+
+	measure 'No Dairy Type Votes' = ```
+			
+			VAR DairyType = [No Dairy Type Text] 
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',
+			        'Coffee Tasting Fact Table'[Dairy Type] = DairyType
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: 209e7b01-c78e-4ff6-a1de-833735bf0d4a
+
+	measure 'No Dairy Type %' =
+			
+			DIVIDE(
+			    [No Dairy Type Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 948ca49f-826a-41f9-9fc0-efef2f9df076
+
+	measure 'Coffee Origin Knowledge Text' = ```
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Coffee Origin Knowledge]),
+			        'Coffee Tasting Fact Table'[Coffee Origin Knowledge] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			) 
+			```
+		lineageTag: 82622601-e52a-4e93-8bd8-aa6873003b5a
+
+	measure 'Coffee Origin Knowledge Votes' = ```
+			
+			VAR Origin = 
+			[Coffee Origin Knowledge Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',        
+			        'Coffee Tasting Fact Table'[Coffee Origin Knowledge] = Origin
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: 0d9c26e5-d207-43c8-a2cf-5137fbee934b
+
+	measure 'Coffee Origin Knowledge %' =
+			
+			DIVIDE(
+			    [Coffee Origin Knowledge Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 579bd347-1908-404a-b29b-9a9bd54b477a
+
+	measure 'No of Children Text' =
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Number of Children]),
+			        'Coffee Tasting Fact Table'[Number of Children] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			)
+		lineageTag: 295ccdf2-e3a4-4a7e-9de6-82a3641ef2ca
+
+	measure 'No of Children Votes' = ```
+			
+			VAR NoOfChildren = 
+			[No of Children Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',        
+			        'Coffee Tasting Fact Table'[Number of Children] = NoOfChildren
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: 9fae0600-6bb9-43ee-b050-5fbc2867e3e1
+
+	measure 'No of Children %' =
+			
+			DIVIDE(
+			    [No of Children Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: fc2f8025-5ef3-4993-a1e4-d5946e5de958
+
+	measure 'Political Affiliation Text' =
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Political Affiliation]),
+			        'Coffee Tasting Fact Table'[Political Affiliation] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			)
+		lineageTag: bd226a3b-ad66-4398-9bf2-ef8d612731c7
+
+	measure 'Political Affiliation Votes' = ```
+			
+			VAR Affiliation = 
+			[Political Affiliation Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',        
+			        'Coffee Tasting Fact Table'[Political Affiliation] = Affiliation
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: ad218505-682a-470c-917d-34adf4743a73
+
+	measure 'No of Children Text for Display' = ```
+			
+			VAR NoOfChildren =
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Number of Children]),
+			        'Coffee Tasting Fact Table'[Number of Children] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			)
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    NoOfChildren = "None","no",
+			    LEFT(NoOfChildren,1) = "<", "less than" & 
+			    RIGHT(NoOfChildren,LEN(NoOfChildren)-1),
+			    LEFT(NoOfChildren,1) = ">", "More than" & 
+			    RIGHT(NoOfChildren,LEN(NoOfChildren)-1),
+			    NoOfChildren
+			)
+			```
+		lineageTag: d5527ea1-d43d-494c-a4dd-7d3027c9185d
+
+	measure 'Political Affiliation %' =
+			
+			DIVIDE(
+			    [Political Affiliation Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: be85bdba-e923-43f8-9171-6da59e1671cc
+
+	measure 'Coffee D Preference Votes' = ```
+			
+			VAR Preference = 
+			[Coffee D Preference Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',        
+			        'Coffee Tasting Fact Table'[Coffee D - Personal Preference] = Preference
+			   )
+			)
+			```
+		formatString: 0
+		lineageTag: 719b6168-5f7e-4ea2-a1bf-2828b2b4e805
+
+	measure 'Coffee D Preference Text' =
+			
+			TOPN(
+			    1,
+			    FILTER(
+			    VALUES('Coffee Tasting Fact Table'[Coffee D - Personal Preference]),
+			    ('Coffee Tasting Fact Table'[Coffee D - Personal Preference]) <> BLANK()
+			    ),
+			    [No of People],
+			    DESC
+			)
+		formatString: 0
+		lineageTag: f6d0db77-d83a-4098-a990-b47216484306
+
+	measure 'Coffee D Preference %' =
+			
+			DIVIDE(
+			    [Coffee D Preference Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 18f17321-9e5e-4f4e-b798-7fd2e83e9b86
+
+	measure 'Daily Consumption Text' =
+			
+			TOPN(
+			    1,
+			    FILTER(
+			        VALUES('Coffee Tasting Fact Table'[Daily Consumption]),
+			        'Coffee Tasting Fact Table'[Daily Consumption] <> "Not Specified"
+			    ),
+			    [No of People],
+			    DESC
+			)
+		lineageTag: 8680d086-1d6b-4c2a-adbb-7cddc9a701a1
+
+	measure 'Daily Consumption Votes' = ```
+			
+			VAR Consumption = 
+			[Daily Consumption Text]
+			RETURN
+			CALCULATE(    
+			    [No of People],    
+			    FILTER(
+			        'Coffee Tasting Fact Table',        
+			        'Coffee Tasting Fact Table'[Daily Consumption] = Consumption
+			    )
+			)
+			```
+		formatString: #,0
+		lineageTag: 1cecefb3-90f7-4cb9-82fc-9a1776d1fe45
+
+	measure 'Daily Consumption %' =
+			
+			DIVIDE(
+			    [Daily Consumption Votes],
+			    [Total for Selected Coffee]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 80d9c398-6a1e-4ec7-955a-576c37d13964
+
+	column Column1
+		dataType: string
+		isHidden
+		lineageTag: e920c565-afba-4bb1-bb56-3c3caf4dd4ad
+		summarizeBy: none
+		sourceColumn: Column1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition '_02 - Smart Text Measures' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

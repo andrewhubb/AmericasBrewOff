@@ -1,0 +1,25 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/1.2.0/schema.json",
+  "displayName": "Default View",
+  "name": "Bookmark25b74c646d3e07026499",
+  "options": {
+    "targetVisualNames": []
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "ReportSectionc9ecdc1df6aafadfdce1",
+    "sections": {
+      "ReportSectionc9ecdc1df6aafadfdce1": {
+        "visualContainers": {
+          "fd41c04ec22d76cdfa09": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {}
+            }
+          }
+        }
+      }
+    },
+    "objects": {}
+  }
+}
