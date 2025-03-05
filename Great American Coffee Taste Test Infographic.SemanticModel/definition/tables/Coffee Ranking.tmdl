@@ -1,50 +1,47 @@
 table 'Coffee Ranking'
-	lineageTag: 60d39c22-4f0a-42a7-8077-a4b775f3529e
+	lineageTag: 94e2fc96-6f6c-4cf4-822e-2c3d5f3bb85d
 
 	column Coffee
-		lineageTag: 116ca27b-b090-4e12-8f4d-6150d23c26db
+		dataType: string
+		lineageTag: 5d661ac6-e0c7-475c-99ba-13e2540cb584
 		summarizeBy: none
-		isNameInferred
-		sourceColumn: [Coffee]
-
-		annotation SummarizationSetBy = Automatic
-
-	column Rank
-		formatString: 0
-		lineageTag: 0197ecef-ef1a-4d51-8247-bee420d20e78
-		summarizeBy: sum
-		isNameInferred
-		sourceColumn: [Rank]
+		sourceColumn: Coffee
 
 		annotation SummarizationSetBy = Automatic
 
 	column '# Votes'
-		lineageTag: 5d6b50a6-054b-4d60-8733-01ab34fcc9ea
+		dataType: int64
+		formatString: 0
+		lineageTag: dff34b4a-6999-4561-baa4-a6974ba829d8
 		summarizeBy: sum
-		isNameInferred
-		sourceColumn: [# Votes]
+		sourceColumn: # Votes
 
 		annotation SummarizationSetBy = Automatic
 
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
+	column Rank
+		dataType: int64
+		formatString: 0
+		lineageTag: b796fdce-9090-44e3-8b61-4c01743c1dce
+		summarizeBy: sum
+		sourceColumn: Rank
 
-	partition 'Coffee Ranking' = calculated
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Coffee Ranking' = m
 		mode: import
-		source = ```
-				
-				SELECTCOLUMNS (
-				    FILTER (
-				        VALUES ( 'Coffee Tasting Fact Table'[Favourite Coffee] ),
-				        NOT ISBLANK ( 'Coffee Tasting Fact Table'[Favourite Coffee] )
-				    ),
-				    "Coffee", 'Coffee Tasting Fact Table'[Favourite Coffee],
-				    "# Votes", CALCULATE ( DISTINCTCOUNT( 'Coffee Tasting Fact Table'[Submission ID]), 'Coffee Tasting Fact Table'[Favourite Coffee] = EARLIER ( 'Coffee Tasting Fact Table'[Favourite Coffee] ) ),    
-				    "Rank", RANKX (
-				        ALL ( 'Coffee Tasting Fact Table'[Favourite Coffee] ),
-				        CALCULATE ( DISTINCTCOUNT( 'Coffee Tasting Fact Table'[Submission ID]), 'Coffee Tasting Fact Table'[Favourite Coffee] = EARLIER ( 'Coffee Tasting Fact Table'[Favourite Coffee] ) )  
-				    )
-				)
-				```
+		source =
+				let
+				    Source = coffee_dataset_cleaned,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Submission ID", "Favourite Coffee"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+				    #"Grouped Rows" = Table.Group(#"Removed Duplicates", {"Favourite Coffee"}, {{"# Votes", each Table.RowCount(_), Int64.Type}}),
+				    #"Sorted Rows" = Table.Sort(#"Grouped Rows",{{"# Votes", Order.Descending}}),
+				    #"Added Index" = Table.AddIndexColumn(#"Sorted Rows", "Index", 1, 1, Int64.Type),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "Rank"}, {"Favourite Coffee", "Coffee"}})
+				in
+				    #"Renamed Columns"
 
-	annotation PBI_Id = de4d4c43ce6547d1a113a00a1e920b22
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
 

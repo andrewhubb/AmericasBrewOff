@@ -1,12 +1,12 @@
-relationship e7955b5c-16fa-4681-a375-dbcef0b04247
-	crossFilteringBehavior: bothDirections
-	fromCardinality: one
-	fromColumn: 'Coffee Information'.Coffee
-	toColumn: 'Coffee Ranking'.Coffee
-
-relationship 3d0f3e4c-f042-4594-8dc3-41fcaf49ab43
+relationship d5e0108c-88a1-e44a-8016-4ff463f2ff67
 	crossFilteringBehavior: bothDirections
 	fromCardinality: one
 	fromColumn: 'Coffee Summary'.Coffee
+	toColumn: 'Coffee Ranking'.Coffee
+
+relationship 9c4d1280-c2b4-1b65-414a-249bc2429297
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'Coffee Information'.Coffee
 	toColumn: 'Coffee Ranking'.Coffee
 

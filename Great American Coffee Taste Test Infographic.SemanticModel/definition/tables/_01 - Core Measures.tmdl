@@ -34,7 +34,7 @@ table '_01 - Core Measures'
 	measure 'Selected Coffee' =
 			
 			VAR SelectedRank =
-			    MIN ( 'Coffee Ranking'[Rank] )
+			   [Selected Rank]
 			RETURN
 			    CALCULATE (
 			        MIN ( 'Coffee Ranking'[Coffee] ),
@@ -60,7 +60,7 @@ table '_01 - Core Measures'
 			RETURN
 			    CALCULATE (
 			        MIN ( 'Coffee Summary'[Avg Acidity] ),
-			        'Coffee Ranking'[Rank] = SelectedRank
+			        'Coffee Ranking Old'[Ranking] = SelectedRank
 			    )
 		lineageTag: 50a65032-5ec3-494f-93ba-d8ac2328a9f0
 
@@ -72,7 +72,7 @@ table '_01 - Core Measures'
 			RETURN
 			    CALCULATE (
 			        MIN ( 'Coffee Summary'[Avg Bitterness] ),
-			        'Coffee Ranking'[Rank] = SelectedRank
+			        'Coffee Ranking Old'[Ranking] = SelectedRank
 			    )
 		lineageTag: d7a2e42d-e7c5-4672-bbf0-cad990d9ae09
 

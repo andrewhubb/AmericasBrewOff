@@ -397,7 +397,7 @@ table '_02 - Smart Text Measures'
 			RETURN
 			    CALCULATE (
 			        MIN ( 'Coffee Information'[Description] ),
-			        'Coffee Ranking'[Rank] = SelectedRank
+			        'Coffee Ranking Old'[Ranking] = SelectedRank
 			    )
 		lineageTag: 31de792c-01ab-42ed-8055-c3ce9290ca0c
 

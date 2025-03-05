@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.4.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.5.0/schema.json",
   "name": "fd41c04ec22d76cdfa09",
   "position": {
     "x": 43.14430151374944,
@@ -705,7 +705,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "Filter85a24501da69e0231969",
+        "name": "2eee40a566dcef61a053",
         "field": {
           "Column": {
             "Expression": {
@@ -716,7 +716,7 @@
             "Property": "Rank"
           }
         },
-        "type": "Advanced",
+        "type": "Categorical",
         "filter": {
           "Version": 2,
           "From": [
@@ -729,23 +729,28 @@
           "Where": [
             {
               "Condition": {
-                "Comparison": {
-                  "ComparisonKind": 0,
-                  "Left": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Source": "c"
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "c"
+                          }
+                        },
+                        "Property": "Rank"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "1L"
                         }
-                      },
-                      "Property": "Rank"
-                    }
-                  },
-                  "Right": {
-                    "Literal": {
-                      "Value": "1L"
-                    }
-                  }
+                      }
+                    ]
+                  ]
                 }
               }
             }

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.4.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.5.0/schema.json",
   "name": "63d11c374458a8af0178",
   "position": {
     "x": 561.13419603099157,
@@ -813,7 +813,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "Filtere8e49a5bd3dae94339f6",
+        "name": "b81ddeb26c1e7b030ae6",
         "field": {
           "Column": {
             "Expression": {
@@ -824,7 +824,7 @@
             "Property": "Rank"
           }
         },
-        "type": "Advanced",
+        "type": "Categorical",
         "filter": {
           "Version": 2,
           "From": [
@@ -837,23 +837,28 @@
           "Where": [
             {
               "Condition": {
-                "Comparison": {
-                  "ComparisonKind": 0,
-                  "Left": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Source": "c"
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "c"
+                          }
+                        },
+                        "Property": "Rank"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "3L"
                         }
-                      },
-                      "Property": "Rank"
-                    }
-                  },
-                  "Right": {
-                    "Literal": {
-                      "Value": "3L"
-                    }
-                  }
+                      }
+                    ]
+                  ]
                 }
               }
             }

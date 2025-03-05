@@ -4,14 +4,14 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 7545.8823529411766,
-        "y": 49342.352941176468
+        "x": 7745,
+        "y": 58735
       },
       "nodes": [
         {
           "location": {
-            "x": 11415.3510794414,
-            "y": 50538.021838006796
+            "x": 9375.3510794414,
+            "y": 59036.647821008679
           },
           "nodeIndex": "_01 - Core Measures",
           "nodeLineageTag": "bbbc8023-8b7d-4541-ab1a-1dc1f086ac02",
@@ -19,25 +19,12 @@
             "height": 104,
             "width": 234
           },
-          "zIndex": 6
-        },
-        {
-          "location": {
-            "x": 8172.9962566052091,
-            "y": 49658.771752840665
-          },
-          "nodeIndex": "Coffee Ranking",
-          "nodeLineageTag": "60d39c22-4f0a-42a7-8077-a4b775f3529e",
-          "size": {
-            "height": 200,
-            "width": 234
-          },
           "zIndex": 7
         },
         {
           "location": {
             "x": 7852.9962566052091,
-            "y": 49445.771752840665
+            "y": 59094.397735842547
           },
           "nodeIndex": "Coffee Summary",
           "nodeLineageTag": "b391b5ee-3fdf-4f8c-b731-1264059e30f1",
@@ -45,12 +32,12 @@
             "height": 155,
             "width": 234
           },
-          "zIndex": 4
+          "zIndex": 3
         },
         {
           "location": {
-            "x": 11089.154801984028,
-            "y": 49913.709231549132
+            "x": 8949.1548019840284,
+            "y": 58942.335214551014
           },
           "nodeIndex": "Coffee Equipment Expense",
           "nodeLineageTag": "f69ca9ae-b6cd-409f-ab47-1daa6793245a",
@@ -58,12 +45,12 @@
             "height": 152,
             "width": 234
           },
-          "zIndex": 5
+          "zIndex": 6
         },
         {
           "location": {
             "x": 7881.1962774573713,
-            "y": 49659.837243529895
+            "y": 59308.463226531778
           },
           "nodeIndex": "Coffee Tasting Fact Table",
           "nodeLineageTag": "7ee3c6e6-b101-41c3-a9e7-b755ca3f0a47",
@@ -71,12 +58,12 @@
             "height": 300,
             "width": 234
           },
-          "zIndex": 8
+          "zIndex": 4
         },
         {
           "location": {
             "x": 8419.3510794414,
-            "y": 49429.08549735682
+            "y": 59077.7114803587
           },
           "nodeIndex": "Coffee Information",
           "nodeLineageTag": "cc4d187e-d560-4381-9019-70b6a290d706",
@@ -84,12 +71,12 @@
             "height": 128,
             "width": 234
           },
-          "zIndex": 2
+          "zIndex": 1
         },
         {
           "location": {
             "x": 9457.3510794414,
-            "y": 49706.279535545531
+            "y": 59354.905518547414
           },
           "nodeIndex": "_00 - Core Measures",
           "nodeLineageTag": "3b3c29f1-b57c-42aa-9a89-420270495572",
@@ -97,12 +84,12 @@
             "height": 104,
             "width": 234
           },
-          "zIndex": 3
+          "zIndex": 2
         },
         {
           "location": {
             "x": 9450.6451970884573,
-            "y": 49856.789012115434
+            "y": 59505.414995117317
           },
           "nodeIndex": "_02 - Smart Text Measures",
           "nodeLineageTag": "d6e5cda1-4017-4b9d-9484-aac3549e0e14",
@@ -110,12 +97,12 @@
             "height": 124,
             "width": 234
           },
-          "zIndex": 9
+          "zIndex": 5
         },
         {
           "location": {
-            "x": 4078.1548019840284,
-            "y": 19297.251966003765
+            "x": 8955.9325797618058,
+            "y": 59417.485298542684
           },
           "nodeIndex": "Visual Titles",
           "nodeLineageTag": "9608a48f-911e-4e91-b998-c31638eb3bcf",
@@ -123,11 +110,36 @@
             "height": 128,
             "width": 234
           },
-          "zIndex": 1
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 8172.9962566052091,
+            "y": 59307.397735842547
+          },
+          "nodeIndex": "Coffee Ranking Old",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 8502.6777589388512,
+            "y": 59348.3683408784
+          },
+          "nodeIndex": "Coffee Ranking",
+          "nodeLineageTag": "94e2fc96-6f6c-4cf4-822e-2c3d5f3bb85d",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 10
         }
       ],
       "name": "All tables",
-      "zoomValue": 170,
+      "zoomValue": 80,
       "pinKeyFieldsToTop": false,
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,

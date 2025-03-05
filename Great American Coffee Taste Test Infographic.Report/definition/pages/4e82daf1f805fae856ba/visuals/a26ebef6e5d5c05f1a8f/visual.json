@@ -1,0 +1,85 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.5.0/schema.json",
+  "name": "a26ebef6e5d5c05f1a8f",
+  "position": {
+    "x": 10.119385106807746,
+    "y": 0,
+    "z": 0,
+    "height": 300.82172090237572,
+    "width": 395.575963266121,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Coffee Ranking"
+                    }
+                  },
+                  "Property": "Coffee"
+                }
+              },
+              "queryRef": "Coffee Ranking.Coffee",
+              "nativeQueryRef": "Coffee"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Coffee Ranking"
+                    }
+                  },
+                  "Property": "Rank"
+                }
+              },
+              "queryRef": "Sum(Coffee Ranking.Rank)",
+              "nativeQueryRef": "Rank"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Coffee Ranking"
+                        }
+                      },
+                      "Property": "# Votes"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(Coffee Ranking.# Votes)",
+              "nativeQueryRef": "Sum of # Votes"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_01 - Core Measures"
+                    }
+                  },
+                  "Property": "Selected Coffee"
+                }
+              },
+              "queryRef": "_01 - Core Measures.Selected Coffee",
+              "nativeQueryRef": "Selected Coffee"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

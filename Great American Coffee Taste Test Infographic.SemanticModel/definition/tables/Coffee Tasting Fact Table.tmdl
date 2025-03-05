@@ -1,14 +1,6 @@
 table 'Coffee Tasting Fact Table'
 	lineageTag: 7ee3c6e6-b101-41c3-a9e7-b755ca3f0a47
 
-	column 'Submission ID'
-		dataType: string
-		lineageTag: 1473f2ee-fc86-47cb-bdaa-3a2dd04bcdd6
-		summarizeBy: none
-		sourceColumn: Submission ID
-
-		annotation SummarizationSetBy = Automatic
-
 	column 'Age Group'
 		dataType: string
 		lineageTag: f4e61ded-36b5-4659-a02c-e268f1564deb
@@ -460,6 +452,14 @@ table 'Coffee Tasting Fact Table'
 		lineageTag: 1c298217-d784-49d4-af16-a0f353943f00
 		summarizeBy: sum
 		sourceColumn: Max Monthly Expense
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Submission ID'
+		dataType: string
+		lineageTag: 216d7d11-460c-4aa5-a32a-202031e8585c
+		summarizeBy: none
+		sourceColumn: Submission ID
 
 		annotation SummarizationSetBy = Automatic
 

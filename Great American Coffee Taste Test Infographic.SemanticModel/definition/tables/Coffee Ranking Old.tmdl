@@ -1,0 +1,49 @@
+table 'Coffee Ranking Old'
+	lineageTag: 60d39c22-4f0a-42a7-8077-a4b775f3529e
+
+	column Coffee
+		lineageTag: 116ca27b-b090-4e12-8f4d-6150d23c26db
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Coffee]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ranking
+		formatString: 0
+		lineageTag: 0197ecef-ef1a-4d51-8247-bee420d20e78
+		summarizeBy: sum
+		sourceColumn: [Rank]
+
+		annotation SummarizationSetBy = Automatic
+
+	column '# Votes'
+		lineageTag: 5d6b50a6-054b-4d60-8733-01ab34fcc9ea
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [# Votes]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'Coffee Ranking Old' = calculated
+		mode: import
+		source = ```
+				
+				SELECTCOLUMNS (
+				    FILTER (
+				        VALUES ( 'Coffee Tasting Fact Table'[Favourite Coffee] ),
+				        NOT ISBLANK ( 'Coffee Tasting Fact Table'[Favourite Coffee] )
+				    ),
+				    "Coffee", 'Coffee Tasting Fact Table'[Favourite Coffee],
+				    "# Votes", CALCULATE ( DISTINCTCOUNT( 'Coffee Tasting Fact Table'[Submission ID]), 'Coffee Tasting Fact Table'[Favourite Coffee] = EARLIER ( 'Coffee Tasting Fact Table'[Favourite Coffee] ) ),    
+				    "Rank", RANKX (
+				        ALL ( 'Coffee Tasting Fact Table'[Favourite Coffee] ),
+				        CALCULATE ( DISTINCTCOUNT( 'Coffee Tasting Fact Table'[Submission ID]), 'Coffee Tasting Fact Table'[Favourite Coffee] = EARLIER ( 'Coffee Tasting Fact Table'[Favourite Coffee] ) )  
+				    )
+				)
+				```
+
+	annotation PBI_Id = de4d4c43ce6547d1a113a00a1e920b22
+

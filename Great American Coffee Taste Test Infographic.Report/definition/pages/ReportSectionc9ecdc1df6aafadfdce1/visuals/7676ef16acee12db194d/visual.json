@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.4.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.5.0/schema.json",
   "name": "7676ef16acee12db194d",
   "position": {
     "x": 40,
@@ -47,7 +47,7 @@
                             "From": [
                               {
                                 "Name": "c",
-                                "Entity": "Coffee Ranking",
+                                "Entity": "Coffee Ranking Old",
                                 "Type": 0
                               }
                             ],
@@ -76,7 +76,7 @@
                                             "Source": "c"
                                           }
                                         },
-                                        "Property": "Rank"
+                                        "Property": "Ranking"
                                       }
                                     },
                                     "Right": {

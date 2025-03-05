@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.4.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.5.0/schema.json",
   "name": "427417c54ad9c4a35f95",
   "position": {
     "x": 40,
@@ -184,7 +184,7 @@
                     }
                   },
                   {
-                    "value": " of the votes it was a close result for ",
+                    "value": " of the votes it was a tie for  ",
                     "textStyle": {
                       "fontFamily": "DIN",
                       "fontSize": "14pt",
@@ -198,7 +198,7 @@
                         "propertyName": "expr"
                       },
                       "selector": {
-                        "id": "Coffee Rank 3"
+                        "id": "Value 3"
                       }
                     },
                     "textStyle": {
@@ -222,7 +222,7 @@
                         "propertyName": "expr"
                       },
                       "selector": {
-                        "id": "Coffee Rank 4"
+                        "id": "Value 4"
                       }
                     },
                     "textStyle": {
@@ -256,31 +256,7 @@
                     }
                   },
                   {
-                    "value": " and ",
-                    "textStyle": {
-                      "fontFamily": "DIN",
-                      "fontSize": "14pt",
-                      "color": "#666666"
-                    }
-                  },
-                  {
-                    "value": {
-                      "propertyIdentifier": {
-                        "objectName": "values",
-                        "propertyName": "expr"
-                      },
-                      "selector": {
-                        "id": "Votes Rank 4"
-                      }
-                    },
-                    "textStyle": {
-                      "fontFamily": "DIN",
-                      "fontSize": "14pt",
-                      "color": "#666666"
-                    }
-                  },
-                  {
-                    "value": " votes, respectively. ",
+                    "value": " votes. ",
                     "textStyle": {
                       "fontFamily": "DIN",
                       "fontSize": "14pt",
@@ -304,7 +280,7 @@
                     }
                   },
                   {
-                    "value": " people in the taste test did not vote for a favourite coffee. In the analysis we have focused on the winning coffee and and the people who voted it their favourite all the blank responses to questions have been filtered out from the information shown to allow you to focus on actual responses.",
+                    "value": " people in the taste test did not vote for a favourite coffee. Our analysis focuses on the winning coffee and the people who voted for it as their favorite; we filtered out all blank responses to focus on actual responses.",
                     "textStyle": {
                       "fontFamily": "DIN",
                       "fontSize": "14pt",
@@ -332,7 +308,7 @@
                             "From": [
                               {
                                 "Name": "c",
-                                "Entity": "Coffee Ranking",
+                                "Entity": "Coffee Ranking Old",
                                 "Type": 0
                               }
                             ],
@@ -361,7 +337,7 @@
                                             "Source": "c"
                                           }
                                         },
-                                        "Property": "Rank"
+                                        "Property": "Ranking"
                                       }
                                     },
                                     "Right": {
@@ -427,7 +403,7 @@
                             "From": [
                               {
                                 "Name": "c",
-                                "Entity": "Coffee Ranking",
+                                "Entity": "Coffee Ranking Old",
                                 "Type": 0
                               },
                               {
@@ -461,7 +437,7 @@
                                             "Source": "c"
                                           }
                                         },
-                                        "Property": "Rank"
+                                        "Property": "Ranking"
                                       }
                                     },
                                     "Right": {
@@ -568,7 +544,7 @@
                             "From": [
                               {
                                 "Name": "c",
-                                "Entity": "Coffee Ranking",
+                                "Entity": "Coffee Ranking Old",
                                 "Type": 0
                               }
                             ],
@@ -597,7 +573,7 @@
                                             "Source": "c"
                                           }
                                         },
-                                        "Property": "Rank"
+                                        "Property": "Ranking"
                                       }
                                     },
                                     "Right": {
@@ -670,7 +646,7 @@
                             "From": [
                               {
                                 "Name": "c",
-                                "Entity": "Coffee Ranking",
+                                "Entity": "Coffee Ranking Old",
                                 "Type": 0
                               }
                             ],
@@ -704,7 +680,7 @@
                                       "Source": "c"
                                     }
                                   },
-                                  "Property": "Rank"
+                                  "Property": "Ranking"
                                 },
                                 "Name": "Coffee Ranking.Rank"
                               }
@@ -721,7 +697,7 @@
                                             "Source": "c"
                                           }
                                         },
-                                        "Property": "Rank"
+                                        "Property": "Ranking"
                                       }
                                     },
                                     "Right": {
@@ -787,7 +763,7 @@
                             "From": [
                               {
                                 "Name": "c",
-                                "Entity": "Coffee Ranking",
+                                "Entity": "Coffee Ranking Old",
                                 "Type": 0
                               }
                             ],
@@ -810,7 +786,7 @@
                                       "Source": "c"
                                     }
                                   },
-                                  "Property": "Rank"
+                                  "Property": "Ranking"
                                 },
                                 "Name": "Coffee Ranking.Rank"
                               }
@@ -827,7 +803,7 @@
                                             "Source": "c"
                                           }
                                         },
-                                        "Property": "Rank"
+                                        "Property": "Ranking"
                                       }
                                     },
                                     "Right": {
@@ -893,7 +869,7 @@
                             "From": [
                               {
                                 "Name": "c",
-                                "Entity": "Coffee Ranking",
+                                "Entity": "Coffee Ranking Old",
                                 "Type": 0
                               },
                               {
@@ -927,7 +903,7 @@
                                             "Source": "c"
                                           }
                                         },
-                                        "Property": "Rank"
+                                        "Property": "Ranking"
                                       }
                                     },
                                     "Right": {
@@ -978,219 +954,7 @@
                             "From": [
                               {
                                 "Name": "c",
-                                "Entity": "Coffee Ranking",
-                                "Type": 0
-                              }
-                            ],
-                            "Select": [
-                              {
-                                "Column": {
-                                  "Expression": {
-                                    "SourceRef": {
-                                      "Source": "c"
-                                    }
-                                  },
-                                  "Property": "Coffee"
-                                },
-                                "Name": "Coffee Ranking.Coffee"
-                              },
-                              {
-                                "Column": {
-                                  "Expression": {
-                                    "SourceRef": {
-                                      "Source": "c"
-                                    }
-                                  },
-                                  "Property": "Rank"
-                                },
-                                "Name": "Coffee Ranking.Rank"
-                              }
-                            ],
-                            "Where": [
-                              {
-                                "Condition": {
-                                  "Comparison": {
-                                    "ComparisonKind": 0,
-                                    "Left": {
-                                      "Column": {
-                                        "Expression": {
-                                          "SourceRef": {
-                                            "Source": "c"
-                                          }
-                                        },
-                                        "Property": "Rank"
-                                      }
-                                    },
-                                    "Right": {
-                                      "Literal": {
-                                        "Value": "3L"
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            ],
-                            "OrderBy": [
-                              {
-                                "Direction": 1,
-                                "Expression": {
-                                  "Column": {
-                                    "Expression": {
-                                      "SourceRef": {
-                                        "Source": "c"
-                                      }
-                                    },
-                                    "Property": "Coffee"
-                                  }
-                                }
-                              }
-                            ]
-                          }
-                        }
-                      },
-                      "Property": "Coffee Ranking.Coffee"
-                    }
-                  },
-                  "IncludeAllTypes": 1
-                },
-                "Annotations": {
-                  "NaturalLanguage": {
-                    "version": 1,
-                    "kind": "NaturalLanguage",
-                    "annotation": {
-                      "name": "Coffee Rank 3",
-                      "utterance": "Coffee Rank 3"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "id": "Coffee Rank 3"
-          }
-        },
-        {
-          "properties": {
-            "expr": {
-              "expr": {
-                "Min": {
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "Subquery": {
-                          "Query": {
-                            "Version": 2,
-                            "From": [
-                              {
-                                "Name": "c",
-                                "Entity": "Coffee Ranking",
-                                "Type": 0
-                              }
-                            ],
-                            "Select": [
-                              {
-                                "Column": {
-                                  "Expression": {
-                                    "SourceRef": {
-                                      "Source": "c"
-                                    }
-                                  },
-                                  "Property": "Coffee"
-                                },
-                                "Name": "Coffee Ranking.Coffee"
-                              },
-                              {
-                                "Column": {
-                                  "Expression": {
-                                    "SourceRef": {
-                                      "Source": "c"
-                                    }
-                                  },
-                                  "Property": "Rank"
-                                },
-                                "Name": "Coffee Ranking.Rank"
-                              }
-                            ],
-                            "Where": [
-                              {
-                                "Condition": {
-                                  "Comparison": {
-                                    "ComparisonKind": 0,
-                                    "Left": {
-                                      "Column": {
-                                        "Expression": {
-                                          "SourceRef": {
-                                            "Source": "c"
-                                          }
-                                        },
-                                        "Property": "Rank"
-                                      }
-                                    },
-                                    "Right": {
-                                      "Literal": {
-                                        "Value": "4L"
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            ],
-                            "OrderBy": [
-                              {
-                                "Direction": 1,
-                                "Expression": {
-                                  "Column": {
-                                    "Expression": {
-                                      "SourceRef": {
-                                        "Source": "c"
-                                      }
-                                    },
-                                    "Property": "Coffee"
-                                  }
-                                }
-                              }
-                            ]
-                          }
-                        }
-                      },
-                      "Property": "Coffee Ranking.Coffee"
-                    }
-                  },
-                  "IncludeAllTypes": 1
-                },
-                "Annotations": {
-                  "NaturalLanguage": {
-                    "version": 1,
-                    "kind": "NaturalLanguage",
-                    "annotation": {
-                      "name": "Coffee Rank 4",
-                      "utterance": "Coffee Rank 4"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "id": "Coffee Rank 4"
-          }
-        },
-        {
-          "properties": {
-            "expr": {
-              "expr": {
-                "Min": {
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "Subquery": {
-                          "Query": {
-                            "Version": 2,
-                            "From": [
-                              {
-                                "Name": "c",
-                                "Entity": "Coffee Ranking",
+                                "Entity": "Coffee Ranking Old",
                                 "Type": 0
                               }
                             ],
@@ -1224,7 +988,7 @@
                                       "Source": "c"
                                     }
                                   },
-                                  "Property": "Rank"
+                                  "Property": "Ranking"
                                 },
                                 "Name": "Coffee Ranking.Rank"
                               }
@@ -1241,7 +1005,7 @@
                                             "Source": "c"
                                           }
                                         },
-                                        "Property": "Rank"
+                                        "Property": "Ranking"
                                       }
                                     },
                                     "Right": {
@@ -1307,7 +1071,7 @@
                             "From": [
                               {
                                 "Name": "c",
-                                "Entity": "Coffee Ranking",
+                                "Entity": "Coffee Ranking Old",
                                 "Type": 0
                               }
                             ],
@@ -1341,7 +1105,7 @@
                                       "Source": "c"
                                     }
                                   },
-                                  "Property": "Rank"
+                                  "Property": "Ranking"
                                 },
                                 "Name": "Coffee Ranking.Rank"
                               }
@@ -1358,124 +1122,7 @@
                                             "Source": "c"
                                           }
                                         },
-                                        "Property": "Rank"
-                                      }
-                                    },
-                                    "Right": {
-                                      "Literal": {
-                                        "Value": "3L"
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            ],
-                            "OrderBy": [
-                              {
-                                "Direction": 1,
-                                "Expression": {
-                                  "Column": {
-                                    "Expression": {
-                                      "SourceRef": {
-                                        "Source": "c"
-                                      }
-                                    },
-                                    "Property": "# Votes"
-                                  }
-                                }
-                              }
-                            ]
-                          }
-                        }
-                      },
-                      "Property": "Coffee Ranking.# Votes"
-                    }
-                  },
-                  "IncludeAllTypes": 1
-                },
-                "Annotations": {
-                  "NaturalLanguage": {
-                    "version": 1,
-                    "kind": "NaturalLanguage",
-                    "annotation": {
-                      "name": "Votes Rank 3",
-                      "utterance": "# Votes coffee rank 3"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "id": "Votes Rank 3"
-          }
-        },
-        {
-          "properties": {
-            "expr": {
-              "expr": {
-                "Min": {
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "Subquery": {
-                          "Query": {
-                            "Version": 2,
-                            "From": [
-                              {
-                                "Name": "c",
-                                "Entity": "Coffee Ranking",
-                                "Type": 0
-                              }
-                            ],
-                            "Select": [
-                              {
-                                "Column": {
-                                  "Expression": {
-                                    "SourceRef": {
-                                      "Source": "c"
-                                    }
-                                  },
-                                  "Property": "# Votes"
-                                },
-                                "Name": "Coffee Ranking.# Votes"
-                              },
-                              {
-                                "Column": {
-                                  "Expression": {
-                                    "SourceRef": {
-                                      "Source": "c"
-                                    }
-                                  },
-                                  "Property": "Coffee"
-                                },
-                                "Name": "Coffee Ranking.Coffee"
-                              },
-                              {
-                                "Column": {
-                                  "Expression": {
-                                    "SourceRef": {
-                                      "Source": "c"
-                                    }
-                                  },
-                                  "Property": "Rank"
-                                },
-                                "Name": "Coffee Ranking.Rank"
-                              }
-                            ],
-                            "Where": [
-                              {
-                                "Condition": {
-                                  "Comparison": {
-                                    "ComparisonKind": 0,
-                                    "Left": {
-                                      "Column": {
-                                        "Expression": {
-                                          "SourceRef": {
-                                            "Source": "c"
-                                          }
-                                        },
-                                        "Property": "Rank"
+                                        "Property": "Ranking"
                                       }
                                     },
                                     "Right": {
@@ -1525,6 +1172,365 @@
           },
           "selector": {
             "id": "Value 2"
+          }
+        },
+        {
+          "properties": {
+            "expr": {
+              "expr": {
+                "Min": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "Subquery": {
+                          "Query": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "c",
+                                "Entity": "Coffee Information",
+                                "Type": 0
+                              },
+                              {
+                                "Name": "c1",
+                                "Entity": "Coffee Ranking",
+                                "Type": 0
+                              }
+                            ],
+                            "Select": [
+                              {
+                                "Column": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "c"
+                                    }
+                                  },
+                                  "Property": "Coffee"
+                                },
+                                "Name": "Coffee Information.Coffee"
+                              }
+                            ],
+                            "Where": [
+                              {
+                                "Condition": {
+                                  "Exists": {
+                                    "Expression": {
+                                      "SourceRef": {
+                                        "Source": "c"
+                                      }
+                                    }
+                                  }
+                                },
+                                "Target": [
+                                  {
+                                    "SourceRef": {
+                                      "Source": "c1"
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "Condition": {
+                                  "Comparison": {
+                                    "ComparisonKind": 0,
+                                    "Left": {
+                                      "Column": {
+                                        "Expression": {
+                                          "SourceRef": {
+                                            "Source": "c1"
+                                          }
+                                        },
+                                        "Property": "Rank"
+                                      }
+                                    },
+                                    "Right": {
+                                      "Literal": {
+                                        "Value": "3L"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            ],
+                            "OrderBy": [
+                              {
+                                "Direction": 1,
+                                "Expression": {
+                                  "Column": {
+                                    "Expression": {
+                                      "SourceRef": {
+                                        "Source": "c"
+                                      }
+                                    },
+                                    "Property": "Coffee"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "Property": "Coffee Information.Coffee"
+                    }
+                  },
+                  "IncludeAllTypes": 1
+                },
+                "Annotations": {
+                  "NaturalLanguage": {
+                    "version": 1,
+                    "kind": "NaturalLanguage",
+                    "annotation": {
+                      "name": "Value 3",
+                      "utterance": "coffee with rank 3"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "Value 3"
+          }
+        },
+        {
+          "properties": {
+            "expr": {
+              "expr": {
+                "Min": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "Subquery": {
+                          "Query": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "c",
+                                "Entity": "Coffee Information",
+                                "Type": 0
+                              },
+                              {
+                                "Name": "c1",
+                                "Entity": "Coffee Ranking",
+                                "Type": 0
+                              }
+                            ],
+                            "Select": [
+                              {
+                                "Column": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "c"
+                                    }
+                                  },
+                                  "Property": "Coffee"
+                                },
+                                "Name": "Coffee Information.Coffee"
+                              }
+                            ],
+                            "Where": [
+                              {
+                                "Condition": {
+                                  "Exists": {
+                                    "Expression": {
+                                      "SourceRef": {
+                                        "Source": "c"
+                                      }
+                                    }
+                                  }
+                                },
+                                "Target": [
+                                  {
+                                    "SourceRef": {
+                                      "Source": "c1"
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "Condition": {
+                                  "Comparison": {
+                                    "ComparisonKind": 0,
+                                    "Left": {
+                                      "Column": {
+                                        "Expression": {
+                                          "SourceRef": {
+                                            "Source": "c1"
+                                          }
+                                        },
+                                        "Property": "Rank"
+                                      }
+                                    },
+                                    "Right": {
+                                      "Literal": {
+                                        "Value": "4L"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            ],
+                            "OrderBy": [
+                              {
+                                "Direction": 1,
+                                "Expression": {
+                                  "Column": {
+                                    "Expression": {
+                                      "SourceRef": {
+                                        "Source": "c"
+                                      }
+                                    },
+                                    "Property": "Coffee"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "Property": "Coffee Information.Coffee"
+                    }
+                  },
+                  "IncludeAllTypes": 1
+                },
+                "Annotations": {
+                  "NaturalLanguage": {
+                    "version": 1,
+                    "kind": "NaturalLanguage",
+                    "annotation": {
+                      "name": "Value 4",
+                      "utterance": "coffee with rank 4"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "Value 4"
+          }
+        },
+        {
+          "properties": {
+            "expr": {
+              "expr": {
+                "Min": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "Subquery": {
+                          "Query": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "c",
+                                "Entity": "Coffee Ranking",
+                                "Type": 0
+                              }
+                            ],
+                            "Select": [
+                              {
+                                "Aggregation": {
+                                  "Expression": {
+                                    "Column": {
+                                      "Expression": {
+                                        "SourceRef": {
+                                          "Source": "c"
+                                        }
+                                      },
+                                      "Property": "# Votes"
+                                    }
+                                  },
+                                  "Function": 0
+                                },
+                                "Name": "Sum(Coffee Ranking.# Votes)"
+                              },
+                              {
+                                "Column": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "c"
+                                    }
+                                  },
+                                  "Property": "Rank"
+                                },
+                                "Name": "Coffee Ranking.Rank"
+                              }
+                            ],
+                            "Where": [
+                              {
+                                "Condition": {
+                                  "Comparison": {
+                                    "ComparisonKind": 0,
+                                    "Left": {
+                                      "Column": {
+                                        "Expression": {
+                                          "SourceRef": {
+                                            "Source": "c"
+                                          }
+                                        },
+                                        "Property": "Rank"
+                                      }
+                                    },
+                                    "Right": {
+                                      "Literal": {
+                                        "Value": "3L"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            ],
+                            "OrderBy": [
+                              {
+                                "Direction": 2,
+                                "Expression": {
+                                  "Aggregation": {
+                                    "Expression": {
+                                      "Column": {
+                                        "Expression": {
+                                          "SourceRef": {
+                                            "Source": "c"
+                                          }
+                                        },
+                                        "Property": "# Votes"
+                                      }
+                                    },
+                                    "Function": 0
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "Property": "Sum(Coffee Ranking.# Votes)"
+                    }
+                  },
+                  "IncludeAllTypes": 1
+                },
+                "Annotations": {
+                  "NaturalLanguage": {
+                    "version": 1,
+                    "kind": "NaturalLanguage",
+                    "annotation": {
+                      "name": "Votes Rank 3",
+                      "utterance": "number of votes rank 3 (rank)"
+                    }
+                  }
+                }
+              }
+            },
+            "formatString": {
+              "expr": {
+                "Literal": {
+                  "Value": "'#,0'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "Votes Rank 3"
           }
         }
       ]
