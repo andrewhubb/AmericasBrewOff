@@ -10,11 +10,11 @@ queryGroup 'Dimension Tables'
 
 	annotation PBI_QueryGroupOrder = 0
 
-annotation PBI_QueryOrder = ["coffee_dataset_source","coffee_dataset_cleaned","Home Brew Method Dim","Coffee Tasting Fact Table","Employmernt Status Dim","Ethinicity / Race Dim","Education Level Dim","Gender Dim","Political Affiliation Dim","Other Methods Dim","Coffee Type Dim","Coffee Strength Dim","Roast Level Dim","Purchase Coffee Location Dim","Drink Coffee Location Dim","Favourite Coffee Drink Dim","Coffee Additions Dim","Dairy Type Dim","Sweetener Type Dim","Preferred Coffee Type Dim","Caffeine Strength Dim","Coffee Drinking Reason Dim","Work Location Dim","_01 - Core Measures","Coffee Equipment Expense","Coffee Equipment Expense Coffee A","Coffee Equipment Expense Coffee B","Coffee Equipment Expense Coffee C","Coffee Equipment Expense Coffee D","Coffee Tasting Fact Table - Backup","Coffee Information","_00 - Core Measures","Coffee Equipment Expense Dim","description","Word Summary_pqe","z_word_rank","_02 - Smart Text Measures","Willing To Pay","Visual Titles","File Path"]
+annotation PBI_QueryOrder = ["coffee_dataset_source","coffee_dataset_cleaned","Home Brew Method Dim","Coffee Tasting Fact Table","Employmernt Status Dim","Ethinicity / Race Dim","Education Level Dim","Gender Dim","Political Affiliation Dim","Other Methods Dim","Coffee Type Dim","Coffee Strength Dim","Roast Level Dim","Purchase Coffee Location Dim","Drink Coffee Location Dim","Favourite Coffee Drink Dim","Coffee Additions Dim","Dairy Type Dim","Sweetener Type Dim","Preferred Coffee Type Dim","Caffeine Strength Dim","Coffee Drinking Reason Dim","Work Location Dim","_01 - Core Measures","Coffee Equipment Expense","Coffee Equipment Expense Coffee A","Coffee Equipment Expense Coffee B","Coffee Equipment Expense Coffee C","Coffee Equipment Expense Coffee D","Coffee Tasting Fact Table - Backup","Coffee Information","_00 - Core Measures","Coffee Equipment Expense Dim","description","Word Summary_pqe","z_word_rank","_02 - Smart Text Measures","Willing To Pay","Visual Titles","Data_File"]
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBIDesktopVersion = 2.138.1452.0 (24.11)
+annotation PBIDesktopVersion = 2.140.1205.0 (25.02)+2ab3defe107764e1cf486b42122d9362df7f34ea
 
 annotation PBI_ProTooling = ["DevMode"]
 

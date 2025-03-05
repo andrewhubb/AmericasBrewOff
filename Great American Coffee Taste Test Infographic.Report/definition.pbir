@@ -3,7 +3,6 @@
   "datasetReference": {
     "byPath": {
       "path": "../Great American Coffee Taste Test Infographic.SemanticModel"
-    },
-    "byConnection": null
+    }
   }
 }
