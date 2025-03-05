@@ -132,7 +132,7 @@
                     "textStyle": {
                       "fontFamily": "DIN",
                       "fontSize": "14pt",
-                      "color": "#666666"
+                      "color": "#faa93a"
                     }
                   },
                   {
@@ -156,7 +156,7 @@
                     "textStyle": {
                       "fontFamily": "DIN",
                       "fontSize": "14pt",
-                      "color": "#666666"
+                      "color": "#faa93a"
                     }
                   },
                   {
@@ -180,11 +180,11 @@
                     "textStyle": {
                       "fontFamily": "DIN",
                       "fontSize": "14pt",
-                      "color": "#666666"
+                      "color": "#faa93a"
                     }
                   },
                   {
-                    "value": " of the votes it was a tie for  ",
+                    "value": " of the votes. It was a tie for ",
                     "textStyle": {
                       "fontFamily": "DIN",
                       "fontSize": "14pt",
@@ -204,7 +204,7 @@
                     "textStyle": {
                       "fontFamily": "DIN",
                       "fontSize": "14pt",
-                      "color": "#666666"
+                      "color": "#faa93a"
                     }
                   },
                   {
@@ -228,7 +228,7 @@
                     "textStyle": {
                       "fontFamily": "DIN",
                       "fontSize": "14pt",
-                      "color": "#666666"
+                      "color": "#faa93a"
                     }
                   },
                   {
@@ -252,7 +252,7 @@
                     "textStyle": {
                       "fontFamily": "DIN",
                       "fontSize": "14pt",
-                      "color": "#666666"
+                      "color": "#faa93a"
                     }
                   },
                   {
@@ -276,11 +276,11 @@
                     "textStyle": {
                       "fontFamily": "DIN",
                       "fontSize": "14pt",
-                      "color": "#666666"
+                      "color": "#faa93a"
                     }
                   },
                   {
-                    "value": " people in the taste test did not vote for a favourite coffee. Our analysis focuses on the winning coffee and the people who voted for it as their favorite; we filtered out all blank responses to focus on actual responses.",
+                    "value": " people in the taste test did not vote for a favourite coffee. Our analysis focuses on the winning coffee and the people who voted for it as their favourite. We filtered out all blank responses to focus on actual responses.",
                     "textStyle": {
                       "fontFamily": "DIN",
                       "fontSize": "14pt",
